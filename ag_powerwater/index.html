@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: https: nui: game:;">
+    <title>AG Dispatch System</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Dispatch Tablet Interface -->
+    <div id="tablet-ui" class="hidden">
+        <div class="tablet-frame">
+            <header class="tablet-header">
+                <div class="logo">
+                    <img src="ag_logo.png" alt="LSDWP Logo" class="dept-logo"
+                        onerror="console.log('[AG-UI] Error loading ag_logo.png')">
+                    <span>S.A. Power & Water Authority</span>
+                </div>
+                <div class="status-indicator">
+                    <span id="grid-status-text">GRID STATUS: ONLINE</span>
+                    <div class="status-dot online"></div>
+                </div>
+            </header>
+
+            <main class="tablet-content">
+                <!-- Left Panel: Map & Stats -->
+                <div class="panel-left">
+                    <div class="map-view" id="map-container">
+                        <!-- Real Map Layer (User must add map.jpg to assets) -->
+                        <div class="game-map" id="game-map" style="background-image: url('assets/map.jpg');">
+                            <!-- Markers injected via JS -->
+                        </div>
+
+                        <!-- Fallback (Hidden if map exists/logic works) -->
+                        <div class="map-placeholder" id="map-placeholder" style="display: none;">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>Map Offline</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-stats">
+                        <div class="stat-box">
+                            <h3><i class="fas fa-plug"></i> Power Grid</h3>
+                            <div class="progress-bar">
+                                <div class="fill" id="power-fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="value" id="power-value">--%</span>
+                        </div>
+                        <div class="stat-box">
+                            <h3><i class="fas fa-faucet"></i> Water Pressure</h3>
+                            <div class="progress-bar">
+                                <div class="fill blue" id="water-fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="value" id="water-value">--%</span>
+                        </div>
+                    </div>
+
+                    <!-- Active Units List -->
+                    <div class="tech-list-panel">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-users"></i> ACTIVE UNITS</h3>
+                            <span class="badge" id="tech-count">0</span>
+                        </div>
+                        <ul class="tech-list" id="tech-list">
+                            <!-- Injected via JS -->
+                            <!-- <li><span class="dot online"></span> Technician Dave (Supervisor)</li> -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Mission Dispatch -->
+                <div class="panel-right">
+                    <div class="mission-header">
+                        <h2>Active Dispatches</h2>
+                        <span class="badge" id="mission-count">0</span>
+                    </div>
+                    <div class="mission-list" id="mission-list-container">
+                        <!-- Missions injected by JS -->
+                        <!-- Example Item:
+                        <div class="mission-card emergency">
+                            <div class="icon"><i class="fas fa-fire"></i></div>
+                            <div class="details">
+                                <h4>Turbine Fire #3</h4>
+                                <p>Ron Alternates Wind Farm</p>
+                            </div>
+                            <button class="action-btn">CLAIM</button>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

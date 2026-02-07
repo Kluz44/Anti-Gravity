@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power & Water Department - Dispatch System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #0f172a;
+            --card: #1e293b;
+            --card-50: rgba(30, 41, 59, 0.5);
+            --secondary: #334155;
+            --secondary-50: rgba(51, 65, 85, 0.5);
+            --border: #475569;
+            --border-50: rgba(71, 85, 105, 0.5);
+            --foreground: #f8fafc;
+            --muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-20: rgba(59, 130, 246, 0.2);
+            --emerald: #22c55e;
+            --emerald-20: rgba(34, 197, 94, 0.2);
+            --emerald-10: rgba(34, 197, 94, 0.1);
+            --amber: #f59e0b;
+            --amber-20: rgba(245, 158, 11, 0.2);
+            --amber-10: rgba(245, 158, 11, 0.1);
+            --amber-5: rgba(245, 158, 11, 0.05);
+            --red: #ef4444;
+            --red-20: rgba(239, 68, 68, 0.2);
+            --red-10: rgba(239, 68, 68, 0.1);
+            --red-5: rgba(239, 68, 68, 0.05);
+            --blue: #3b82f6;
+            --blue-20: rgba(59, 130, 246, 0.2);
+            --blue-10: rgba(59, 130, 246, 0.1);
+            --cyan: #06b6d4;
+            --cyan-20: rgba(6, 182, 212, 0.2);
+            --purple: #a855f7;
+            --purple-20: rgba(168, 85, 247, 0.2);
+            --violet: #8b5cf6;
+            --violet-20: rgba(139, 92, 246, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            height: 100vh;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        /* Header */
+        .header {
+            height: 64px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border-50);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            flex-shrink: 0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--card);
+            border: 1px solid var(--border-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-emerald {
+            background: var(--emerald-20);
+            color: var(--emerald);
+        }
+
+        .badge-blue {
+            background: var(--blue-20);
+            color: var(--blue);
+        }
+
+        .badge-amber {
+            background: var(--amber-20);
+            color: var(--amber);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .clock-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        .clock-section svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .clock-text {
+            text-align: right;
+        }
+
+        .clock-time {
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .clock-date {
+            font-size: 11px;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: var(--foreground);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: var(--secondary-50);
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background: var(--red);
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .operator-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: var(--foreground);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .operator-btn:hover {
+            background: var(--secondary-50);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .status-dot.emerald { background: var(--emerald); }
+        .status-dot.amber { background: var(--amber); }
+        .status-dot.blue { background: var(--blue); }
+        .status-dot.slate { background: var(--muted); }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 220px;
+            background: var(--card);
+            border: 1px solid var(--border-50);
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 10px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--secondary-50);
+        }
+
+        .dropdown-item.active {
+            background: var(--secondary-50);
+        }
+
+        .dropdown-item-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border-50);
+            margin: 4px 0;
+        }
+
+        .dropdown-item.red {
+            color: var(--red);
+        }
+
+        .dropdown-item.red .dropdown-item-icon {
+            background: var(--red-20);
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 64px);
+            overflow: hidden;
+        }
+
+        /* Left Sidebar */
+        .sidebar-left {
+            width: 288px;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border-50);
+            display: flex;
+            flex-direction: column;
+            background: var(--card);
+        }
+
+        .sidebar-header {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-50);
+            flex-shrink: 0;
+        }
+
+        .sidebar-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .sidebar-count {
+            font-size: 10px;
+            background: var(--primary-20);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .sidebar-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+        }
+
+        .sidebar-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sidebar-stat-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .sidebar-stat-dot.emerald { background: var(--emerald); }
+        .sidebar-stat-dot.amber { background: var(--amber); }
+
+        .sidebar-stat-value {
+            font-weight: 500;
+        }
+
+        .sidebar-stat-value.emerald { color: var(--emerald); }
+        .sidebar-stat-value.amber { color: var(--amber); }
+
+        .employee-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 6px;
+        }
+
+        .employee-item {
+            padding: 8px;
+            border-radius: 8px;
+            background: var(--secondary-50);
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .employee-item:hover {
+            background: var(--secondary);
+        }
+
+        .employee-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .unit-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .unit-icon.blue { color: var(--blue); background: var(--card); }
+        .unit-icon.amber { color: var(--amber); background: var(--card); }
+        .unit-icon.purple { color: var(--purple); background: var(--card); }
+        .unit-icon.red { color: var(--red); background: var(--card); }
+
+        .employee-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .employee-name-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 2px;
+        }
+
+        .employee-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .job-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: help;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .job-icon svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .job-icon.amber { background: var(--amber-20); color: var(--amber); }
+        .job-icon.blue { background: var(--blue-20); color: var(--blue); }
+        .job-icon.cyan { background: var(--cyan-20); color: var(--cyan); }
+        .job-icon.purple { background: var(--purple-20); color: var(--purple); }
+        .job-icon.emerald { background: var(--emerald-20); color: var(--emerald); }
+
+        .tooltip {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 4px 8px;
+            background: var(--secondary);
+            color: white;
+            font-size: 11px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+
+        .job-icon:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .employee-badge {
+            font-size: 10px;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .employee-status-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+        }
+
+        .employee-status {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .employee-status.emerald { color: var(--emerald); background: var(--emerald-20); }
+        .employee-status.amber { color: var(--amber); background: var(--amber-20); }
+        .employee-status.slate { color: var(--muted); background: var(--secondary); }
+
+        .employee-location-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .employee-location {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .employee-call {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: var(--amber);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .status-dot-small {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .status-dot-small.emerald { background: var(--emerald); }
+        .status-dot-small.amber { background: var(--amber); }
+        .status-dot-small.slate { background: var(--muted); }
+
+        /* Center - Map Area */
+        .center-area {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #0a1628;
+            overflow: hidden;
+        }
+
+        .map-toolbar {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-50);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-50);
+            flex-shrink: 0;
+        }
+
+        .map-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-toolbar-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .selected-badge {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: var(--primary-20);
+            color: var(--primary);
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .selected-badge.active {
+            display: inline-flex;
+        }
+
+        .map-toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: var(--cyan-20);
+            color: var(--cyan);
+        }
+
+        .filter-btn.active.violet {
+            background: var(--violet-20);
+            color: var(--violet);
+        }
+
+        .filter-btn.active.blue {
+            background: var(--blue-20);
+            color: var(--blue);
+        }
+
+        .toolbar-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--border-50);
+            margin: 0 4px;
+        }
+
+        .toolbar-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .toolbar-btn:hover {
+            color: white;
+            background: var(--secondary-50);
+        }
+
+        .toolbar-btn.active {
+            background: var(--primary-20);
+            color: var(--primary);
+        }
+
+        .map-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        .map-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .map-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--border-50) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-50) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .map-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-image-container {
+            position: relative;
+            width: 900px;
+            height: 900px;
+            transition: transform 0.1s ease-out;
+        }
+
+        .map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0.9) contrast(1.1);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .map-markers {
+            position: absolute;
+            inset: 0;
+        }
+
+        .map-marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .marker-ping {
+            position: absolute;
+            border-radius: 50%;
+            animation: ping 1.5s infinite;
+        }
+
+        @keyframes ping {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .marker-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 20px var(--amber), 0 0 40px var(--amber);
+        }
+
+        .marker-pulse {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .marker-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .marker-dot svg {
+            width: 10px;
+            height: 10px;
+            color: white;
+        }
+
+        .marker-label {
+            margin-top: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.8);
+            white-space: nowrap;
+        }
+
+        .marker-label.selected {
+            color: var(--primary);
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: var(--card-50);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-50);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .legend-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .legend-icon {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legend-icon svg {
+            width: 6px;
+            height: 6px;
+            color: white;
+        }
+
+        .zoom-level {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: var(--card-50);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-50);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        /* Bottom Stats Panel */
+        .bottom-stats {
+            height: 56px;
+            background: var(--card);
+            border-top: 1px solid var(--border-50);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 24px;
+            flex-shrink: 0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon.emerald { background: var(--emerald-20); color: var(--emerald); }
+        .stat-icon.blue { background: var(--blue-20); color: var(--blue); }
+        .stat-icon.red { background: var(--red-20); color: var(--red); }
+        .stat-icon.amber { background: var(--amber-20); color: var(--amber); }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .stat-value.emerald { color: var(--emerald); }
+        .stat-value.blue { color: var(--blue); }
+        .stat-value.red { color: var(--red); }
+        .stat-value.amber { color: var(--amber); }
+
+        .stats-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border-50);
+        }
+
+        /* Right Sidebar */
+        .sidebar-right {
+            width: 320px;
+            flex-shrink: 0;
+            border-left: 1px solid var(--border-50);
+            background: var(--card);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-50);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: var(--secondary-50);
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: white;
+        }
+
+        .tab-btn.active {
+            background: var(--card);
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: -1px;
+        }
+
+        .tab-count {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+
+        .tab-count.primary { background: var(--primary-20); color: var(--primary); }
+        .tab-count.red { background: var(--red-20); color: var(--red); }
+
+        .tab-content {
+            flex: 1;
+            overflow: hidden;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Calls Tab */
+        .calls-filter-bar {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-50);
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .calls-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .call-item {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-50);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .call-item:hover {
+            border-color: var(--primary);
+        }
+
+        .call-item.selected {
+            box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px var(--card);
+        }
+
+        .call-item.pending {
+            background: var(--amber-10);
+            border-color: var(--amber-20);
+        }
+
+        .call-item.pending:hover {
+            background: var(--amber-5);
+        }
+
+        .call-item.active {
+            background: var(--emerald-10);
+            border-color: var(--emerald-20);
+        }
+
+        .call-item.high {
+            background: var(--red-5);
+            border-color: var(--red-20);
+        }
+
+        .call-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .call-header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .call-id {
+            font-size: 10px;
+            font-family: monospace;
+            color: var(--muted);
+            background: var(--secondary);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        .call-priority {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .call-priority.high { color: var(--red); background: var(--red-20); }
+        .call-priority.medium { color: var(--amber); background: var(--amber-20); }
+        .call-priority.low { color: var(--blue); background: var(--blue-20); }
+
+        .call-header-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .call-type-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .call-type-icon.amber { color: var(--amber); }
+        .call-type-icon.blue { color: var(--blue); }
+        .call-type-icon.red { color: var(--red); }
+
+        .call-title-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .call-code {
+            font-size: 10px;
+            font-family: monospace;
+            color: var(--primary);
+            background: var(--primary-20);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        .call-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .call-description {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .call-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .call-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .call-units {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-50);
+            margin-bottom: 10px;
+        }
+
+        .call-units-label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .call-unit-tag {
+            font-size: 10px;
+            background: var(--primary-20);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .call-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-top: 8px;
+        }
+
+        .btn-accept {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 12px;
+            background: var(--emerald-20);
+            color: var(--emerald);
+            border: 1px solid var(--emerald);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-accept:hover {
+            background: var(--emerald);
+            color: white;
+        }
+
+        .btn-accept:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .call-status-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: var(--emerald-20);
+            color: var(--emerald);
+            border-radius: 6px;
+            font-size: 11px;
+        }
+
+        .call-waiting {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .waiting-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--amber-20);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .waiting-fill {
+            height: 100%;
+            width: 66%;
+            background: var(--amber);
+            animation: waiting-pulse 1.5s infinite;
+        }
+
+        @keyframes waiting-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .waiting-text {
+            font-size: 10px;
+            color: var(--amber);
+        }
+
+        /* Status Tab */
+        .status-quick-stats {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-50);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .quick-stat-card {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid;
+        }
+
+        .quick-stat-card.amber {
+            background: var(--amber-10);
+            border-color: var(--amber-20);
+        }
+
+        .quick-stat-card.blue {
+            background: var(--blue-10);
+            border-color: var(--blue-20);
+        }
+
+        .quick-stat-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .quick-stat-header svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .quick-stat-header.amber { color: var(--amber); }
+        .quick-stat-header.blue { color: var(--blue); }
+
+        .quick-stat-label {
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .quick-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .quick-stat-value.emerald { color: var(--emerald); }
+        .quick-stat-value.amber { color: var(--amber); }
+        .quick-stat-value.red { color: var(--red); }
+        .quick-stat-value.blue { color: var(--blue); }
+
+        .status-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .status-section {
+            margin-bottom: 12px;
+        }
+
+        .status-section-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 0 4px;
+            margin-bottom: 6px;
+        }
+
+        .status-section-header.red { color: var(--red); }
+        .status-section-header.amber { color: var(--amber); }
+        .status-section-header.muted { color: var(--muted); }
+
+        .critical-asset, .warning-asset {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+
+        .critical-asset {
+            background: var(--red-10);
+            border: 1px solid var(--red-20);
+        }
+
+        .warning-asset {
+            background: var(--amber-10);
+            border: 1px solid var(--amber-20);
+        }
+
+        .asset-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .asset-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: white;
+        }
+
+        .asset-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .asset-status-dot.red {
+            background: var(--red);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .asset-status-dot.amber {
+            background: var(--amber);
+        }
+
+        .asset-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .asset-badge.red {
+            background: var(--red-20);
+            color: var(--red);
+        }
+
+        .asset-badge.amber {
+            background: var(--amber-20);
+            color: var(--amber);
+        }
+
+        .district-card {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-50);
+            margin-bottom: 8px;
+        }
+
+        .district-card.critical {
+            background: var(--red-5);
+            border-color: var(--red-20);
+        }
+
+        .district-card.warning {
+            background: var(--amber-5);
+            border-color: var(--amber-20);
+        }
+
+        .district-card.normal {
+            background: var(--card-50);
+        }
+
+        .district-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .district-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .district-outages {
+            font-size: 10px;
+            background: var(--red-20);
+            color: var(--red);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .district-bars {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bar-header svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .bar-header.amber { color: var(--amber); }
+        .bar-header.blue { color: var(--blue); }
+
+        .bar-value {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .bar-value.emerald { color: var(--emerald); }
+        .bar-value.amber { color: var(--amber); }
+        .bar-value.red { color: var(--red); }
+        .bar-value.blue { color: var(--blue); }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--secondary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.emerald { background: var(--emerald); }
+        .progress-fill.amber { background: var(--amber); }
+        .progress-fill.red { background: var(--red); }
+        .progress-fill.blue { background: var(--blue); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--muted);
+        }
+
+        /* Icons */
+        .icon { width: 16px; height: 16px; }
+        .icon-sm { width: 12px; height: 12px; }
+        .icon-xs { width: 10px; height: 10px; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo-box">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <div class="logo-text">
+                <h1>POWER & WATER</h1>
+                <p>Department of Infrastructure</p>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <span class="badge badge-emerald">
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                </svg>
+                Grid Online
+            </span>
+            <span class="badge badge-blue">
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+                Water OK
+            </span>
+            <span class="badge badge-amber">
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2v20"/>
+                    <path d="M12 12l4-4"/>
+                </svg>
+                Wind 85%
+            </span>
+        </div>
+        
+        <div class="header-right">
+            <div class="clock-section">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <div class="clock-text">
+                    <div class="clock-time" id="clockTime">--:--:--</div>
+                    <div class="clock-date" id="clockDate">--.--.----</div>
+                </div>
+            </div>
+            
+            <button class="btn-icon" onclick="clearNotifications()">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                <span class="notification-count" id="notificationCount">5</span>
+            </button>
+            
+            <div class="dropdown">
+                <button class="operator-btn" onclick="toggleDropdown()">
+                    <span class="status-dot emerald" id="operatorStatusDot"></span>
+                    <span>Operator-01</span>
+                    <span style="color: var(--emerald); font-size: 12px;" id="operatorStatusText">(Verfügbar)</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="dropdown-header">Status ändern</div>
+                    <div class="dropdown-item active" onclick="setStatus('available', this)">
+                        <div class="dropdown-item-icon" style="background: var(--emerald-20);">
+                            <svg class="icon-xs" style="color: var(--emerald);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
+                        <span>Verfügbar</span>
+                        <svg class="icon-xs" style="margin-left: auto; color: var(--emerald);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div class="dropdown-item" onclick="setStatus('busy', this)">
+                        <div class="dropdown-item-icon" style="background: var(--amber-20);">
+                            <svg class="icon-xs" style="color: var(--amber);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                        </div>
+                        <span>Im Einsatz</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setStatus('break', this)">
+                        <div class="dropdown-item-icon" style="background: var(--blue-20);">
+                            <svg class="icon-xs" style="color: var(--blue);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                                <line x1="6" y1="1" x2="6" y2="4"/>
+                                <line x1="10" y1="1" x2="10" y2="4"/>
+                                <line x1="14" y1="1" x2="14" y2="4"/>
+                            </svg>
+                        </div>
+                        <span>In Pause</span>
+                    </div>
+                    <div class="dropdown-item" onclick="setStatus('offduty', this)">
+                        <div class="dropdown-item-icon" style="background: rgba(148, 163, 184, 0.2);">
+                            <svg class="icon-xs" style="color: var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </div>
+                        <span>Außer Dienst</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item red" onclick="logout()">
+                        <div class="dropdown-item-icon">
+                            <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                        </div>
+                        <span>Abmelden</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar - Employees -->
+        <aside class="sidebar-left">
+            <div class="sidebar-header">
+                <div class="sidebar-title-row">
+                    <span class="sidebar-title">
+                        <svg class="icon-sm" style="color: var(--amber);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                        <svg class="icon-sm" style="color: var(--blue); margin-left: -8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                        Team
+                    </span>
+                    <span class="sidebar-count" id="employeeCount">0</span>
+                </div>
+                <div class="sidebar-stats">
+                    <div class="sidebar-stat">
+                        <span class="sidebar-stat-dot emerald"></span>
+                        <span class="sidebar-stat-value emerald" id="availableCount">0</span>
+                    </div>
+                    <div class="sidebar-stat">
+                        <span class="sidebar-stat-dot amber"></span>
+                        <span class="sidebar-stat-value amber" id="busyCount">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="employee-list" id="employeeList"></div>
+        </aside>
+
+        <!-- Center - Map -->
+        <div class="center-area">
+            <div class="map-container">
+                <div class="map-toolbar">
+                    <div class="map-toolbar-left">
+                        <span class="map-toolbar-title">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                            </svg>
+                            Karte
+                        </span>
+                        <span class="selected-badge" id="selectedCallBadge">
+                            <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                            </svg>
+                            <span id="selectedCallId"></span>
+                        </span>
+                    </div>
+                    <div class="map-toolbar-right">
+                        <button class="filter-btn" id="filterWind" onclick="toggleFilter('windturbine', this)">
+                            <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2v20"/>
+                                <path d="M12 12l4-4"/>
+                            </svg>
+                            Wind
+                        </button>
+                        <button class="filter-btn" id="filterSubstation" onclick="toggleFilter('substation', this)">
+                            <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 20h20"/>
+                                <path d="M5 20v-8h3v8"/>
+                                <path d="M10 20V8h3v12"/>
+                                <path d="M15 20v-12h3v12"/>
+                            </svg>
+                            UW
+                        </button>
+                        <button class="filter-btn" id="filterDam" onclick="toggleFilter('dam', this)">
+                            <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </svg>
+                            Wasser
+                        </button>
+                        <div class="toolbar-divider"></div>
+                        <button class="toolbar-btn" id="btnGrid" onclick="toggleGrid()">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                                <polyline points="2 17 12 22 22 17"/>
+                                <polyline points="2 12 12 17 22 12"/>
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn" onclick="resetMap()">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn" onclick="zoomOut()">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                <line x1="8" y1="11" x2="14" y2="11"/>
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn" onclick="zoomIn()">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                <line x1="11" y1="8" x2="11" y2="14"/>
+                                <line x1="8" y1="11" x2="14" y2="11"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="map-wrapper" id="mapWrapper">
+                    <div class="map-grid" id="mapGrid"></div>
+                    <div class="map-content" id="mapContent">
+                        <div class="map-image-container" id="mapImageContainer">
+                            <img src="map.jpg" alt="San Andreas Map" class="map-image" id="mapImage" draggable="false">
+                            <div class="map-markers" id="mapMarkers"></div>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-title">Legende</div>
+                        <div class="legend-item">
+                            <span class="legend-icon" style="background: var(--cyan);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 2v20"/>
+                                </svg>
+                            </span>
+                            <span>Wind</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon" style="background: var(--violet);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 20h20"/>
+                                    <path d="M5 20v-8h3v8"/>
+                                </svg>
+                            </span>
+                            <span>UW</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon" style="background: var(--amber);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                </svg>
+                            </span>
+                            <span>Trafo</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon" style="background: var(--blue);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                </svg>
+                            </span>
+                            <span>Wasser</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon" style="background: var(--primary); border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></span>
+                            <span>Ausgewählt</span>
+                        </div>
+                    </div>
+                    <div class="zoom-level" id="zoomLevel">100%</div>
+                </div>
+            </div>
+            
+            <!-- Bottom Stats -->
+            <div class="bottom-stats">
+                <div class="stat-item">
+                    <div class="stat-icon emerald">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Strom Ø</span>
+                        <span class="stat-value emerald" id="avgPower">0%</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon blue">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Wasser Ø</span>
+                        <span class="stat-value blue" id="avgWater">0%</span>
+                    </div>
+                </div>
+                <div class="stats-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-icon red">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Kritisch</span>
+                        <span class="stat-value red" id="criticalCount">0 Aufträge</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon amber">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Aktive Aufträge</span>
+                        <span class="stat-value amber" id="activeCalls">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Tabs -->
+        <aside class="sidebar-right">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('calls', this)">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    Aufträge
+                    <span class="tab-count primary" id="callsCount">0</span>
+                </button>
+                <button class="tab-btn" onclick="switchTab('status', this)">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                    Status
+                    <span class="tab-count red">2</span>
+                </button>
+            </div>
+            
+            <!-- Calls Tab -->
+            <div class="tab-content active" id="callsTab">
+                <div class="calls-filter-bar">
+                    <span class="badge badge-emerald" style="font-size: 11px;">
+                        <span class="sidebar-stat-dot emerald"></span>
+                        <span id="activeCallsBadge">0 Aktiv</span>
+                    </span>
+                    <span class="badge badge-amber" style="font-size: 11px; display: none;" id="pendingBadge">
+                        <span class="sidebar-stat-dot amber"></span>
+                        <span id="pendingCallsBadge">0 Ausstehend</span>
+                    </span>
+                    <span class="badge" style="font-size: 11px; background: var(--red-20); color: var(--red); display: none;" id="highPriorityBadge">
+                        <span class="sidebar-stat-dot" style="background: var(--red);"></span>
+                        <span id="highPriorityCount">0 Hoch</span>
+                    </span>
+                </div>
+                <div class="calls-list" id="callsList"></div>
+            </div>
+            
+            <!-- Status Tab -->
+            <div class="tab-content" id="statusTab">
+                <div class="status-quick-stats">
+                    <div class="quick-stat-card amber">
+                        <div class="quick-stat-header amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            <span class="quick-stat-label">Strom Ø</span>
+                        </div>
+                        <div class="quick-stat-value emerald" id="statusAvgPower">0%</div>
+                    </div>
+                    <div class="quick-stat-card blue">
+                        <div class="quick-stat-header blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </svg>
+                            <span class="quick-stat-label">Wasser Ø</span>
+                        </div>
+                        <div class="quick-stat-value blue" id="statusAvgWater">0%</div>
+                    </div>
+                </div>
+                <div class="status-list" id="statusList"></div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Data
+        const employees = [
+            { id: 'E001', name: 'Max Schmidt', jobRole: 'Elektriker', unit: 'technician', status: 'available', badge: '#4521', location: 'Downtown Substation', currentCall: null },
+            { id: 'E002', name: 'Anna Weber', jobRole: 'Gas und Wasser Techniker', unit: 'engineer', status: 'busy', badge: '#4522', location: 'Port Area', currentCall: 'PWR-2024-084' },
+            { id: 'E003', name: 'Tom Müller', jobRole: 'Dispatcher', unit: 'supervisor', status: 'available', badge: '#4523', location: 'Control Center', currentCall: null },
+            { id: 'E004', name: 'Lisa Fischer', jobRole: 'Manager', unit: 'supervisor', status: 'offduty', badge: '#4524', location: 'HQ Office', currentCall: null },
+            { id: 'E005', name: 'Jan Becker', jobRole: 'Praktikant', unit: 'technician', status: 'available', badge: '#4525', location: 'Vinewood', currentCall: null },
+            { id: 'E006', name: 'Sarah Koch', jobRole: 'Elektriker', unit: 'technician', status: 'offduty', badge: '#4526', location: 'Off Duty', currentCall: null },
+            { id: 'E007', name: 'Mike Wolf', jobRole: 'Gas und Wasser Techniker', unit: 'engineer', status: 'busy', badge: '#4527', location: 'Harbor Docks', currentCall: 'WTR-2024-042' },
+            { id: 'E008', name: 'Emma Braun', jobRole: 'Elektriker', unit: 'technician', status: 'available', badge: '#4528', location: 'East LS', currentCall: null },
+            { id: 'E009', name: 'David Maier', jobRole: 'Dispatcher', unit: 'supervisor', status: 'available', badge: '#4529', location: 'Control Center', currentCall: null },
+            { id: 'E010', name: 'Nina Schulz', jobRole: 'Gas und Wasser Techniker', unit: 'engineer', status: 'offduty', badge: '#4530', location: 'Off Duty', currentCall: null },
+        ];
+
+        const calls = [
+            { id: 'PWR-2024-084', code: 'PWR-084', title: 'Stromausfall Downtown', description: 'Stromausfall im Wohngebiet. Mehrere Anrufe von Bewohnern eingegangen.', type: 'power', location: 'Power Street 45, Downtown', timestamp: '14:32', priority: 'high', status: 'pending', assignedUnits: [] },
+            { id: 'WTR-2024-042', code: 'WTR-042', title: 'Wasserrohrbruch Hafen', description: 'Wasserrohrbruch im Hafenbereich. Druckabfall in der gesamten Zone.', type: 'water', location: 'Harbor Docks, Port Area', timestamp: '14:28', priority: 'high', status: 'active', assignedUnits: ['Mike Wolf'] },
+            { id: 'PWR-2024-083', code: 'PWR-083', title: 'Transformator überhitzt', description: 'Transformator überhitzt. Brandgefahr besteht.', type: 'power', location: 'Vinewood Hills, Mansion District', timestamp: '14:15', priority: 'medium', status: 'active', assignedUnits: ['Emma Braun'] },
+            { id: 'WTR-2024-041', code: 'WTR-041', title: 'Hydrant beschädigt', description: 'Hydrant beschädigt nach Verkehrsunfall.', type: 'water', location: 'Main Street 122, Commerce', timestamp: '13:58', priority: 'medium', status: 'pending', assignedUnits: [] },
+            { id: 'EMR-2024-015', code: 'EMR-015', title: 'Notabschaltung erforderlich', description: 'Notabschaltung erforderlich. Wartungsteam vor Ort.', type: 'emergency', location: 'Substation North, Industrial', timestamp: '13:45', priority: 'low', status: 'active', assignedUnits: ['Max Schmidt'] },
+            { id: 'PWR-2024-082', code: 'PWR-082', title: 'Straßenbeleuchtung ausgefallen', description: 'Straßenbeleuchtung ausgefallen.', type: 'power', location: 'Grove Street 8, South LS', timestamp: '13:30', priority: 'low', status: 'pending', assignedUnits: [] },
+            { id: 'WTR-2024-040', code: 'WTR-040', title: 'Wasserstandsanomalie', description: 'Wasserstandsanomalie am Staudamm. Überprüfung notwendig.', type: 'water', location: 'Lake Dam Control, Countryside', timestamp: '13:15', priority: 'high', status: 'pending', assignedUnits: [] },
+        ];
+
+        const districts = [
+            { id: 'D001', name: 'Los Santos Downtown', power: 'good', water: 'good', powerValue: 92, waterValue: 88, outages: 0 },
+            { id: 'D002', name: 'Vinewood & Hills', power: 'warning', water: 'good', powerValue: 78, waterValue: 95, outages: 1 },
+            { id: 'D003', name: 'Port & Industrial', power: 'warning', water: 'critical', powerValue: 65, waterValue: 45, outages: 2 },
+            { id: 'D004', name: 'South Los Santos', power: 'good', water: 'good', powerValue: 89, waterValue: 92, outages: 0 },
+            { id: 'D005', name: 'East LS & Palomino', power: 'good', water: 'good', powerValue: 94, waterValue: 87, outages: 0 },
+        ];
+
+        const infrastructureAssets = [
+            { id: 'A001', name: 'Windpark North', type: 'windturbine', status: 'good' },
+            { id: 'A002', name: 'Windpark East', type: 'windturbine', status: 'good' },
+            { id: 'A003', name: 'Hauptstation Downtown', type: 'substation', status: 'warning' },
+            { id: 'A004', name: 'Station South', type: 'substation', status: 'good' },
+            { id: 'A005', name: 'Trafo Vinewood', type: 'transformer', status: 'critical' },
+            { id: 'A006', name: 'Trafo Harbor', type: 'transformer', status: 'good' },
+            { id: 'A007', name: 'Land Act Dam', type: 'dam', status: 'warning' },
+            { id: 'A008', name: 'Hydrant Main St', type: 'hydrant', status: 'good' },
+            { id: 'A009', name: 'Hydrant Port', type: 'hydrant', status: 'critical' },
+            { id: 'A010', name: 'Hydrant Vinewood', type: 'hydrant', status: 'good' },
+        ];
+
+        const mapMarkers = [
+            { id: 'M001', type: 'windturbine', x: 75, y: 20, label: 'Wind N', status: 'good' },
+            { id: 'M002', type: 'windturbine', x: 80, y: 25, label: 'Wind E', status: 'good' },
+            { id: 'M003', type: 'substation', x: 50, y: 45, label: 'UW DT', status: 'warning' },
+            { id: 'M004', type: 'substation', x: 35, y: 60, label: 'UW S', status: 'good' },
+            { id: 'M005', type: 'transformer', x: 55, y: 35, label: 'Trafo V', status: 'critical' },
+            { id: 'M006', type: 'transformer', x: 40, y: 70, label: 'Trafo H', status: 'good' },
+            { id: 'M007', type: 'dam', x: 65, y: 35, label: 'Dam', status: 'warning' },
+            { id: 'M008', type: 'hydrant', x: 45, y: 50, label: 'H-MS', status: 'good' },
+            { id: 'M009', type: 'hydrant', x: 30, y: 65, label: 'H-P', status: 'critical' },
+            { id: 'M010', type: 'hydrant', x: 60, y: 40, label: 'H-V', status: 'good' },
+            { id: 'C001', type: 'call', x: 45, y: 55, label: 'PWR-084', status: 'pending' },
+            { id: 'C002', type: 'call', x: 30, y: 70, label: 'WTR-042', status: 'active' },
+            { id: 'C003', type: 'call', x: 60, y: 35, label: 'PWR-083', status: 'active' },
+            { id: 'C004', type: 'call', x: 50, y: 50, label: 'WTR-041', status: 'pending' },
+            { id: 'C005', type: 'call', x: 40, y: 25, label: 'EMR-015', status: 'active' },
+            { id: 'C006', type: 'call', x: 35, y: 65, label: 'PWR-082', status: 'pending' },
+            { id: 'C007', type: 'call', x: 70, y: 40, label: 'WTR-040', status: 'pending' },
+        ];
+
+        // State
+        let currentZoom = 1;
+        let mapPosition = { x: 0, y: 0 };
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+        let selectedCallId = null;
+        let activeFilter = null;
+        let showGrid = true;
+        let operatorStatus = 'available';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateClock();
+            setInterval(updateClock, 1000);
+            renderEmployees();
+            renderCalls();
+            renderStatusPanel();
+            renderMapMarkers();
+            updateStats();
+            setupMapInteractions();
+        });
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clockTime').textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('clockDate').textContent = now.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        // Dropdown
+        function toggleDropdown() {
+            document.getElementById('dropdownMenu').classList.toggle('active');
+        }
+
+        function setStatus(status, element) {
+            operatorStatus = status;
+            document.querySelectorAll('.dropdown-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            const dot = document.getElementById('operatorStatusDot');
+            const text = document.getElementById('operatorStatusText');
+            
+            dot.className = 'status-dot';
+            
+            const statusConfig = {
+                available: { dot: 'emerald', text: 'Verfügbar', color: 'var(--emerald)' },
+                busy: { dot: 'amber', text: 'Im Einsatz', color: 'var(--amber)' },
+                break: { dot: 'blue', text: 'In Pause', color: 'var(--blue)' },
+                offduty: { dot: 'slate', text: 'Außer Dienst', color: 'var(--muted)' },
+            };
+            
+            const config = statusConfig[status];
+            dot.classList.add(config.dot);
+            text.textContent = `(${config.text})`;
+            text.style.color = config.color;
+            
+            toggleDropdown();
+        }
+
+        function logout() {
+            alert('Abmeldung erfolgreich!');
+            toggleDropdown();
+        }
+
+        function clearNotifications() {
+            document.getElementById('notificationCount').style.display = 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Render Employees
+        function renderEmployees() {
+            const list = document.getElementById('employeeList');
+            const availableCount = employees.filter(e => e.status === 'available').length;
+            const busyCount = employees.filter(e => e.status === 'busy').length;
+            
+            document.getElementById('employeeCount').textContent = employees.length;
+            document.getElementById('availableCount').textContent = availableCount;
+            document.getElementById('busyCount').textContent = busyCount;
+
+            const unitIcons = {
+                technician: { color: 'blue', svg: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>' },
+                engineer: { color: 'amber', svg: '<path d="M2 20h20M5 20v-8h3v8M10 20V8h3v12M15 20v-12h3v12"/>' },
+                supervisor: { color: 'purple', svg: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>' },
+                emergency: { color: 'red', svg: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
+            };
+
+            const jobIcons = {
+                'Elektriker': { color: 'amber', svg: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>', label: 'Elektriker' },
+                'Gas und Wasser Techniker': { color: 'blue', svg: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>', label: 'Gas & Wasser Techniker' },
+                'Dispatcher': { color: 'cyan', svg: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>', label: 'Dispatcher' },
+                'Manager': { color: 'purple', svg: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', label: 'Manager' },
+                'Praktikant': { color: 'emerald', svg: '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>', label: 'Praktikant' },
+            };
+
+            const statusConfig = {
+                available: { label: 'Verfügbar', color: 'emerald' },
+                busy: { label: 'Im Einsatz', color: 'amber' },
+                offduty: { label: 'Außer Dienst', color: 'slate' },
+            };
+
+            list.innerHTML = employees.map(emp => {
+                const unit = unitIcons[emp.unit];
+                const job = jobIcons[emp.jobRole];
+                const status = statusConfig[emp.status];
+                
+                return `
+                    <div class="employee-item">
+                        <div class="employee-row">
+                            <div class="unit-icon ${unit.color}">
+                                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    ${unit.svg}
+                                </svg>
+                            </div>
+                            <div class="employee-info">
+                                <div class="employee-name-row">
+                                    <span class="employee-name">${emp.name}</span>
+                                    <div class="job-icon ${job.color}">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            ${job.svg}
+                                        </svg>
+                                        <span class="tooltip">${job.label}</span>
+                                    </div>
+                                    <span class="employee-badge">${emp.badge}</span>
+                                </div>
+                                <div class="employee-status-row">
+                                    <span class="employee-status ${status.color}">${status.label}</span>
+                                </div>
+                                ${emp.status !== 'offduty' ? `
+                                    <div class="employee-location-row">
+                                        <span class="employee-location">
+                                            <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                                <circle cx="12" cy="10" r="3"/>
+                                            </svg>
+                                            ${emp.location}
+                                        </span>
+                                        ${emp.currentCall ? `
+                                            <span class="employee-call">
+                                                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                                </svg>
+                                                ${emp.currentCall}
+                                            </span>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="status-dot-small ${status.color}"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render Calls
+        function renderCalls() {
+            const list = document.getElementById('callsList');
+            const activeCount = calls.filter(c => c.status === 'active').length;
+            const pendingCount = calls.filter(c => c.status === 'pending').length;
+            const highPriorityCount = calls.filter(c => c.priority === 'high').length;
+            
+            document.getElementById('callsCount').textContent = calls.length;
+            document.getElementById('activeCallsBadge').textContent = `${activeCount} Aktiv`;
+            document.getElementById('pendingCallsBadge').textContent = `${pendingCount} Ausstehend`;
+            document.getElementById('highPriorityCount').textContent = `${highPriorityCount} Hoch`;
+            
+            document.getElementById('pendingBadge').style.display = pendingCount > 0 ? 'inline-flex' : 'none';
+            document.getElementById('highPriorityBadge').style.display = highPriorityCount > 0 ? 'inline-flex' : 'none';
+
+            const priorityConfig = {
+                high: { label: 'Hoch', color: 'red' },
+                medium: { label: 'Mittel', color: 'amber' },
+                low: { label: 'Niedrig', color: 'blue' },
+            };
+
+            const typeConfig = {
+                power: { icon: 'amber', svg: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>' },
+                water: { icon: 'blue', svg: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>' },
+                emergency: { icon: 'red', svg: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>' },
+            };
+
+            list.innerHTML = calls.map(call => {
+                const priority = priorityConfig[call.priority];
+                const type = typeConfig[call.type];
+                const isSelected = selectedCallId === call.id;
+                const isPending = call.status === 'pending';
+                const isActive = call.status === 'active';
+                
+                return `
+                    <div class="call-item ${isSelected ? 'selected' : ''} ${isPending ? 'pending' : ''} ${isActive ? 'active' : ''} ${call.priority === 'high' ? 'high' : ''}" 
+                         onclick="selectCall('${call.id}')">
+                        <div class="call-header">
+                            <div class="call-header-left">
+                                <span class="call-id">${call.id}</span>
+                                <span class="call-priority ${priority.color}">${priority.label}</span>
+                            </div>
+                            <div class="call-header-right">
+                                ${isSelected ? `
+                                    <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                    </svg>
+                                ` : ''}
+                                <svg class="call-type-icon ${type.icon}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    ${type.svg}
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="call-title-row">
+                            <span class="call-code">${call.code}</span>
+                            <span class="call-title">${call.title}</span>
+                        </div>
+                        <div class="call-description">${call.description}</div>
+                        <div class="call-meta">
+                            <span class="call-meta-item">
+                                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                ${call.location}
+                            </span>
+                            <span class="call-meta-item">
+                                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                ${call.timestamp}
+                            </span>
+                        </div>
+                        ${call.assignedUnits.length > 0 ? `
+                            <div class="call-units">
+                                <svg class="icon-xs" style="color: var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                ${call.assignedUnits.map(u => `<span class="call-unit-tag">${u}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                        <div class="call-actions">
+                            ${isPending ? `
+                                <button class="btn-accept" onclick="acceptCall(event, '${call.id}')">
+                                    <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    Annehmen
+                                </button>
+                                <div class="call-waiting">
+                                    <div class="waiting-bar">
+                                        <div class="waiting-fill"></div>
+                                    </div>
+                                    <span class="waiting-text">Wartet</span>
+                                </div>
+                            ` : ''}
+                            ${isActive ? `
+                                <span class="call-status-badge">
+                                    <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    Angenommen
+                                </span>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectCall(id) {
+            selectedCallId = id;
+            renderCalls();
+            renderMapMarkers();
+            
+            const badge = document.getElementById('selectedCallBadge');
+            const badgeId = document.getElementById('selectedCallId');
+            
+            if (id) {
+                badge.classList.add('active');
+                badgeId.textContent = id;
+            } else {
+                badge.classList.remove('active');
+            }
+        }
+
+        function acceptCall(event, id) {
+            event.stopPropagation();
+            const call = calls.find(c => c.id === id);
+            if (call) {
+                call.status = 'active';
+                call.assignedUnits.push('Operator-01');
+                renderCalls();
+                updateStats();
+            }
+        }
+
+        // Render Status Panel
+        function renderStatusPanel() {
+            const list = document.getElementById('statusList');
+            
+            const criticalAssets = infrastructureAssets.filter(a => a.status === 'critical');
+            const warningAssets = infrastructureAssets.filter(a => a.status === 'warning');
+            
+            const avgPower = Math.round(districts.reduce((sum, d) => sum + d.powerValue, 0) / districts.length);
+            const avgWater = Math.round(districts.reduce((sum, d) => sum + d.waterValue, 0) / districts.length);
+            
+            document.getElementById('statusAvgPower').textContent = `${avgPower}%`;
+            document.getElementById('statusAvgWater').textContent = `${avgWater}%`;
+            
+            const statusConfig = {
+                good: { label: 'OK', color: 'emerald' },
+                warning: { label: 'WARN', color: 'amber' },
+                critical: { label: 'KRIT', color: 'red' },
+            };
+
+            let html = '';
+            
+            if (criticalAssets.length > 0) {
+                html += `
+                    <div class="status-section">
+                        <div class="status-section-header red">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                            <span>Kritisch (${criticalAssets.length})</span>
+                        </div>
+                        ${criticalAssets.map(asset => `
+                            <div class="critical-asset">
+                                <div class="asset-row">
+                                    <div class="asset-name">
+                                        <span class="asset-status-dot red"></span>
+                                        <span>${asset.name}</span>
+                                    </div>
+                                    <span class="asset-badge red">KRIT</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            if (warningAssets.length > 0) {
+                html += `
+                    <div class="status-section">
+                        <div class="status-section-header amber">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            </svg>
+                            <span>Warnungen (${warningAssets.length})</span>
+                        </div>
+                        ${warningAssets.map(asset => `
+                            <div class="warning-asset">
+                                <div class="asset-row">
+                                    <div class="asset-name">
+                                        <span class="asset-status-dot amber"></span>
+                                        <span>${asset.name}</span>
+                                    </div>
+                                    <span class="asset-badge amber">WARN</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div class="status-section">
+                    <div class="status-section-header muted">
+                        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                        <span>Stadtteile</span>
+                    </div>
+                    ${districts.map(district => {
+                        const powerStatus = statusConfig[district.power];
+                        const waterStatus = statusConfig[district.water];
+                        const cardClass = district.power === 'critical' || district.water === 'critical' ? 'critical' : 
+                                         district.power === 'warning' || district.water === 'warning' ? 'warning' : 'normal';
+                        
+                        return `
+                            <div class="district-card ${cardClass}">
+                                <div class="district-header">
+                                    <span class="district-name">${district.name}</span>
+                                    ${district.outages > 0 ? `<span class="district-outages">${district.outages} Ausfälle</span>` : ''}
+                                </div>
+                                <div class="district-bars">
+                                    <div class="bar-item">
+                                        <div class="bar-header amber">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                            </svg>
+                                            <span class="bar-value ${district.powerValue >= 80 ? 'emerald' : district.powerValue >= 60 ? 'amber' : 'red'}">${district.powerValue}%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill ${district.powerValue >= 80 ? 'emerald' : district.powerValue >= 60 ? 'amber' : 'red'}" style="width: ${district.powerValue}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar-header blue">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                            </svg>
+                                            <span class="bar-value ${district.waterValue >= 80 ? 'blue' : district.waterValue >= 60 ? 'amber' : 'red'}">${district.waterValue}%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill ${district.waterValue >= 80 ? 'blue' : district.waterValue >= 60 ? 'amber' : 'red'}" style="width: ${district.waterValue}%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            list.innerHTML = html;
+        }
+
+        // Map Functions
+        function renderMapMarkers() {
+            const container = document.getElementById('mapMarkers');
+            
+            const filtered = activeFilter 
+                ? mapMarkers.filter(m => m.type === activeFilter || (activeFilter === 'dam' && ['dam', 'hydrant'].includes(m.type)))
+                : mapMarkers;
+
+            const typeColors = {
+                windturbine: 'var(--cyan)',
+                transformer: 'var(--amber)',
+                substation: 'var(--violet)',
+                dam: 'var(--blue)',
+                hydrant: 'var(--cyan)',
+                call: 'var(--amber)',
+            };
+
+            const typeIcons = {
+                windturbine: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M12 12l4-4"/></svg>',
+                transformer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+                substation: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20"/><path d="M5 20v-8h3v8"/><path d="M10 20V8h3v12"/></svg>',
+                dam: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>',
+                hydrant: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>',
+                call: '',
+            };
+
+            container.innerHTML = filtered.map(marker => {
+                const isSelected = selectedCallId && marker.type === 'call' && marker.label === selectedCallId;
+                const isInfrastructure = ['windturbine', 'transformer', 'substation', 'dam', 'hydrant'].includes(marker.type);
+                const color = typeColors[marker.type];
+                const isCritical = marker.status === 'critical';
+                const isCall = marker.type === 'call';
+                
+                return `
+                    <div class="map-marker" style="left: ${marker.x}%; top: ${marker.y}%;">
+                        ${isSelected ? `<div class="marker-ping" style="width: 40px; height: 40px; background: var(--amber); margin: -11px;"></div>` : ''}
+                        ${isSelected ? `<div class="marker-ring" style="width: 32px; height: 32px; margin: -7px;"></div>` : ''}
+                        ${isCritical && !isSelected ? `<div class="marker-ping" style="width: 24px; height: 24px; background: ${color}; margin: -3px;"></div>` : ''}
+                        ${isCall && !isSelected ? `<div class="marker-pulse" style="width: 28px; height: 28px; border-color: ${color}; margin: -5px;"></div>` : ''}
+                        <div class="marker-dot" style="background: ${isSelected ? 'var(--amber)' : color}; width: ${isInfrastructure ? '18px' : '14px'}; height: ${isInfrastructure ? '18px' : '14px'}; ${isSelected ? 'box-shadow: 0 0 15px var(--amber);' : ''}">
+                            ${typeIcons[marker.type] || ''}
+                        </div>
+                        <div class="marker-label ${isSelected ? 'selected' : ''}">${marker.label}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setupMapInteractions() {
+            const wrapper = document.getElementById('mapWrapper');
+            const container = document.getElementById('mapImageContainer');
+            
+            wrapper.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                dragStart = { x: e.clientX - mapPosition.x, y: e.clientY - mapPosition.y };
+            });
+            
+            wrapper.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                mapPosition = { x: e.clientX - dragStart.x, y: e.clientY - dragStart.y };
+                updateMapTransform();
+            });
+            
+            wrapper.addEventListener('mouseup', () => isDragging = false);
+            wrapper.addEventListener('mouseleave', () => isDragging = false);
+            
+            wrapper.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                currentZoom = Math.max(0.5, Math.min(4, currentZoom * delta));
+                updateMapTransform();
+            });
+        }
+
+        function updateMapTransform() {
+            const container = document.getElementById('mapImageContainer');
+            container.style.transform = `translate(${mapPosition.x}px, ${mapPosition.y}px) scale(${currentZoom})`;
+            document.getElementById('zoomLevel').textContent = `${Math.round(currentZoom * 100)}%`;
+        }
+
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom * 1.2, 4);
+            updateMapTransform();
+        }
+
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom / 1.2, 0.5);
+            updateMapTransform();
+        }
+
+        function resetMap() {
+            currentZoom = 1;
+            mapPosition = { x: 0, y: 0 };
+            updateMapTransform();
+        }
+
+        function toggleGrid() {
+            showGrid = !showGrid;
+            document.getElementById('mapGrid').style.display = showGrid ? 'block' : 'none';
+            document.getElementById('btnGrid').classList.toggle('active', showGrid);
+        }
+
+        function toggleFilter(filter, btn) {
+            if (activeFilter === filter) {
+                activeFilter = null;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'violet', 'blue'));
+            } else {
+                activeFilter = filter;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'violet', 'blue'));
+                btn.classList.add('active');
+                if (filter === 'substation') btn.classList.add('violet');
+                if (filter === 'dam') btn.classList.add('blue');
+            }
+            renderMapMarkers();
+        }
+
+        // Tabs
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            btn.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // Stats
+        function updateStats() {
+            const avgPower = Math.round(districts.reduce((sum, d) => sum + d.powerValue, 0) / districts.length);
+            const avgWater = Math.round(districts.reduce((sum, d) => sum + d.waterValue, 0) / districts.length);
+            const activeCallsCount = calls.filter(c => c.status === 'active').length;
+            const criticalCount = calls.filter(c => c.priority === 'high').length;
+            
+            document.getElementById('avgPower').textContent = `${avgPower}%`;
+            document.getElementById('avgWater').textContent = `${avgWater}%`;
+            document.getElementById('activeCalls').textContent = activeCallsCount;
+            document.getElementById('criticalCount').textContent = `${criticalCount} Aufträge`;
+        }
+    </script>
+</body>
+</html>
