@@ -27,14 +27,15 @@ const zoneLabels = {
 
 // Approximate Zone Polygons (0-100% coordinates)
 // Origin Top-Left (0,0)
+// Adjusted based on "Los Santos in seinen Stadtbezirken" map
 const zonePolygons = {
-    'LS_Downtown': { x: 46, y: 62, w: 8, h: 8 },
-    'LS_Vinewood': { x: 40, y: 50, w: 20, h: 12 },
-    'LS_SouthCentral': { x: 46, y: 72, w: 12, h: 10 },
-    'LS_WestSide': { x: 32, y: 62, w: 14, h: 10 },
-    'LS_Vespucci': { x: 25, y: 74, w: 14, h: 10 }, // Extended for Little Seoul coverage
-    'LS_Industrial': { x: 50, y: 78, w: 15, h: 14 }, // Port / Industrial
-    'LS_Airport': { x: 28, y: 84, w: 12, h: 12 }, // Shifted left to cover runway, away from port
+    'LS_Downtown': { x: 44, y: 62, w: 8, h: 10 },
+    'LS_Vinewood': { x: 42, y: 40, w: 25, h: 20 },
+    'LS_SouthCentral': { x: 42, y: 72, w: 12, h: 10 },
+    'LS_WestSide': { x: 28, y: 55, w: 15, h: 15 },
+    'LS_Vespucci': { x: 24, y: 70, w: 16, h: 15 }, // Covers Vespucci + Little Seoul
+    'LS_Industrial': { x: 54, y: 60, w: 12, h: 35 }, // Vertical strip: East LS to Port
+    'LS_Airport': { x: 20, y: 82, w: 15, h: 14 }, // Loop area
     'SandyShores': { x: 48, y: 35, w: 22, h: 12 },
     'PaletoBay': { x: 42, y: 5, w: 16, h: 10 },
     'CountrySide': { x: 10, y: 15, w: 80, h: 40 }, // Generic fallback area
@@ -563,4 +564,4 @@ window.addEventListener('DOMContentLoaded', () => {
     renderEmployees();
 });
 
-console.log('[AG-PowerWater] NUI Integration Ready (Refined Map Zones)');
+console.log('[AG-PowerWater] NUI Integration Ready (Map v3)');
