@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ethor_bus Boss Dispatch</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="display: none;">
+
+    <!-- MAIN WRAPPER -->
+    <div id="dispatch-ui">
+
+        <!-- LEFT: MAP AREA -->
+        <div class="map-section">
+            <div id="gta-map">
+                <!-- Map Background Image -->
+                <!-- Markers will be injected here via JS -->
+            </div>
+
+            <div class="map-controls">
+                <button id="toggle-names"><i class="fa-solid fa-eye"></i> Label</button>
+                <button id="zoom-in"><i class="fa-solid fa-plus"></i></button>
+                <button id="zoom-out"><i class="fa-solid fa-minus"></i></button>
+            </div>
+        </div>
+
+        <!-- RIGHT: DASHBOARD AREA -->
+        <div class="dashboard-section">
+            <header>
+                <div class="company-info">
+                    <h1 id="company-name">Los Santos Transit</h1>
+                    <span class="badge online">System Online</span>
+                </div>
+                <button class="close-btn" id="close-dispatch"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="overview"><i class="fa-solid fa-chart-pie"></i>
+                    Übersicht</button>
+                <button class="tab-btn" data-tab="lines"><i class="fa-solid fa-route"></i> Linien</button>
+                <button class="tab-btn" data-tab="stops"><i class="fa-solid fa-location-dot"></i> Haltestellen</button>
+            </nav>
+
+            <main class="tab-content">
+
+                <!-- OVERVIEW TAB -->
+                <div id="tab-overview" class="tab-pane active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Aktiv</h3>
+                            <div class="value" id="val-active-buses">0</div>
+                            <div class="sub">Busse auf Route</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Heutig</h3>
+                            <div class="value" id="val-pax">0</div>
+                            <div class="sub">Beförderte Pax</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LINES TAB -->
+                <div id="tab-lines" class="tab-pane">
+                    <div class="list-header">
+                        <h2>Routenverwaltung</h2>
+                        <button class="btn-primary" id="btn-create-line"><i class="fa-solid fa-plus"></i> Neue
+                            Linie</button>
+                    </div>
+                    <ul class="line-list" id="line-list-container">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+
+                <!-- STOPS TAB -->
+                <div id="tab-stops" class="tab-pane">
+                    <h2>Alle Haltestellen</h2>
+                    <ul class="stop-list" id="stop-list-container">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- DRIVER UI WRAPPER -->
+    <div id="driver-ui" style="display: none;">
+        <div class="driver-panel">
+            <!-- LEFT -->
+            <div class="col-left">
+                <div class="door-status" id="door-front"><i class="fa-solid fa-door-closed"></i> Tür 1 (Geschlossen)
+                </div>
+                <div class="door-status" id="door-rear"><i class="fa-solid fa-door-closed"></i> Tür 2 (Geschlossen)
+                </div>
+                <div class="alert-box" id="stop-request-alert"><i class="fa-solid fa-bell"></i> STOP REQUEST</div>
+            </div>
+            <!-- CENTER -->
+            <div class="col-center">
+                <div class="line-display">Linie <span id="drv-line">--</span></div>
+                <div class="next-stop">Nächste: <span id="drv-next-stop">Keine Route</span></div>
+                <div class="delay-box">ETA: <span id="drv-eta">--:--</span> | <span id="drv-delay" class="ontime">+0
+                        Min</span></div>
+            </div>
+            <!-- RIGHT -->
+            <div class="col-right">
+                <button class="btn-drv action" id="btn-skip-stop"><i class="fa-solid fa-forward-step"></i> Skip</button>
+                <button class="btn-drv info" id="btn-service"><i class="fa-solid fa-wrench"></i> Service Mode</button>
+            </div>
+        </div>
+        <div class="driver-footer">
+            <span class="pax-count"><i class="fa-solid fa-users"></i> Pax: <span id="drv-pax">0/50</span></span>
+            <span class="mood-score"><i class="fa-solid fa-face-smile"></i> Mood: <span id="drv-mood">100%</span></span>
+        </div>
+    </div>
+
+    <!-- PASSENGER STOP UI (DEPARTURE BOARD) -->
+    <div id="passenger-ui" style="display: none;">
+        <div class="departure-board">
+            <div class="board-header">
+                <span id="board-stop-name">Legion Square</span>
+                <span id="board-time">12:34</span>
+            </div>
+            <div class="board-table-header">
+                <span>Linie</span>
+                <span>Ziel</span>
+                <span>Abfahrt</span>
+            </div>
+            <ul class="board-list" id="board-list">
+                <!-- Example Row -->
+                <!-- 
+                <li>
+                    <span class="l-badge" style="background: red;">54</span>
+                    <span class="l-dest">Paleto Bay <span class="badge-full">VOLL</span></span>
+                    <span class="l-time">in 3 Min <span class="delayed">(+2)</span></span>
+                </li> 
+                -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
