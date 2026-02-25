@@ -41,22 +41,20 @@ CREATE TABLE IF NOT EXISTS `bus_routes` (
   FOREIGN KEY (`company_id`) REFERENCES `bus_companies`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 4. Active Trips Snapshot (Persistence)
+-- 4. Active Trips (State Persistence Phase 1 & 3)
 CREATE TABLE IF NOT EXISTS `bus_active_trips` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(50) NOT NULL,
   `route_id` int(11) NOT NULL,
   `bus_netid` int(11) DEFAULT NULL,
-  `bus_plate` varchar(15) DEFAULT NULL,
-  `driver_type` ENUM('human', 'ai') NOT NULL,
+  `bus_plate` varchar(20) DEFAULT NULL,
+  `driver_type` ENUM('human', 'ai') DEFAULT 'human',
   `driver_identifier` varchar(50) DEFAULT NULL,
   `current_stop_index` int(11) DEFAULT 1,
-  `mood_score` float DEFAULT 100.0,
+  `mood_score` int(11) DEFAULT 100,
   `passengers_total` int(11) DEFAULT 0,
-  `passengers_data` longtext DEFAULT NULL, -- JSON representing current peds
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `bus_health` int(11) DEFAULT 100, -- Phase 3 Maintenance
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`route_id`) REFERENCES `bus_routes`(`id`) ON DELETE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 5. System Properties (For Tracking Imports etc.)
@@ -64,6 +62,30 @@ CREATE TABLE IF NOT EXISTS `bus_sys_properties` (
   `key_name` varchar(50) NOT NULL,
   `key_value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`key_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 6. Stop Requests (Phase 2)
+CREATE TABLE IF NOT EXISTS `bus_requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `coords` longtext NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `status` ENUM('pending', 'accepted', 'denied') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`company_id`) REFERENCES `bus_companies`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 7. Advertising System (Phase 3)
+CREATE TABLE IF NOT EXISTS `bus_ads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `image_url` varchar(500) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`company_id`) REFERENCES `bus_companies`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Insert initial flag so we check it on start

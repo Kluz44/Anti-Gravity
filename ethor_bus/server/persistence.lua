@@ -15,11 +15,11 @@ CreateThread(function()
             -- Batch save to DB
             MySQL.update([[
                 INSERT INTO bus_active_trips 
-                (id, route_id, bus_netid, bus_plate, driver_type, driver_identifier, current_stop_index, mood_score, passengers_total, last_update) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                (id, route_id, bus_netid, bus_plate, driver_type, driver_identifier, current_stop_index, mood_score, passengers_total, bus_health, last_update) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE 
                 current_stop_index = VALUES(current_stop_index), mood_score = VALUES(mood_score), 
-                passengers_total = VALUES(passengers_total), last_update = CURRENT_TIMESTAMP
+                passengers_total = VALUES(passengers_total), bus_health = VALUES(bus_health), last_update = CURRENT_TIMESTAMP
             ]], {
                 id,
                 trip.routeId,
@@ -29,7 +29,8 @@ CreateThread(function()
                 trip.driverIdentifier,
                 trip.currentStopIndex,
                 trip.moodScore,
-                trip.passengersTotal
+                trip.passengersTotal,
+                trip.busHealth or 100
             })
             activeCount = activeCount + 1
         end
@@ -55,7 +56,8 @@ CreateThread(function()
                 driverIdentifier = trip.driver_identifier,
                 currentStopIndex = trip.current_stop_index,
                 moodScore = trip.mood_score,
-                passengersTotal = trip.passengers_total
+                passengersTotal = trip.passengers_total,
+                busHealth = trip.bus_health or 100
             }
         end
         print('^2[ethor_bus] ^7[Persistence] Recovered ' .. #rows .. ' trips from previous session.')

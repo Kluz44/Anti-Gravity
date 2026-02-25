@@ -63,13 +63,32 @@ Config.DriverPay = {
 }
 
 -- =============================================
--- AI & Emergency Rules (Phase 2 Prep)
+-- AI & Emergency Rules (Phase 2)
 -- =============================================
 Config.AI = {
+    -- The server controls virtual coords. If a player is within this distance of an AI bus,
+    -- the bus is spawned on the client and given driving tasks.
+    SyncDistance = 250.0,
+    -- Speed config for AI
+    Speed = 15.0, -- m/s (~54 km/h)
+    WaitAtStop = 15000, -- 15 seconds wait at bus stop for boarding
+    
     EnableEmergencyReaction = true,
     EmergencySirenDistance = 50.0, -- Distance to start pulling over
     CheckInterval = 1000, -- Check emergency behind every 1s
     EmergencyClasses = { 18 } -- Emergency Vehicle Class
+}
+
+-- =============================================
+-- Ads & External Media (Phase 3)
+-- =============================================
+Config.Ads = {
+    RotationInterval = 30000, -- ms to show each ad before rotating
+    WhitelistDomains = {
+        "i.imgur.com",
+        "cdn.discordapp.com",
+        "media.discordapp.net"
+    }
 }
 
 -- =============================================

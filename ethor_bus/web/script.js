@@ -148,6 +148,77 @@ function renderMapMarkers() {
     });
 }
 
+function renderLiveBuses(buses) {
+    const map = $('#gta-map');
+    map.find('.bus-blip').remove(); // Clear old live blips
+
+    buses.forEach(bus => {
+        if (!bus.coords) return;
+
+        let color = bus.isMaterialized ? '#ef4444' : '#f59e0b'; // Red if real human/materialized, Orange if virtual
+        let icon = bus.isMaterialized ? 'fa-bus' : 'fa-ghost';
+
+        const pos = mapGtaToPixels(bus.coords.x, bus.coords.y);
+        const blip = $(`
+            <div class="map-marker bus-blip" style="left: ${pos.px}%; top: ${pos.py}%; background: ${color}; width:20px; height:20px;">
+                <i class="fa-solid ${icon}" style="font-size: 10px; color: white;"></i>
+                <div class="tooltip" style="bottom: 25px;">${bus.id}<br>${bus.state}</div>
+            </div>
+        `);
+        map.append(blip);
+    });
+}
+
+// ==========================================
+// Heatmap Logic
+// ==========================================
+let isHeatmapActive = false;
+
+$('#toggle-heatmap').click(function () {
+    isHeatmapActive = !isHeatmapActive;
+    if (isHeatmapActive) {
+        $(this).addClass('active');
+        $(this).css('background', '#ef4444'); // Red active state
+        $.post(`https://${GetParentResourceName()}/requestHeatmap`);
+    } else {
+        $(this).removeClass('active');
+        $(this).css('background', '');
+        $('#gta-map').find('.heatmap-blip').remove();
+    }
+});
+
+function renderHeatmap(data) {
+    if (!isHeatmapActive) return;
+
+    const map = $('#gta-map');
+    map.find('.heatmap-blip').remove(); // Clear old
+
+    data.forEach(point => {
+        const pos = mapGtaToPixels(point.x, point.y);
+        // Weight determines opacity and size (roughly)
+        let size = 30 + (point.weight * 50);
+        let opacity = 0.4 + (point.weight * 0.4);
+        let color = point.weight > 0.6 ? '#ef4444' : '#f59e0b'; // Red for hot, yellow for medium
+
+        const blip = $(`
+            <div class="heatmap-blip" style="
+                position: absolute;
+                left: ${pos.px}%; 
+                top: ${pos.py}%;
+                width: ${size}px;
+                height: ${size}px;
+                background: radial-gradient(circle, ${color} 0%, transparent 70%);
+                opacity: ${opacity};
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                z-index: 1;">
+            </div>
+        `);
+        map.append(blip);
+    });
+}
+
 // ==========================================
 // Driver UI Logic
 // ==========================================
@@ -246,3 +317,67 @@ window.addEventListener('message', function (event) {
         $('#passenger-ui').fadeOut(200);
     }
 });
+
+// ==========================================
+// Ads Rotation Logic
+// ==========================================
+
+let activeAds = [];
+let currentAdIndex = 0;
+let adRotationInterval = null;
+
+window.addEventListener('message', function (event) {
+    const data = event.data;
+    if (data.action === "updateAds") {
+        if (data.ads) {
+            activeAds = data.ads;
+            startAdRotation(data.interval);
+        }
+    } else if (data.action === "updateLiveTracking") {
+        if (data.buses && $('#dispatch-ui').is(':visible')) {
+            renderLiveBuses(data.buses);
+        }
+    } else if (data.action === "updateHeatmap") {
+        if (data.heatmapData && $('#dispatch-ui').is(':visible')) {
+            renderHeatmap(data.heatmapData);
+        }
+    }
+});
+
+function startAdRotation(intervalMs) {
+    if (adRotationInterval) clearInterval(adRotationInterval);
+
+    let driverAdImg = $('#driver-ad-image');
+    let passAdImg = $('#passenger-ad-image');
+
+    if (activeAds.length === 0) {
+        driverAdImg.addClass('hidden');
+        passAdImg.addClass('hidden');
+        return;
+    }
+
+    displayAd(activeAds[0]);
+
+    adRotationInterval = setInterval(() => {
+        currentAdIndex++;
+        if (currentAdIndex >= activeAds.length) currentAdIndex = 0;
+        displayAd(activeAds[currentAdIndex]);
+    }, intervalMs || 30000);
+}
+
+function displayAd(adData) {
+    let driverAdImg = $('#driver-ad-image');
+    let passAdImg = $('#passenger-ad-image');
+
+    // Fade out
+    driverAdImg.addClass('hidden');
+    passAdImg.addClass('hidden');
+
+    setTimeout(() => {
+        driverAdImg.attr('src', adData.image_url);
+        passAdImg.attr('src', adData.image_url);
+
+        driverAdImg.on('load', function () { $(this).removeClass('hidden'); });
+        passAdImg.on('load', function () { $(this).removeClass('hidden'); });
+    }, 500);
+}

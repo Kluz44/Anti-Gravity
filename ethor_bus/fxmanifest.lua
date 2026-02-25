@@ -23,7 +23,8 @@ shared_scripts {
 client_scripts {
     'client/admin.lua',
     'client/main.lua',
-    'client/peds.lua'
+    'client/peds.lua',
+    'client/ai.lua'
 }
 
 server_scripts {
@@ -32,7 +33,13 @@ server_scripts {
     'server/main.lua',
     'server/import.lua',
     'server/demand.lua',
-    'server/persistence.lua'
+    'server/persistence.lua',
+    'server/ai.lua',
+    'server/rating.lua',
+    'server/requests.lua',
+    'server/ads.lua',
+    'server/dispatch.lua',
+    'server/maintenance.lua'
 }
 
 ui_page 'web/index.html'

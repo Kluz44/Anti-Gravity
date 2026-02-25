@@ -26,19 +26,45 @@ RegisterNetEvent('ethor_bus:client:OpenDispatchUI', function(data)
     AG.Notify.Show('Bus System', 'Dispatch UI geöffnet', 'success')
 end)
 
+RegisterNUICallback('actionDriverService', function(data, cb)
+    if currentTripId then
+        TriggerServerEvent('ethor_bus:server:ToggleServiceMode', currentTripId)
+    end
+    cb('ok')
+end)
+
+RegisterNUICallback('requestHeatmap', function(data, cb)
+    TriggerServerEvent('ethor_bus:server:RequestHeatmap')
+    cb('ok')
+end)
+
 RegisterNUICallback('closeUI', function(data, cb)
     isDispatchOpen = false
     SetNuiFocus(false, false)
     cb('ok')
 end)
 
+RegisterNUICallback('actionDriverSkip', function(data, cb)
+    if currentTripId then
+        -- Tell server we skipped
+        TriggerServerEvent('ethor_bus:server:ReportSkipStop', currentTripId, 5) -- Example 5 pax missed
+        AG.Notify.Show('Bus System', 'Haltestelle übersprungen. Rating-Abzug!', 'error')
+        
+        -- Advance route index locally to update UI
+        if currentRouteStops and currentStopIndex then
+            currentStopIndex = currentStopIndex + 1
+            if currentStopIndex > #currentRouteStops then currentStopIndex = 1 end
+        end
+        TriggerEvent('ethor_bus:client:UpdateDriverUI')
+    end
+    cb('ok')
+end)
+
 RegisterNUICallback('driverAction', function(data, cb)
-    if data.action == "skip_stop" then
-        AG.Notify.Show('Bus System', 'Haltestelle übersprungen.', 'info')
-        -- TODO: Logic to advance route index
-    elseif data.action == "toggle_service" then
-        AG.Notify.Show('Bus System', 'Service Modus umgeschaltet.', 'info')
-        -- TODO: Out of service logic
+    if data.action == "toggle_service" then
+        if currentTripId then
+            TriggerServerEvent('ethor_bus:server:ToggleServiceMode', currentTripId)
+        end
     end
     cb('ok')
 end)
@@ -117,6 +143,73 @@ end)
 -- =============================================
 -- Passenger UI & Target Registration
 -- =============================================
+
+local passengerStops = {}
+RegisterNetEvent('ethor_bus:client:ReceiveStopBoard', function(stopId, data)
+    SendNUIMessage({
+        action = "updateStopBoard",
+        stopId = stopId,
+        boardData = data
+    })
+end)
+
+-- Ads sync
+local currentAds = {}
+RegisterNetEvent('ethor_bus:client:SyncAds', function(ads)
+    currentAds = ads
+    SendNUIMessage({
+        action = "updateAds",
+        ads = ads,
+        interval = Config.Ads.RotationInterval
+    })
+end)
+
+-- Request Ads on Load
+CreateThread(function()
+    Wait(2500)
+    TriggerServerEvent('ethor_bus:server:RequestAds')
+end)
+
+-- Heatmap Sync
+RegisterNetEvent('ethor_bus:client:ReceiveHeatmap', function(data)
+    if isDispatchOpen then
+        SendNUIMessage({
+            action = "updateHeatmap",
+            heatmapData = data
+        })
+    end
+end)
+
+-- Live Tracking
+RegisterNetEvent('ethor_bus:client:SyncLiveTracking', function(liveBuses)
+    if isDispatchOpen then
+        SendNUIMessage({
+            action = "updateLiveTracking",
+            buses = liveBuses
+        })
+    end
+end)
+
+-- Intercom
+RegisterNetEvent('ethor_bus:client:ReceiveIntercom', function(msg)
+    if isDriverUiOpen then
+        -- Native GTA notification, or custom UI alert
+        SetNotificationTextEntry("STRING")
+        AddTextComponentString("~r~[LEITSTELLE] ~w~" .. msg)
+        DrawNotification(false, true)
+        PlaySoundFrontend(-1, "Event_Message_Purple", "GTAO_FM_Events_Soundset", true)
+    end
+end)
+
+-- Maintenance / Service Mode
+RegisterNetEvent('ethor_bus:client:ForceServiceMode', function()
+    if isDriverUiOpen then
+        SendNUIMessage({
+            action = "updateDriverUI",
+            info = { nextStop = "DEPOT (SERVICE MODE)" }
+        })
+    end
+end)
 
 local activeTargets = {}
 
