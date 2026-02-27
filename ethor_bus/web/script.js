@@ -423,16 +423,18 @@ window.addEventListener('message', function (event) {
 // ==========================================
 
 let activeAds = [];
+const fallbackAds = [
+    { image_url: 'placeholder1.jpg' },
+    { image_url: 'placeholder2.jpg' }
+];
 let currentAdIndex = 0;
 let adRotationInterval = null;
 
 window.addEventListener('message', function (event) {
     const data = event.data;
     if (data.action === "updateAds") {
-        if (data.ads) {
-            activeAds = data.ads;
-            startAdRotation(data.interval);
-        }
+        activeAds = data.ads || [];
+        startAdRotation(data.interval);
     } else if (data.action === "updateLiveTracking") {
         if (data.buses && $('#dispatch-ui').is(':visible')) {
             renderLiveBuses(data.buses);
@@ -451,21 +453,19 @@ function startAdRotation(intervalMs) {
     let passAdImg = $('#passenger-ad-image');
     let inbusAdImg = $('#inbus-ad-image'); // New In-Bus Monitor
 
-    if (activeAds.length === 0) {
-        driverAdImg.addClass('hidden');
-        passAdImg.addClass('hidden');
-        inbusAdImg.addClass('hidden');
-        return;
-    }
+    let adsToDisplay = activeAds.length > 0 ? activeAds : fallbackAds;
 
-    displayAd(activeAds[0]);
+    displayAd(adsToDisplay[0]);
 
     adRotationInterval = setInterval(() => {
         currentAdIndex++;
-        if (currentAdIndex >= activeAds.length) currentAdIndex = 0;
-        displayAd(activeAds[currentAdIndex]);
+        if (currentAdIndex >= adsToDisplay.length) currentAdIndex = 0;
+        displayAd(adsToDisplay[currentAdIndex]);
     }, intervalMs || 30000);
 }
+
+// Start fallback rotation immediately on load
+startAdRotation(30000);
 
 function displayAd(adData) {
     let driverAdImg = $('#driver-ad-image');

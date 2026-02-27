@@ -49,6 +49,8 @@ files {
     'web/style.css',
     'web/script.js',
     'web/ag_map_day.jpg',
+    'web/placeholder1.jpg',
+    'web/placeholder2.jpg',
     'data.json',
     'data/busstops.json',
     'data/routes.json'
