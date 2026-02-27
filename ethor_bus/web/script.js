@@ -10,7 +10,6 @@ window.addEventListener('message', function (event) {
     const data = event.data;
 
     if (data.action === "openDispatch") {
-        document.body.style.display = "block";
         $("#dispatch-ui").fadeIn(300);
 
         // Populate initially
@@ -39,7 +38,6 @@ $('.tab-btn').on('click', function () {
 // Close UI
 $('#close-dispatch').on('click', function () {
     $("#dispatch-ui").fadeOut(300, function () {
-        document.body.style.display = "none";
         $.post('https://ethor_bus/closeUI', JSON.stringify({}));
     });
 });
