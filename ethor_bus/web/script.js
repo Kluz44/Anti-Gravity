@@ -264,6 +264,13 @@ $(document).ready(function () {
     driverUI.draggable({
         handle: ".driver-panel", // Drag by the main panel
         containment: "window",    // Keep within screen bounds
+        start: function (event, ui) {
+            // Un-anchor the bottom/right coordinates so it doesn't stretch when setting top/left
+            $(this).css({
+                bottom: 'auto',
+                right: 'auto'
+            });
+        },
         stop: function (event, ui) {
             // Save position to localStorage when dragging stops
             localStorage.setItem('ag_driver_ui_pos', JSON.stringify({

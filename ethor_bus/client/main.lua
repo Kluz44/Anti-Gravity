@@ -108,10 +108,10 @@ CreateThread(function()
                 end
                 
                 -- Update Loop for Doors
-                -- Front doors: 1 and 2
-                -- Rear doors: 3 and 4
-                local doorFront = (GetVehicleDoorAngleRatio(veh, 1) > 0.1) or (GetVehicleDoorAngleRatio(veh, 2) > 0.1)
-                local doorRear = (GetVehicleDoorAngleRatio(veh, 3) > 0.1) or (GetVehicleDoorAngleRatio(veh, 4) > 0.1)
+                -- Front doors: 0 (Fahrer) and 1 (Beifahrer)
+                -- Rear doors: 2 and 3
+                local doorFront = (GetVehicleDoorAngleRatio(veh, 0) > 0.1) or (GetVehicleDoorAngleRatio(veh, 1) > 0.1)
+                local doorRear = (GetVehicleDoorAngleRatio(veh, 2) > 0.1) or (GetVehicleDoorAngleRatio(veh, 3) > 0.1)
                 
                 SendNUIMessage({
                     action = "updateDriverUI",
@@ -309,16 +309,16 @@ end
 
 RegisterCommand('+bus_door_front', function()
     if inBus and currentBus ~= 0 then
+        toggleDoor(currentBus, 0)
         toggleDoor(currentBus, 1)
-        toggleDoor(currentBus, 2)
     end
 end, false)
 RegisterKeyMapping('+bus_door_front', 'Bus: Vordere Türen (1&2)', 'keyboard', 'NUMPAD1')
 
 RegisterCommand('+bus_door_rear', function()
     if inBus and currentBus ~= 0 then
+        toggleDoor(currentBus, 2)
         toggleDoor(currentBus, 3)
-        toggleDoor(currentBus, 4)
     end
 end, false)
 RegisterKeyMapping('+bus_door_rear', 'Bus: Hintere Türen (3&4)', 'keyboard', 'NUMPAD2')
