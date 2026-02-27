@@ -1,4 +1,3 @@
-```lua
 -- =============================================
 -- Server Main Logic (ethor_bus)
 -- =============================================
@@ -25,7 +24,7 @@ RegisterNetEvent('ethor_bus:server:RequestDispatchData', function()
     
     -- Check for specific job/boss based on Config.Society
     if not (IsPlayerAceAllowed(src, 'command.buscreate') or (playerJob and playerJob.name == Config.Society)) then
-        AG.Notify.Show(src, 'Keine Berechtigung', 'error')
+        AG.Notify.Show(src, 'Keine Berechtigung (Job: ' .. (playerJob and playerJob.name or 'None') .. ')', 'error')
         return
     end
     

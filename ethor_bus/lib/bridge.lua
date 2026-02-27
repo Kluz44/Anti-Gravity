@@ -69,3 +69,16 @@ function AG.GetPlayer(source)
     end
     return nil
 end
+
+-- Get Player Job
+function AG.GetJob(source)
+    local player = AG.GetPlayer(source)
+    if not player then return nil end
+    
+    if AG.Framework == 'qbox' or AG.Framework == 'qbcore' then
+        return player.PlayerData.job
+    elseif AG.Framework == 'esx' then
+        return player.job
+    end
+    return nil
+end
