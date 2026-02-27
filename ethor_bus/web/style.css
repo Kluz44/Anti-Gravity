@@ -325,15 +325,16 @@ header {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 500px;
-    background: #0f172aeb;
-    border: 1px solid var(--border);
+    width: 450px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
     overflow: hidden;
     font-family: 'Inter', sans-serif;
     color: white;
+    z-index: 100;
 }
 
 .driver-panel {
