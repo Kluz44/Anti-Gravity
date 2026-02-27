@@ -88,9 +88,10 @@ CreateThread(function()
         
         if IsPedInAnyVehicle(ped, false) then
             local veh = GetVehiclePedIsIn(ped, false)
-            local isDriver = GetPedInVehicleSeat(veh, -1) == ped
             
             if isVehicleABus(veh) then
+                local isDriver = GetPedInVehicleSeat(veh, -1) == ped
+
                 if isDriver then
                     -- =========================================================
                     -- DRIVER LOGIC
@@ -99,71 +100,88 @@ CreateThread(function()
                         passengerUIVisible = false
                         SendNUIMessage({ action = "togglePassengerInBusUI", show = false })
                     end
-                if not inBus then
-                    inBus = true
-                    currentBus = veh
-                    driverUIVisible = true
+
+                    if not inBus then
+                        inBus = true
+                        currentBus = veh
+                        driverUIVisible = true
+                        
+                        SendNUIMessage({
+                            action = "toggleDriverUI",
+                            show = true,
+                            info = {
+                                line = "Ausser Dienst",
+                                nextStop = "Gewerbegebiet",
+                                eta = "--:--",
+                                pax = "0/50",
+                                mood = 100
+                            }
+                        })
+                    end
+                    
+                    -- Update Loop for Doors
+                    -- Front doors: 0 (Fahrer) and 1 (Beifahrer)
+                    -- Rear doors: 2 and 3
+                    local doorFront = (GetVehicleDoorAngleRatio(veh, 0) > 0.1) or (GetVehicleDoorAngleRatio(veh, 1) > 0.1)
+                    local doorRear = (GetVehicleDoorAngleRatio(veh, 2) > 0.1) or (GetVehicleDoorAngleRatio(veh, 3) > 0.1)
                     
                     SendNUIMessage({
-                        action = "toggleDriverUI",
-                        show = true,
+                        action = "updateDriverUI",
                         info = {
-                            line = "Ausser Dienst",
-                            nextStop = "Gewerbegebiet",
-                            eta = "--:--",
-                            pax = "0/50",
-                            mood = 100
+                            doorFront = doorFront,
+                            doorRear = doorRear
                         }
                     })
-                end
-                
-                -- Update Loop for Doors
-                -- Front doors: 0 (Fahrer) and 1 (Beifahrer)
-                -- Rear doors: 2 and 3
-                local doorFront = (GetVehicleDoorAngleRatio(veh, 0) > 0.1) or (GetVehicleDoorAngleRatio(veh, 1) > 0.1)
-                local doorRear = (GetVehicleDoorAngleRatio(veh, 2) > 0.1) or (GetVehicleDoorAngleRatio(veh, 3) > 0.1)
-                
-                SendNUIMessage({
-                    action = "updateDriverUI",
-                    info = {
-                        doorFront = doorFront,
-                        doorRear = doorRear
-                    }
-                })
-                Wait(500) -- Refresh rate for doors
-            else
-                -- =========================================================
-                -- PASSENGER LOGIC (Not Driver)
-                -- =========================================================
-                if driverUIVisible then
-                    driverUIVisible = false
-                    SendNUIMessage({ action = "toggleDriverUI", show = false })
-                end
-                
-                if not passengerUIVisible then
-                    passengerUIVisible = true
-                    inBus = true
-                    currentBus = veh
+                    Wait(500) -- Refresh rate for doors
+
+                else
+                    -- =========================================================
+                    -- PASSENGER LOGIC (Not Driver)
+                    -- =========================================================
+                    if driverUIVisible then
+                        driverUIVisible = false
+                        SendNUIMessage({ action = "toggleDriverUI", show = false })
+                    end
+                    
+                    if not passengerUIVisible then
+                        passengerUIVisible = true
+                        inBus = true
+                        currentBus = veh
+                        SendNUIMessage({
+                            action = "togglePassengerInBusUI",
+                            show = true,
+                            info = {
+                                line = "Ausser Dienst",
+                                nextStop = "Gewerbegebiet",
+                                eta = "--:--"
+                            }
+                        })
+                    end
+                    
                     SendNUIMessage({
-                        action = "togglePassengerInBusUI",
-                        show = true,
-                        info = {
-                            line = "Ausser Dienst",
-                            nextStop = "Gewerbegebiet",
-                            eta = "--:--"
-                        }
+                        action = "updatePassengerInBusUI",
+                        info = {}
                     })
+                    Wait(1000)
                 end
-                
-                SendNUIMessage({
-                    action = "updatePassengerInBusUI",
-                    info = {
-                        -- In a real scenario, this gets data synced from the driver via server
-                        -- For now, we just keep it visible
-                    }
-                })
+
+            else
+                -- In a vehicle, but NOT a bus
+                if inBus then
+                    inBus = false
+                    currentBus = 0
+                    if driverUIVisible then
+                        driverUIVisible = false
+                        SendNUIMessage({ action = "toggleDriverUI", show = false })
+                    end
+                    if passengerUIVisible then
+                        passengerUIVisible = false
+                        SendNUIMessage({ action = "togglePassengerInBusUI", show = false })
+                    end
+                end
                 Wait(1000)
             end
+
         else
             -- Outside any vehicle
             if inBus then
