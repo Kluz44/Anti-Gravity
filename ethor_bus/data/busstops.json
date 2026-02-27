@@ -1,32 +1,2425 @@
-[
-    {
-        "id": "stop_legion_square",
-        "name": "Legion Square",
-        "coords": {
-            "x": 195.0,
-            "y": -933.0,
-            "z": 29.0,
-            "h": 140.0
+{
+    "DefaultPeds": [
+        "s_m_y_barman_01",
+        "s_m_y_busboy_01",
+        "s_m_m_bouncer_01",
+        "a_m_y_busicas_01",
+        "a_f_y_business_01",
+        "a_m_m_business_01",
+        "a_m_y_business_01",
+        "a_f_m_business_02",
+        "a_f_y_business_02",
+        "s_m_o_busker_01",
+        "a_f_m_bevhills_01",
+        "a_f_m_bevhills_02",
+        "a_f_m_downtown_01",
+        "a_f_m_eastsa_01",
+        "a_f_m_eastsa_02",
+        "a_f_m_fatbla_01",
+        "a_f_m_fatwhite_01",
+        "a_f_m_ktown_01",
+        "a_f_m_ktown_02",
+        "a_f_m_soucent_01",
+        "a_f_m_soucent_02",
+        "a_f_m_tourist_01",
+        "a_f_m_tramp_01",
+        "a_f_y_bevhills_01",
+        "a_f_y_bevhills_02",
+        "a_f_y_bevhills_03",
+        "a_f_y_bevhills_04",
+        "a_f_y_business_04",
+        "a_f_y_clubcust_01",
+        "a_f_y_fitness_01",
+        "a_f_y_golfer_01",
+        "a_f_y_hipster_01",
+        "a_f_y_hipster_02",
+        "a_f_y_hipster_03",
+        "a_f_y_hipster_04",
+        "a_m_m_hasjew_01",
+        "a_m_m_golfer_01",
+        "a_m_m_fatlatin_01",
+        "a_m_m_farmer_01",
+        "a_m_m_eastsa_02",
+        "a_m_m_indian_01",
+        "a_m_m_ktown_01",
+        "a_m_m_malibu_01",
+        "a_m_m_soucent_02",
+        "a_m_m_stlat_02",
+        "a_m_m_tennis_01",
+        "a_m_m_tourist_01",
+        "a_m_y_beach_01",
+        "a_m_y_beachvesp_02",
+        "a_m_y_clubcust_01",
+        "a_m_y_downtown_01",
+        "a_m_y_eastsa_01",
+        "a_m_y_genstreet_01",
+        "a_m_y_ktown_01",
+        "a_m_y_soucent_02",
+        "a_m_y_stbla_02",
+        "a_m_y_vindouche_01",
+        "a_m_y_vinewood_01",
+        "s_m_y_construct_01"
+    ],
+    "BusStops": [
+        {
+            "Name": "Alta Street",
+            "ReverseStop": "Maze Bank Waterpark",
+            "Range": 10,
+            "Position": {
+                "X": -170.54,
+                "Y": -815.96,
+                "Z": 30.21
+            },
+            "PassengerSpawn": {
+                "X": -176.18,
+                "Y": -818.73,
+                "Z": 30.11
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
         },
-        "approach_coords": {
-            "x": 193.0,
-            "y": -930.0,
-            "z": 29.0,
-            "h": 140.0
+        {
+            "Name": "Little Seoul",
+            "ReverseStop": "Betsy O Neil Pavilion",
+            "Range": 10,
+            "Position": {
+                "X": -509.19,
+                "Y": -667.85,
+                "Z": 32.04
+            },
+            "PassengerSpawn": {
+                "X": -504.95,
+                "Y": -670.83,
+                "Z": 32.1
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
         },
-        "exit_coords": {
-            "x": 190.0,
-            "y": -935.0,
-            "z": 29.0,
-            "h": 140.0
+        {
+            "Name": "San Andreas Avenue",
+            "ReverseStop": "Elgin Avenue",
+            "Range": 10,
+            "Position": {
+                "X": 116.03,
+                "Y": -785.17,
+                "Z": 30.32
+            },
+            "PassengerSpawn": {
+                "X": 115.2,
+                "Y": -781.51,
+                "Z": 30.4
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
         },
-        "queue_coords": {
-            "x": 196.0,
-            "y": -935.0,
-            "z": 29.0,
-            "h": 140.0
+        {
+            "Name": "Kortz Center",
+            "ReverseStop": "Kortz Center",
+            "Range": 20,
+            "Position": {
+                "X": -2316.01,
+                "Y": 438.66,
+                "Z": 173.47
+            },
+            "PassengerSpawn": {
+                "X": -2320.09,
+                "Y": 440.04,
+                "Z": 173.6
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 7
         },
-        "base_demand": 5,
-        "rush_profile": "default"
-    }
-]
+        {
+            "Name": "Galileo Observatory",
+            "ReverseStop": "Galileo Observatory",
+            "Range": 10,
+            "Position": {
+                "X": -499.93,
+                "Y": 1194.65,
+                "Z": 323.25
+            },
+            "PassengerSpawn": {
+                "X": -510.23,
+                "Y": 1187.09,
+                "Z": 323.84
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 1,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Vinewood Bowl",
+            "ReverseStop": "Vinewood Bowl",
+            "Range": 50,
+            "Position": {
+                "X": 695.46,
+                "Y": 669.02,
+                "Z": 127.91
+            },
+            "PassengerSpawn": {
+                "X": 695.44,
+                "Y": 674.99,
+                "Z": 128.05
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 6
+        },
+        {
+            "Name": "Maze Bank Arena",
+            "ReverseStop": "Maze Bank Arena",
+            "Range": 15,
+            "Position": {
+                "X": -143.16,
+                "Y": -2037.96,
+                "Z": 21.96
+            },
+            "PassengerSpawn": {
+                "X": -136.78,
+                "Y": -2041.65,
+                "Z": 21.96
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 2,
+            "MaxPassenger": 6
+        },
+        {
+            "Name": "Los Santos International Airport",
+            "ReverseStop": "Los Santos International Airport",
+            "Range": 20,
+            "Position": {
+                "X": -1037.23,
+                "Y": -2727.37,
+                "Z": 19.11
+            },
+            "PassengerSpawn": {
+                "X": -1039.02,
+                "Y": -2734.91,
+                "Z": 19.17
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 2,
+            "MaxPassenger": 8
+        },
+        {
+            "Name": "Strawberry Terminal",
+            "ReverseStop": "Strawberry Metro",
+            "Range": 10,
+            "Position": {
+                "X": 265.98,
+                "Y": -1124.23,
+                "Z": 28.22
+            },
+            "PassengerSpawn": {
+                "X": 258.6,
+                "Y": -1118.88,
+                "Z": 28.34
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 6
+        },
+        {
+            "Name": "Strawberry Avenue",
+            "ReverseStop": "Foxys",
+            "Range": 10,
+            "Position": {
+                "X": 309.02,
+                "Y": -764.78,
+                "Z": 28.3
+            },
+            "PassengerSpawn": {
+                "X": 304.55,
+                "Y": -764.11,
+                "Z": 28.31
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "University of San Andreas",
+            "Range": 10,
+            "Position": {
+                "X": -1571.73,
+                "Y": 255.72,
+                "Z": 57.63
+            },
+            "PassengerSpawn": {
+                "X": -1574.16,
+                "Y": 252.74,
+                "Z": 57.97
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Chamberlain Hills",
+            "Range": 10,
+            "Position": {
+                "X": -108.11,
+                "Y": -1686.7,
+                "Z": 28.2
+            },
+            "PassengerSpawn": {
+                "X": -109.95,
+                "Y": -1685.53,
+                "Z": 28.31
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Rockford Drive",
+            "Range": 10,
+            "Position": {
+                "X": -692.0,
+                "Y": -8.34,
+                "Z": 37.26
+            },
+            "PassengerSpawn": {
+                "X": -696.45,
+                "Y": -2.55,
+                "Z": 37.24
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Rockford Station",
+            "Range": 15,
+            "Position": {
+                "X": -932.27,
+                "Y": -127.0,
+                "Z": 36.58
+            },
+            "PassengerSpawn": {
+                "X": -930.23,
+                "Y": -120.45,
+                "Z": 36.76
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Second University Campus",
+            "Range": 10,
+            "Position": {
+                "X": -1165.97,
+                "Y": -400.67,
+                "Z": 34.48
+            },
+            "PassengerSpawn": {
+                "X": -1169.52,
+                "Y": -397.13,
+                "Z": 34.53
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Vinewood West",
+            "Range": 15,
+            "Position": {
+                "X": -489.41,
+                "Y": 20.84,
+                "Z": 43.97
+            },
+            "PassengerSpawn": {
+                "X": -503.75,
+                "Y": 24.19,
+                "Z": 43.79
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Rockford Emergency Headquarters",
+            "Range": 15,
+            "Position": {
+                "X": -645.9,
+                "Y": -139.79,
+                "Z": 36.7
+            },
+            "PassengerSpawn": {
+                "X": -642.62,
+                "Y": -137.5,
+                "Z": 36.84
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Burton",
+            "Range": 10,
+            "Position": {
+                "X": -523.69,
+                "Y": -267.19,
+                "Z": 34.3
+            },
+            "PassengerSpawn": {
+                "X": -526.19,
+                "Y": -263.57,
+                "Z": 34.45
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Dorset Drive",
+            "Range": 10,
+            "Position": {
+                "X": -681.76,
+                "Y": -374.68,
+                "Z": 33.27
+            },
+            "PassengerSpawn": {
+                "X": -680.76,
+                "Y": -380.41,
+                "Z": 33.26
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Pillbox Hill",
+            "Range": 10,
+            "Position": {
+                "X": -245.05,
+                "Y": -713.49,
+                "Z": 32.43
+            },
+            "PassengerSpawn": {
+                "X": -247.63,
+                "Y": -712.23,
+                "Z": 32.55
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Vespucci Boulevard",
+            "ReverseStop": "Go Center",
+            "Range": 10,
+            "Position": {
+                "X": -250.87,
+                "Y": -882.88,
+                "Z": 29.6
+            },
+            "PassengerSpawn": {
+                "X": -251.6,
+                "Y": -886.41,
+                "Z": 29.68
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Mission Row",
+            "Range": 10,
+            "Position": {
+                "X": 353.32,
+                "Y": -1064.48,
+                "Z": 28.41
+            },
+            "PassengerSpawn": {
+                "X": 355.02,
+                "Y": -1067.31,
+                "Z": 28.57
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "La Mesa",
+            "ReverseStop": "La Mesa Police Department",
+            "Range": 10,
+            "Position": {
+                "X": 788.56,
+                "Y": -1368.24,
+                "Z": 25.42
+            },
+            "PassengerSpawn": {
+                "X": 785.37,
+                "Y": -1368.85,
+                "Z": 25.6
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Popular Street",
+            "ReverseStop": "Ottos Autos",
+            "Range": 10,
+            "Position": {
+                "X": 828.17,
+                "Y": -1636.16,
+                "Z": 29.49
+            },
+            "PassengerSpawn": {
+                "X": 822.63,
+                "Y": -1637.32,
+                "Z": 29.46
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Cypress Flats",
+            "ReverseStop": "Fridgit",
+            "Range": 10,
+            "Position": {
+                "X": 773.77,
+                "Y": -1751.03,
+                "Z": 28.47
+            },
+            "PassengerSpawn": {
+                "X": 773.64,
+                "Y": -1754.93,
+                "Z": 28.5
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Diamond Casino and Resort",
+            "ReverseStop": "Diamond Casino and Resort",
+            "Range": 10,
+            "Position": {
+                "X": 950.6,
+                "Y": 163.01,
+                "Z": 80.83
+            },
+            "PassengerSpawn": {
+                "X": 949.06,
+                "Y": 166.74,
+                "Z": 80.83
+            },
+            "PassengerSpawnHeading": 140,
+            "MinPassenger": 0,
+            "MaxPassenger": 10
+        },
+        {
+            "Name": "Casino Parking",
+            "ReverseStop": "Downtown Cab Co",
+            "Range": 10,
+            "Position": {
+                "X": 909.1,
+                "Y": -116.57,
+                "Z": 76.97
+            },
+            "PassengerSpawn": {
+                "X": 911.06,
+                "Y": -112.74,
+                "Z": 77.83
+            },
+            "PassengerSpawnHeading": 150,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Vinewood Police Department",
+            "ReverseStop": "Vespucci Police Department 2",
+            "Range": 10,
+            "Position": {
+                "X": 644.71,
+                "Y": 47.05,
+                "Z": 87.05
+            },
+            "PassengerSpawn": {
+                "X": 645.06,
+                "Y": 50.04,
+                "Z": 87.83
+            },
+            "PassengerSpawnHeading": 150,
+            "MinPassenger": 0,
+            "MaxPassenger": 5,
+            "Peds": [
+                "s_m_y_barman_01",
+                "s_m_y_cop_01",
+                "s_m_m_bouncer_01",
+                "a_m_y_busicas_01",
+                "s_f_y_cop_01",
+                "a_m_m_business_01",
+                "a_m_y_business_01",
+                "a_f_m_business_02",
+                "a_f_y_business_02",
+                "s_m_o_busker_01"
+            ]
+        },
+        {
+            "Name": "Pacific Standard",
+            "ReverseStop": "Whirligig Theater",
+            "Range": 10,
+            "Position": {
+                "X": 277.41,
+                "Y": 179.07,
+                "Z": 104.46
+            },
+            "PassengerSpawn": {
+                "X": 278.06,
+                "Y": 181.74,
+                "Z": 104.83
+            },
+            "PassengerSpawnHeading": 150,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Centry Manor Hotel",
+            "Range": 10,
+            "Position": {
+                "X": -124.41,
+                "Y": 391.07,
+                "Z": 112.46
+            },
+            "PassengerSpawn": {
+                "X": -121.06,
+                "Y": 390.74,
+                "Z": 112.83
+            },
+            "PassengerSpawnHeading": 60,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Split Sides West Comedy Club",
+            "ReverseStop": "Pegasus Concierge",
+            "Range": 10,
+            "Position": {
+                "X": -445.41,
+                "Y": 254.07,
+                "Z": 82.46
+            },
+            "PassengerSpawn": {
+                "X": -444.96,
+                "Y": 257.74,
+                "Z": 83.83
+            },
+            "PassengerSpawnHeading": 60,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Pegasus Concierge",
+            "ReverseStop": "Split Sides West Comedy Club",
+            "Range": 10,
+            "Position": {
+                "X": -352.96,
+                "Y": 233.74,
+                "Z": 85.83
+            },
+            "PassengerSpawn": {
+                "X": -351.96,
+                "Y": 231.74,
+                "Z": 85.83
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Eclipse Towers",
+            "ReverseStop": "Schlongberg Sachs",
+            "Range": 10,
+            "Position": {
+                "X": -779.96,
+                "Y": 292.74,
+                "Z": 85.83
+            },
+            "PassengerSpawn": {
+                "X": -779.96,
+                "Y": 295.74,
+                "Z": 85.83
+            },
+            "PassengerSpawnHeading": 180,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Cottage Park",
+            "ReverseStop": "Steele Way",
+            "Range": 10,
+            "Position": {
+                "X": -973.96,
+                "Y": 273.74,
+                "Z": 68.83
+            },
+            "PassengerSpawn": {
+                "X": -973.96,
+                "Y": 276.74,
+                "Z": 68.83
+            },
+            "PassengerSpawnHeading": 170,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Richman Hotel",
+            "ReverseStop": "Richman Hotel Lobby",
+            "Range": 10,
+            "Position": {
+                "X": -1302.96,
+                "Y": 228.74,
+                "Z": 58.83
+            },
+            "PassengerSpawn": {
+                "X": -1303.96,
+                "Y": 238.74,
+                "Z": 58.83
+            },
+            "PassengerSpawnHeading": 170,
+            "MinPassenger": 5,
+            "MaxPassenger": 10
+        },
+        {
+            "Name": "Richman Mansion",
+            "ReverseStop": "Richman Mansion 2",
+            "Range": 10,
+            "Position": {
+                "X": -1447.96,
+                "Y": 116.74,
+                "Z": 52.83
+            },
+            "PassengerSpawn": {
+                "X": -1451.96,
+                "Y": 115.74,
+                "Z": 52.83
+            },
+            "PassengerSpawnHeading": 275,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Golf Club",
+            "ReverseStop": "Von Crastenburg Richman",
+            "Range": 10,
+            "Position": {
+                "X": -1247.96,
+                "Y": -69.74,
+                "Z": 44.83
+            },
+            "PassengerSpawn": {
+                "X": -1246.96,
+                "Y": -66.74,
+                "Z": 44.83
+            },
+            "PassengerSpawnHeading": 150,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Von Crastenburg Richman",
+            "ReverseStop": "Golf Club",
+            "Range": 10,
+            "Position": {
+                "X": -1142.96,
+                "Y": -154.74,
+                "Z": 39.83
+            },
+            "PassengerSpawn": {
+                "X": -1144.96,
+                "Y": -156.74,
+                "Z": 39.83
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Hill Valley Church",
+            "ReverseStop": "The Mighty Bush",
+            "Range": 10,
+            "Position": {
+                "X": -1620.96,
+                "Y": -237.74,
+                "Z": 54.83
+            },
+            "PassengerSpawn": {
+                "X": -1623.96,
+                "Y": -235.74,
+                "Z": 54.83
+            },
+            "PassengerSpawnHeading": 275,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Banner Hotel Del Perro",
+            "ReverseStop": "Lombank Beach",
+            "Range": 10,
+            "Position": {
+                "X": -1656.96,
+                "Y": -592.74,
+                "Z": 33.83
+            },
+            "PassengerSpawn": {
+                "X": -1658.96,
+                "Y": -595.74,
+                "Z": 33.83
+            },
+            "PassengerSpawnHeading": 325,
+            "MinPassenger": 5,
+            "MaxPassenger": 10
+        },
+        {
+            "Name": "Del Perro Plaza",
+            "ReverseStop": "Del Perro Pier",
+            "Range": 10,
+            "Position": {
+                "X": -1398.96,
+                "Y": -771.74,
+                "Z": 20.83
+            },
+            "PassengerSpawn": {
+                "X": -1396.96,
+                "Y": -768.74,
+                "Z": 20.83
+            },
+            "PassengerSpawnHeading": 139,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Venecian Beach Hotel",
+            "ReverseStop": "Venecian Beach Hotel 2",
+            "Range": 10,
+            "Position": {
+                "X": -1329.96,
+                "Y": -1058.74,
+                "Z": 7.83
+            },
+            "PassengerSpawn": {
+                "X": -1331.96,
+                "Y": -1060.74,
+                "Z": 7.83
+            },
+            "PassengerSpawnHeading": 300,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Beach Market",
+            "ReverseStop": "Al Dentes",
+            "Range": 10,
+            "Position": {
+                "X": -1168.96,
+                "Y": -1471.74,
+                "Z": 4.83
+            },
+            "PassengerSpawn": {
+                "X": -1170.96,
+                "Y": -1473.74,
+                "Z": 4.83
+            },
+            "PassengerSpawnHeading": 300,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "La Spada",
+            "ReverseStop": "Marlins Cafe",
+            "Range": 10,
+            "Position": {
+                "X": -1084.96,
+                "Y": -1418.74,
+                "Z": 5.83
+            },
+            "PassengerSpawn": {
+                "X": -1081.96,
+                "Y": -1418.74,
+                "Z": 5.83
+            },
+            "PassengerSpawnHeading": 100,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "The Viceroy",
+            "ReverseStop": "Liquor Hole",
+            "Range": 10,
+            "Position": {
+                "X": -875.96,
+                "Y": -1192.74,
+                "Z": 4.83
+            },
+            "PassengerSpawn": {
+                "X": -873.96,
+                "Y": -1194.74,
+                "Z": 4.83
+            },
+            "PassengerSpawnHeading": 65,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Vespucci Police Department",
+            "ReverseStop": "Celltowa",
+            "Range": 10,
+            "Position": {
+                "X": -1056.96,
+                "Y": -799.74,
+                "Z": 18.83
+            },
+            "PassengerSpawn": {
+                "X": -1058.96,
+                "Y": -802.74,
+                "Z": 18.83
+            },
+            "PassengerSpawnHeading": 345,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Lombank",
+            "ReverseStop": "Bahama Mamas",
+            "Range": 10,
+            "Position": {
+                "X": -1476.96,
+                "Y": -631.74,
+                "Z": 30.83
+            },
+            "PassengerSpawn": {
+                "X": -1475.96,
+                "Y": -634.74,
+                "Z": 30.83
+            },
+            "PassengerSpawnHeading": 25,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Bahama Mamas",
+            "ReverseStop": "Lombank",
+            "Range": 10,
+            "Position": {
+                "X": -1410.96,
+                "Y": -571.74,
+                "Z": 30.83
+            },
+            "PassengerSpawn": {
+                "X": -1413.96,
+                "Y": -567.74,
+                "Z": 30.83
+            },
+            "PassengerSpawnHeading": 225,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Von Crastenburg Vinewood",
+            "Range": 10,
+            "Position": {
+                "X": 492.96,
+                "Y": 274.74,
+                "Z": 102.83
+            },
+            "PassengerSpawn": {
+                "X": 494.96,
+                "Y": 277.74,
+                "Z": 103.83
+            },
+            "PassengerSpawnHeading": 160,
+            "MinPassenger": 5,
+            "MaxPassenger": 10
+        },
+        {
+            "Name": "Beaver Bush Ranger Station",
+            "Range": 10,
+            "Position": {
+                "X": 296.96,
+                "Y": 762.74,
+                "Z": 184.83
+            },
+            "PassengerSpawn": {
+                "X": 299.96,
+                "Y": 763.74,
+                "Z": 184.83
+            },
+            "PassengerSpawnHeading": 100,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sisyphus Theater",
+            "Range": 10,
+            "Position": {
+                "X": 281.96,
+                "Y": 1144.74,
+                "Z": 221.83
+            },
+            "PassengerSpawn": {
+                "X": 284.96,
+                "Y": 1145.74,
+                "Z": 221.83
+            },
+            "PassengerSpawnHeading": 120,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Grove Street",
+            "Range": 10,
+            "Position": {
+                "X": -71.96,
+                "Y": -1796.74,
+                "Z": 27.83
+            },
+            "PassengerSpawn": {
+                "X": -73.96,
+                "Y": -1799.74,
+                "Z": 27.83
+            },
+            "PassengerSpawnHeading": 320,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Davis Court",
+            "Range": 10,
+            "Position": {
+                "X": 305.96,
+                "Y": -1687.74,
+                "Z": 29.83
+            },
+            "PassengerSpawn": {
+                "X": 307.96,
+                "Y": -1685.74,
+                "Z": 29.83
+            },
+            "PassengerSpawnHeading": 140,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Davis Public Library",
+            "Range": 10,
+            "Position": {
+                "X": 233.96,
+                "Y": -1575.74,
+                "Z": 29.83
+            },
+            "PassengerSpawn": {
+                "X": 234.96,
+                "Y": -1577.74,
+                "Z": 29.83
+            },
+            "PassengerSpawnHeading": 30,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Rancho Motel",
+            "Range": 10,
+            "Position": {
+                "X": 361.96,
+                "Y": -1782.74,
+                "Z": 29.83
+            },
+            "PassengerSpawn": {
+                "X": 366.96,
+                "Y": -1786.74,
+                "Z": 29.83
+            },
+            "PassengerSpawnHeading": 60,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Bilingsgate Motel",
+            "Range": 10,
+            "Position": {
+                "X": 599.96,
+                "Y": -1740.74,
+                "Z": 29.83
+            },
+            "PassengerSpawn": {
+                "X": 599.96,
+                "Y": -1745.74,
+                "Z": 29.83
+            },
+            "PassengerSpawnHeading": 0,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Central Los Santos Medical Center",
+            "Range": 10,
+            "Position": {
+                "X": 311.96,
+                "Y": -1374.74,
+                "Z": 31.83
+            },
+            "PassengerSpawn": {
+                "X": 317.96,
+                "Y": -1377.74,
+                "Z": 31.83
+            },
+            "PassengerSpawnHeading": 60,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Strawberry Metro",
+            "ReverseStop": "Strawberry Metro",
+            "Range": 10,
+            "Position": {
+                "X": 261.96,
+                "Y": -1180.74,
+                "Z": 29.83
+            },
+            "PassengerSpawn": {
+                "X": 261.96,
+                "Y": -1175.74,
+                "Z": 29.83
+            },
+            "PassengerSpawnHeading": 180,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Premium Deluxe Motorsport",
+            "Range": 10,
+            "Position": {
+                "X": -49.96,
+                "Y": -1129.74,
+                "Z": 25.83
+            },
+            "PassengerSpawn": {
+                "X": -48.96,
+                "Y": -1126.74,
+                "Z": 26.83
+            },
+            "PassengerSpawnHeading": 180,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Pillbox South Metro",
+            "Range": 10,
+            "Position": {
+                "X": -235.96,
+                "Y": -1130.74,
+                "Z": 22.83
+            },
+            "PassengerSpawn": {
+                "X": -235.96,
+                "Y": -1127.74,
+                "Z": 23.83
+            },
+            "PassengerSpawnHeading": 180,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "3 Alta Street",
+            "Range": 10,
+            "Position": {
+                "X": -225.96,
+                "Y": -960.74,
+                "Z": 29.83
+            },
+            "PassengerSpawn": {
+                "X": -228.96,
+                "Y": -959.74,
+                "Z": 29.83
+            },
+            "PassengerSpawnHeading": 250,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Ottos Autos",
+            "ReverseStop": "Popular Street",
+            "Range": 10,
+            "Position": {
+                "X": 785.96,
+                "Y": -776.74,
+                "Z": 26.83
+            },
+            "PassengerSpawn": {
+                "X": 788.96,
+                "Y": -776.74,
+                "Z": 26.83
+            },
+            "PassengerSpawnHeading": 95,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "La Mesa Police Department",
+            "ReverseStop": "La Mesa",
+            "Range": 10,
+            "Position": {
+                "X": 807.96,
+                "Y": -1352.74,
+                "Z": 26.83
+            },
+            "PassengerSpawn": {
+                "X": 810.96,
+                "Y": -1352.74,
+                "Z": 26.83
+            },
+            "PassengerSpawnHeading": 95,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Cypress Industrial",
+            "Range": 10,
+            "Position": {
+                "X": 915.96,
+                "Y": -2200.74,
+                "Z": 30.83
+            },
+            "PassengerSpawn": {
+                "X": 912.96,
+                "Y": -2200.74,
+                "Z": 30.83
+            },
+            "PassengerSpawnHeading": 270,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Pacific Bluffs",
+            "ReverseStop": "Pacific Bluffs Supermarket",
+            "Range": 10,
+            "Position": {
+                "X": -2979.96,
+                "Y": 409.74,
+                "Z": 14.83
+            },
+            "PassengerSpawn": {
+                "X": -2974.96,
+                "Y": 408.74,
+                "Z": 14.83
+            },
+            "PassengerSpawnHeading": 90,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Pacific Bluffs Supermarket",
+            "ReverseStop": "Pacific Bluffs",
+            "Range": 10,
+            "Position": {
+                "X": -3028.96,
+                "Y": 582.74,
+                "Z": 7.83
+            },
+            "PassengerSpawn": {
+                "X": -3031.96,
+                "Y": 581.74,
+                "Z": 7.83
+            },
+            "PassengerSpawnHeading": 285,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Chumash Pier",
+            "ReverseStop": "Chumash Plaza",
+            "Range": 10,
+            "Position": {
+                "X": -3224.96,
+                "Y": 957.74,
+                "Z": 13.83
+            },
+            "PassengerSpawn": {
+                "X": -3220.96,
+                "Y": 957.74,
+                "Z": 13.83
+            },
+            "PassengerSpawnHeading": 100,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Chumash Plaza",
+            "ReverseStop": "Chumash Pier",
+            "Range": 10,
+            "Position": {
+                "X": -3141.96,
+                "Y": 1033.74,
+                "Z": 19.83
+            },
+            "PassengerSpawn": {
+                "X": -3143.96,
+                "Y": 1034.74,
+                "Z": 19.83
+            },
+            "PassengerSpawnHeading": 250,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Lago Zancudo",
+            "ReverseStop": "Zancudo Beach",
+            "Range": 10,
+            "Position": {
+                "X": -2444.96,
+                "Y": 3754.74,
+                "Z": 18.83
+            },
+            "PassengerSpawn": {
+                "X": -2439.96,
+                "Y": 3751.74,
+                "Z": 18.83
+            },
+            "PassengerSpawnHeading": 75,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Hookies Seafood Diner",
+            "Range": 10,
+            "Position": {
+                "X": -2204.96,
+                "Y": 4301.74,
+                "Z": 48.83
+            },
+            "PassengerSpawn": {
+                "X": -2203.96,
+                "Y": 4297.74,
+                "Z": 48.83
+            },
+            "PassengerSpawnHeading": 10,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Bayview Lodge",
+            "Range": 10,
+            "Position": {
+                "X": -690.96,
+                "Y": 5844.74,
+                "Z": 16.83
+            },
+            "PassengerSpawn": {
+                "X": -685.96,
+                "Y": 5843.74,
+                "Z": 17.83
+            },
+            "PassengerSpawnHeading": 75,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Paleto Bay Sheriff Department",
+            "ReverseStop": "Paleto Bay Market",
+            "Range": 10,
+            "Position": {
+                "X": -435.96,
+                "Y": 6054.74,
+                "Z": 31.83
+            },
+            "PassengerSpawn": {
+                "X": -438.96,
+                "Y": 6052.74,
+                "Z": 31.83
+            },
+            "PassengerSpawnHeading": 290,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Clucking Bell Farms",
+            "ReverseStop": "Pixel Petes",
+            "Range": 15,
+            "Position": {
+                "X": -151.96,
+                "Y": 6213.74,
+                "Z": 31.83
+            },
+            "PassengerSpawn": {
+                "X": -147.96,
+                "Y": 6211.74,
+                "Z": 31.83
+            },
+            "PassengerSpawnHeading": 150,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Willies",
+            "ReverseStop": "Bay Hardware",
+            "Range": 10,
+            "Position": {
+                "X": -9.96,
+                "Y": 6531.74,
+                "Z": 31.83
+            },
+            "PassengerSpawn": {
+                "X": -12.96,
+                "Y": 6532.74,
+                "Z": 31.83
+            },
+            "PassengerSpawnHeading": 225,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Blaine County Savings Bank",
+            "ReverseStop": "Paleto Bay Mojito Inn",
+            "Range": 10,
+            "Position": {
+                "X": -95.96,
+                "Y": 6445.74,
+                "Z": 31.83
+            },
+            "PassengerSpawn": {
+                "X": -98.96,
+                "Y": 6448.74,
+                "Z": 31.83
+            },
+            "PassengerSpawnHeading": 225,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "The Hen House",
+            "ReverseStop": "Paleto Bay Church",
+            "Range": 10,
+            "Position": {
+                "X": -294.96,
+                "Y": 6248.74,
+                "Z": 31.83
+            },
+            "PassengerSpawn": {
+                "X": -295.96,
+                "Y": 6250.74,
+                "Z": 31.83
+            },
+            "PassengerSpawnHeading": 225,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Grapeseed Main Street",
+            "ReverseStop": "Wonderama Arcade",
+            "Range": 10,
+            "Position": {
+                "X": 1670.96,
+                "Y": 4799.74,
+                "Z": 41.83
+            },
+            "PassengerSpawn": {
+                "X": 1667.96,
+                "Y": 4799.74,
+                "Z": 41.83
+            },
+            "PassengerSpawnHeading": 270,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "McKenzie Airfield",
+            "ReverseStop": "McKenzie Airfield 2",
+            "Range": 10,
+            "Position": {
+                "X": 2082.96,
+                "Y": 4697.74,
+                "Z": 41.83
+            },
+            "PassengerSpawn": {
+                "X": 2085.96,
+                "Y": 4695.74,
+                "Z": 41.83
+            },
+            "PassengerSpawnHeading": 55,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Fire Station",
+            "ReverseStop": "Sandy Shores Fire Station 2",
+            "Range": 10,
+            "Position": {
+                "X": 1708.96,
+                "Y": 3574.74,
+                "Z": 35.83
+            },
+            "PassengerSpawn": {
+                "X": 1708.96,
+                "Y": 3571.74,
+                "Z": 35.83
+            },
+            "PassengerSpawnHeading": 25,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Sheriff",
+            "ReverseStop": "Sandy Shores Chinese Food",
+            "Range": 10,
+            "Position": {
+                "X": 1868.96,
+                "Y": 3665.74,
+                "Z": 33.83
+            },
+            "PassengerSpawn": {
+                "X": 1868.96,
+                "Y": 3663.74,
+                "Z": 33.83
+            },
+            "PassengerSpawnHeading": 25,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores 247",
+            "ReverseStop": "Osheas Barber Shop",
+            "Range": 10,
+            "Position": {
+                "X": 1943.96,
+                "Y": 3751.74,
+                "Z": 32.83
+            },
+            "PassengerSpawn": {
+                "X": 1949.96,
+                "Y": 3751.74,
+                "Z": 32.83
+            },
+            "PassengerSpawnHeading": 125,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Ammunation",
+            "ReverseStop": "Seaton Sands Automotive Services",
+            "Range": 10,
+            "Position": {
+                "X": 1695.96,
+                "Y": 3735.74,
+                "Z": 33.83
+            },
+            "PassengerSpawn": {
+                "X": 1693.96,
+                "Y": 3738.74,
+                "Z": 33.83
+            },
+            "PassengerSpawnHeading": 215,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Save the Sands",
+            "ReverseStop": "Office Motel",
+            "Range": 10,
+            "Position": {
+                "X": 1540.96,
+                "Y": 3654.74,
+                "Z": 34.83
+            },
+            "PassengerSpawn": {
+                "X": 1538.96,
+                "Y": 3648.74,
+                "Z": 34.83
+            },
+            "PassengerSpawnHeading": 215,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Ace Liquor",
+            "Range": 10,
+            "Position": {
+                "X": 1393.96,
+                "Y": 3588.74,
+                "Z": 34.83
+            },
+            "PassengerSpawn": {
+                "X": 1392.96,
+                "Y": 3592.74,
+                "Z": 34.83
+            },
+            "PassengerSpawnHeading": 215,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Airfield",
+            "ReverseStop": "Senora National Park",
+            "Range": 10,
+            "Position": {
+                "X": 1824.96,
+                "Y": 3274.74,
+                "Z": 43.83
+            },
+            "PassengerSpawn": {
+                "X": 1818.96,
+                "Y": 3275.74,
+                "Z": 43.83
+            },
+            "PassengerSpawnHeading": 300,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Yellow Jack Inn",
+            "ReverseStop": "Sandy Shores Waste Disposal",
+            "Range": 10,
+            "Position": {
+                "X": 2003.96,
+                "Y": 3097.74,
+                "Z": 47.83
+            },
+            "PassengerSpawn": {
+                "X": 1999.96,
+                "Y": 3092.74,
+                "Z": 46.83
+            },
+            "PassengerSpawnHeading": 325,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Larrys RV Sales",
+            "ReverseStop": "The Motor Motel",
+            "Range": 10,
+            "Position": {
+                "X": 1218.96,
+                "Y": 2687.74,
+                "Z": 37.83
+            },
+            "PassengerSpawn": {
+                "X": 1218.96,
+                "Y": 2690.74,
+                "Z": 37.83
+            },
+            "PassengerSpawnHeading": 180,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Harmony Plaza",
+            "ReverseStop": "Harmony 247",
+            "Range": 10,
+            "Position": {
+                "X": 622.96,
+                "Y": 2702.74,
+                "Z": 41.83
+            },
+            "PassengerSpawn": {
+                "X": 622.96,
+                "Y": 2707.74,
+                "Z": 41.83
+            },
+            "PassengerSpawnHeading": 180,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Harmony 247",
+            "ReverseStop": "Harmony Plaza",
+            "Range": 10,
+            "Position": {
+                "X": 565.96,
+                "Y": 2685.74,
+                "Z": 42.83
+            },
+            "PassengerSpawn": {
+                "X": 566.96,
+                "Y": 2681.74,
+                "Z": 41.83
+            },
+            "PassengerSpawnHeading": 10,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "The Motor Motel",
+            "ReverseStop": "Larrys RV Sales",
+            "Range": 10,
+            "Position": {
+                "X": 1129.96,
+                "Y": 2681.74,
+                "Z": 38.83
+            },
+            "PassengerSpawn": {
+                "X": 1129.96,
+                "Y": 2677.74,
+                "Z": 38.83
+            },
+            "PassengerSpawnHeading": 10,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Waste Disposal",
+            "ReverseStop": "Yellow Jack Inn",
+            "Range": 10,
+            "Position": {
+                "X": 1979.96,
+                "Y": 3128.74,
+                "Z": 46.83
+            },
+            "PassengerSpawn": {
+                "X": 1982.96,
+                "Y": 3131.74,
+                "Z": 46.83
+            },
+            "PassengerSpawnHeading": 150,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Senora National Park",
+            "ReverseStop": "Sandy Shores Airfield",
+            "Range": 10,
+            "Position": {
+                "X": 1807.96,
+                "Y": 3324.74,
+                "Z": 41.83
+            },
+            "PassengerSpawn": {
+                "X": 1812.96,
+                "Y": 3331.74,
+                "Z": 41.83
+            },
+            "PassengerSpawnHeading": 160,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Fire Station 2",
+            "ReverseStop": "Sandy Shores Fire Station",
+            "Range": 10,
+            "Position": {
+                "X": 1680.96,
+                "Y": 3568.74,
+                "Z": 35.83
+            },
+            "PassengerSpawn": {
+                "X": 1679.96,
+                "Y": 3571.74,
+                "Z": 35.83
+            },
+            "PassengerSpawnHeading": 205,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sandy Shores Chinese Food",
+            "ReverseStop": "Sandy Shores Sheriff",
+            "Range": 10,
+            "Position": {
+                "X": 1905.96,
+                "Y": 3699.74,
+                "Z": 32.83
+            },
+            "PassengerSpawn": {
+                "X": 1903.96,
+                "Y": 3704.74,
+                "Z": 32.83
+            },
+            "PassengerSpawnHeading": 205,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Osheas Barber Shop",
+            "ReverseStop": "Sandy Shores 247",
+            "Range": 10,
+            "Position": {
+                "X": 1940.96,
+                "Y": 3736.74,
+                "Z": 32.83
+            },
+            "PassengerSpawn": {
+                "X": 1937.96,
+                "Y": 3734.74,
+                "Z": 32.83
+            },
+            "PassengerSpawnHeading": 310,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Seaton Sands Automotive Services",
+            "ReverseStop": "Sandy Shores Ammunation",
+            "Range": 10,
+            "Position": {
+                "X": 1733.96,
+                "Y": 3739.74,
+                "Z": 33.83
+            },
+            "PassengerSpawn": {
+                "X": 1734.96,
+                "Y": 3735.74,
+                "Z": 33.83
+            },
+            "PassengerSpawnHeading": 30,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Office Motel",
+            "ReverseStop": "Save the Sands",
+            "Range": 10,
+            "Position": {
+                "X": 1542.96,
+                "Y": 3636.74,
+                "Z": 34.83
+            },
+            "PassengerSpawn": {
+                "X": 1543.96,
+                "Y": 3632.74,
+                "Z": 34.83
+            },
+            "PassengerSpawnHeading": 15,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "McKenzie Airfield 2",
+            "ReverseStop": "McKenzie Airfield",
+            "Range": 10,
+            "Position": {
+                "X": 2119.96,
+                "Y": 4747.74,
+                "Z": 41.83
+            },
+            "PassengerSpawn": {
+                "X": 2116.96,
+                "Y": 4750.74,
+                "Z": 40.83
+            },
+            "PassengerSpawnHeading": 223,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Wonderama Arcade",
+            "ReverseStop": "Grapeseed Main Street",
+            "Range": 10,
+            "Position": {
+                "X": 1679.974,
+                "Y": 4801.01,
+                "Z": 41.99513
+            },
+            "PassengerSpawn": {
+                "X": 1684.018,
+                "Y": 4801.273,
+                "Z": 41.95228
+            },
+            "PassengerSpawnHeading": 102,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Paleto Bay Market",
+            "ReverseStop": "Paleto Bay Sheriff Department",
+            "Range": 10,
+            "Position": {
+                "X": -419.8428,
+                "Y": 6054.714,
+                "Z": 31.38718
+            },
+            "PassengerSpawn": {
+                "X": -416.7354,
+                "Y": 6058.123,
+                "Z": 31.529
+            },
+            "PassengerSpawnHeading": 130,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Paleto Bay Church",
+            "ReverseStop": "The Hen House",
+            "Range": 10,
+            "Position": {
+                "X": -334.003,
+                "Y": 6190.142,
+                "Z": 31.24489
+            },
+            "PassengerSpawn": {
+                "X": -330.0792,
+                "Y": 6187.258,
+                "Z": 31.44938
+            },
+            "PassengerSpawnHeading": 41,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Paleto Bay Mojito Inn",
+            "ReverseStop": "Blaine County Savings Bank",
+            "Range": 10,
+            "Position": {
+                "X": -132.9986,
+                "Y": 6393.448,
+                "Z": 31.38689
+            },
+            "PassengerSpawn": {
+                "X": -131.5848,
+                "Y": 6390.922,
+                "Z": 31.50162
+            },
+            "PassengerSpawnHeading": 38,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Bay Hardware",
+            "ReverseStop": "Willies",
+            "Range": 10,
+            "Position": {
+                "X": -35.58522,
+                "Y": 6493.135,
+                "Z": 31.35668
+            },
+            "PassengerSpawn": {
+                "X": -25.61222,
+                "Y": 6488.836,
+                "Z": 31.49143
+            },
+            "PassengerSpawnHeading": 57,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Pixel Petes",
+            "ReverseStop": "Clucking Bell Farms",
+            "Range": 10,
+            "Position": {
+                "X": -214.5843,
+                "Y": 6173.124,
+                "Z": 31.22556
+            },
+            "PassengerSpawn": {
+                "X": -218.4052,
+                "Y": 6175.762,
+                "Z": 31.25019
+            },
+            "PassengerSpawnHeading": 259,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Zancudo Beach",
+            "ReverseStop": "Lago Zancudo",
+            "Range": 10,
+            "Position": {
+                "X": -2507.652,
+                "Y": 3591.538,
+                "Z": 14.55213
+            },
+            "PassengerSpawn": {
+                "X": -2512.132,
+                "Y": 3593.375,
+                "Z": 14.50642
+            },
+            "PassengerSpawnHeading": 274,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Lombank Beach",
+            "ReverseStop": "Banner Hotel Del Perro",
+            "Range": 10,
+            "Position": {
+                "X": -1623.393,
+                "Y": -593.5612,
+                "Z": 33.19717
+            },
+            "PassengerSpawn": {
+                "X": -1619.868,
+                "Y": -588.4902,
+                "Z": 33.36529
+            },
+            "PassengerSpawnHeading": 142,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Del Perro Pier",
+            "ReverseStop": "Del Perro Plaza",
+            "Range": 10,
+            "Position": {
+                "X": -1432.023,
+                "Y": -774.9516,
+                "Z": 23.17302
+            },
+            "PassengerSpawn": {
+                "X": -1438.903,
+                "Y": -778.7637,
+                "Z": 23.41988
+            },
+            "PassengerSpawnHeading": 314,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Venecian Beach Hotel 2",
+            "ReverseStop": "Venecian Beach Hotel",
+            "Range": 10,
+            "Position": {
+                "X": -1317.104,
+                "Y": -1063.318,
+                "Z": 6.977682
+            },
+            "PassengerSpawn": {
+                "X": -1313.17,
+                "Y": -1060.736,
+                "Z": 7.06015
+            },
+            "PassengerSpawnHeading": 121,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Al Dentes",
+            "ReverseStop": "Beach Market",
+            "Range": 10,
+            "Position": {
+                "X": -1199.976,
+                "Y": -1410.914,
+                "Z": 4.22122
+            },
+            "PassengerSpawn": {
+                "X": -1196.011,
+                "Y": -1409.225,
+                "Z": 4.298996
+            },
+            "PassengerSpawnHeading": 129,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Marlins Cafe",
+            "ReverseStop": "La Spada",
+            "Range": 10,
+            "Position": {
+                "X": -1123.309,
+                "Y": -1380.504,
+                "Z": 5.071587
+            },
+            "PassengerSpawn": {
+                "X": -1126.627,
+                "Y": -1377.326,
+                "Z": 5.112096
+            },
+            "PassengerSpawnHeading": 222,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Liquor Hole",
+            "ReverseStop": "The Viceroy",
+            "Range": 10,
+            "Position": {
+                "X": -889.509,
+                "Y": -1172.91,
+                "Z": 4.740355
+            },
+            "PassengerSpawn": {
+                "X": -891.5252,
+                "Y": -1169.637,
+                "Z": 4.905424
+            },
+            "PassengerSpawnHeading": 210,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Sho",
+            "ReverseStop": "Puerta Del Sol",
+            "Range": 10,
+            "Position": {
+                "X": -670.7671,
+                "Y": -1232.832,
+                "Z": 10.5023
+            },
+            "PassengerSpawn": {
+                "X": -664.0882,
+                "Y": -1229.763,
+                "Z": 10.60911
+            },
+            "PassengerSpawnHeading": 125,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Puerta Del Sol",
+            "ReverseStop": "Sho",
+            "Range": 10,
+            "Position": {
+                "X": -708.3621,
+                "Y": -1221.672,
+                "Z": 10.5243
+            },
+            "PassengerSpawn": {
+                "X": -714.2391,
+                "Y": -1223.636,
+                "Z": 10.6334
+            },
+            "PassengerSpawnHeading": 293,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Celltowa",
+            "ReverseStop": "Vespucci Police Department",
+            "Range": 10,
+            "Position": {
+                "X": -1015.818,
+                "Y": -794.3574,
+                "Z": 16.80571
+            },
+            "PassengerSpawn": {
+                "X": -1013.779,
+                "Y": -787.9043,
+                "Z": 16.96856
+            },
+            "PassengerSpawnHeading": 182,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "The Mighty Bush",
+            "ReverseStop": "Hill Valley Church",
+            "Range": 10,
+            "Position": {
+                "X": -1590.828,
+                "Y": -227.7225,
+                "Z": 54.45399
+            },
+            "PassengerSpawn": {
+                "X": -1585.192,
+                "Y": -230.6946,
+                "Z": 54.44838
+            },
+            "PassengerSpawnHeading": 51,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Richman Mansion 2",
+            "ReverseStop": "Richman Mansion",
+            "Range": 10,
+            "Position": {
+                "X": -1423.976,
+                "Y": 113.1014,
+                "Z": 52.01006
+            },
+            "PassengerSpawn": {
+                "X": -1419.455,
+                "Y": 114.3184,
+                "Z": 52.11527
+            },
+            "PassengerSpawnHeading": 88,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Richman Hotel Lobby",
+            "ReverseStop": "Richman Hotel",
+            "Range": 10,
+            "Position": {
+                "X": -1285.302,
+                "Y": 275.4535,
+                "Z": 64.79657
+            },
+            "PassengerSpawn": {
+                "X": -1286.174,
+                "Y": 272.1895,
+                "Z": 64.73933
+            },
+            "PassengerSpawnHeading": 355,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Steele Way",
+            "ReverseStop": "Cottage Park",
+            "Range": 10,
+            "Position": {
+                "X": -938.5716,
+                "Y": 237.9726,
+                "Z": 69.99368
+            },
+            "PassengerSpawn": {
+                "X": -942.06,
+                "Y": 235.5669,
+                "Z": 70.03186
+            },
+            "PassengerSpawnHeading": 316,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Schlongberg Sachs",
+            "ReverseStop": "Eclipse Towers",
+            "Range": 10,
+            "Position": {
+                "X": -746.682,
+                "Y": 286.5057,
+                "Z": 85.25376
+            },
+            "PassengerSpawn": {
+                "X": -748.2303,
+                "Y": 283.9986,
+                "Z": 85.38355
+            },
+            "PassengerSpawnHeading": 26,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Up n Atom Vinewood",
+            "ReverseStop": "Bishops WTF",
+            "Range": 10,
+            "Position": {
+                "X": 136.1723,
+                "Y": 230.6259,
+                "Z": 107.2026
+            },
+            "PassengerSpawn": {
+                "X": 135.9962,
+                "Y": 235.1891,
+                "Z": 107.254
+            },
+            "PassengerSpawnHeading": 166,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Bishops WTF",
+            "ReverseStop": "Up n Atom Vinewood",
+            "Range": 10,
+            "Position": {
+                "X": 104.5378,
+                "Y": 220.1856,
+                "Z": 107.7702
+            },
+            "PassengerSpawn": {
+                "X": 103.5743,
+                "Y": 217.2651,
+                "Z": 107.8149
+            },
+            "PassengerSpawnHeading": 349,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Whirligig Theater",
+            "ReverseStop": "Pacific Standard",
+            "Range": 10,
+            "Position": {
+                "X": 321.9203,
+                "Y": 140.6512,
+                "Z": 103.419
+            },
+            "PassengerSpawn": {
+                "X": 321.7729,
+                "Y": 137.7155,
+                "Z": 103.4769
+            },
+            "PassengerSpawnHeading": 19,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Vinewood Police Department 2",
+            "ReverseStop": "Vinewood Police Department",
+            "Range": 10,
+            "Position": {
+                "X": 635.8417,
+                "Y": 35.40738,
+                "Z": 87.59832
+            },
+            "PassengerSpawn": {
+                "X": 635.6782,
+                "Y": 32.86604,
+                "Z": 87.68401
+            },
+            "PassengerSpawnHeading": 356,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Downtown Cab Co",
+            "ReverseStop": "Casino Parking",
+            "Range": 10,
+            "Position": {
+                "X": 917.3939,
+                "Y": -145.8434,
+                "Z": 75.80279
+            },
+            "PassengerSpawn": {
+                "X": 914.5563,
+                "Y": -149.6215,
+                "Z": 75.93643
+            },
+            "PassengerSpawnHeading": 347,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Mirror Park",
+            "ReverseStop": "East Mirror Drive",
+            "Range": 10,
+            "Position": {
+                "X": 1172.029,
+                "Y": -635.3309,
+                "Z": 62.72305
+            },
+            "PassengerSpawn": {
+                "X": 1168.773,
+                "Y": -636.9101,
+                "Z": 62.79449
+            },
+            "PassengerSpawnHeading": 293,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "East Mirror Drive",
+            "ReverseStop": "Mirror Park",
+            "Range": 10,
+            "Position": {
+                "X": 1190.303,
+                "Y": -629.9507,
+                "Z": 62.83182
+            },
+            "PassengerSpawn": {
+                "X": 1194.961,
+                "Y": -629.4341,
+                "Z": 62.89766
+            },
+            "PassengerSpawnHeading": 74,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Fridgit",
+            "ReverseStop": "Cypress Flats",
+            "Range": 10,
+            "Position": {
+                "X": 775.2028,
+                "Y": -1732.83,
+                "Z": 29.41626
+            },
+            "PassengerSpawn": {
+                "X": 776.5751,
+                "Y": -1729.76,
+                "Z": 29.52173
+            },
+            "PassengerSpawnHeading": 174,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Maze Bank Waterpark",
+            "ReverseStop": "Alta Street",
+            "Range": 10,
+            "Position": {
+                "X": -154.6719,
+                "Y": -841.9655,
+                "Z": 30.4676
+            },
+            "PassengerSpawn": {
+                "X": -151.6333,
+                "Y": -842.4602,
+                "Z": 30.61776
+            },
+            "PassengerSpawnHeading": 68,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Go Center",
+            "ReverseStop": "Vespucci Boulevard",
+            "Range": 10,
+            "Position": {
+                "X": -260.0704,
+                "Y": -854.2219,
+                "Z": 31.23961
+            },
+            "PassengerSpawn": {
+                "X": -259.3593,
+                "Y": -848.686,
+                "Z": 31.37613
+            },
+            "PassengerSpawnHeading": 162,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Betsy O Neil Pavilion",
+            "ReverseStop": "Little Seoul",
+            "Range": 10,
+            "Position": {
+                "X": -540.811,
+                "Y": -648.7596,
+                "Z": 33.14193
+            },
+            "PassengerSpawn": {
+                "X": -541.8538,
+                "Y": -643.2737,
+                "Z": 33.23389
+            },
+            "PassengerSpawnHeading": 187,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Elgin Avenue",
+            "ReverseStop": "San Andreas Avenue",
+            "Range": 10,
+            "Position": {
+                "X": 130.1205,
+                "Y": -815.9268,
+                "Z": 31.13309
+            },
+            "PassengerSpawn": {
+                "X": 129.4595,
+                "Y": -818.6434,
+                "Z": 31.23379
+            },
+            "PassengerSpawnHeading": 358,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        },
+        {
+            "Name": "Foxys",
+            "ReverseStop": "Strawberry Avenue",
+            "Range": 10,
+            "Position": {
+                "X": 330.3546,
+                "Y": -770.1522,
+                "Z": 29.22089
+            },
+            "PassengerSpawn": {
+                "X": 335.6814,
+                "Y": -770.0504,
+                "Z": 29.32465
+            },
+            "PassengerSpawnHeading": 79,
+            "MinPassenger": 0,
+            "MaxPassenger": 5
+        }
+    ]
+}
