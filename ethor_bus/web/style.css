@@ -372,6 +372,9 @@ header {
     background: var(--danger);
     /* Solid Red when closed */
     border: 1px solid var(--danger);
+    width: 140px;
+    /* Fixed width to prevent jumping */
+    justify-content: center;
 }
 
 .door-status.open {

@@ -107,9 +107,11 @@ CreateThread(function()
                     })
                 end
                 
-                -- Update Loop for Doors (Passenger Side: 1=Front Right, 3=Rear Right)
-                local doorFront = GetVehicleDoorAngleRatio(veh, 1) > 0.1 
-                local doorRear = GetVehicleDoorAngleRatio(veh, 3) > 0.1
+                -- Update Loop for Doors (Support standard GTA Bus models)
+                -- Front doors: 0 (Driver), 1 (Passenger Front)
+                -- Rear doors: 2 (Back Left), 3 (Back Right)
+                local doorFront = (GetVehicleDoorAngleRatio(veh, 0) > 0.1) or (GetVehicleDoorAngleRatio(veh, 1) > 0.1)
+                local doorRear = (GetVehicleDoorAngleRatio(veh, 2) > 0.1) or (GetVehicleDoorAngleRatio(veh, 3) > 0.1)
                 
                 SendNUIMessage({
                     action = "updateDriverUI",

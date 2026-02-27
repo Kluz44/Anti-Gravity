@@ -242,6 +242,41 @@ window.addEventListener('message', function (event) {
     }
 });
 
+// Initialize Draggable Driver UI
+$(document).ready(function () {
+    const driverUI = $('#driver-ui');
+
+    // Make it draggable
+    driverUI.draggable({
+        handle: ".driver-panel", // Drag by the main panel
+        containment: "window",    // Keep within screen bounds
+        stop: function (event, ui) {
+            // Save position to localStorage when dragging stops
+            localStorage.setItem('ag_driver_ui_pos', JSON.stringify({
+                top: ui.position.top,
+                left: ui.position.left
+            }));
+        }
+    });
+
+    // Restore position on load
+    const savedPos = localStorage.getItem('ag_driver_ui_pos');
+    if (savedPos) {
+        try {
+            const pos = JSON.parse(savedPos);
+            driverUI.css({
+                top: pos.top + 'px',
+                left: pos.left + 'px',
+                bottom: 'auto', // Override CSS bottom/right bounds
+                right: 'auto'
+            });
+        } catch (e) { }
+    }
+
+    // Add visual cue for dragging
+    $('.driver-panel').css('cursor', 'move');
+});
+
 function updateDriverInfo(info) {
     if (!info) return;
 
