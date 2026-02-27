@@ -32,7 +32,6 @@ body {
     margin: 5vh auto;
     background-color: transparent;
     border-radius: 12px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     overflow: hidden;
 }
 
@@ -94,8 +93,7 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 400px;
-    background-color: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(12px);
+    background-color: rgba(15, 23, 42, 0.9);
     border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -325,11 +323,9 @@ header {
     bottom: 20px;
     right: 20px;
     width: 450px;
-    background: rgba(15, 23, 42, 0.4);
+    background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
     overflow: hidden;
     font-family: 'Inter', sans-serif;
     color: white;
@@ -477,9 +473,9 @@ header {
 .passenger-ad-box {
     width: 100%;
     margin-bottom: 15px;
-    border-radius: var(--radius);
+    border-radius: 8px;
     overflow: hidden;
-    background-color: var(--surface-light);
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
