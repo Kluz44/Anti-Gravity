@@ -239,6 +239,20 @@ window.addEventListener('message', function (event) {
         }
     } else if (data.action === "updateDriverUI") {
         updateDriverInfo(data.info);
+    } else if (data.action === "enableUIDragMode") {
+        // Visually highlight that it's draggable
+        $('#driver-ui').css({
+            'box-shadow': '0 0 15px rgba(255, 255, 255, 0.4)',
+            'border': '1px solid rgba(255, 255, 255, 0.8)'
+        });
+    } else if (data.action === "resetUIPosition") {
+        localStorage.removeItem('ag_driver_ui_pos');
+        $('#driver-ui').css({
+            top: 'auto',
+            left: 'auto',
+            bottom: '20px',
+            right: '20px'
+        });
     }
 });
 
@@ -275,6 +289,19 @@ $(document).ready(function () {
 
     // Add visual cue for dragging
     $('.driver-panel').css('cursor', 'move');
+
+    // Handle Escape Key to exit drag mode
+    $(document).on('keydown', function (e) {
+        if (e.key === "Escape") {
+            // Remove highlight
+            $('#driver-ui').css({
+                'box-shadow': 'none',
+                'border': '1px solid rgba(255, 255, 255, 0.1)'
+            });
+            // Tell Lua we're done
+            $.post(`https://${GetParentResourceName()}/exitDragMode`, JSON.stringify({}));
+        }
+    });
 });
 
 function updateDriverInfo(info) {

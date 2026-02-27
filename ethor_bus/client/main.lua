@@ -107,11 +107,11 @@ CreateThread(function()
                     })
                 end
                 
-                -- Update Loop for Doors (Support standard GTA Bus models)
-                -- Front doors: 0 (Driver), 1 (Passenger Front)
-                -- Rear doors: 2 (Back Left), 3 (Back Right)
-                local doorFront = (GetVehicleDoorAngleRatio(veh, 0) > 0.1) or (GetVehicleDoorAngleRatio(veh, 1) > 0.1)
-                local doorRear = (GetVehicleDoorAngleRatio(veh, 2) > 0.1) or (GetVehicleDoorAngleRatio(veh, 3) > 0.1)
+                -- Update Loop for Doors
+                -- Front doors: 1 and 2
+                -- Rear doors: 3 and 4
+                local doorFront = (GetVehicleDoorAngleRatio(veh, 1) > 0.1) or (GetVehicleDoorAngleRatio(veh, 2) > 0.1)
+                local doorRear = (GetVehicleDoorAngleRatio(veh, 3) > 0.1) or (GetVehicleDoorAngleRatio(veh, 4) > 0.1)
                 
                 SendNUIMessage({
                     action = "updateDriverUI",
@@ -268,3 +268,77 @@ RegisterNUICallback('closeUI', function(data, cb)
     SendNUIMessage({ action = "closePassengerUI" })
     cb('ok')
 end)
+
+-- =============================================
+-- Driver UI Drag Mode & Reset
+-- =============================================
+
+RegisterCommand('busdriveui', function()
+    if inBus and driverUIVisible then
+        SetNuiFocus(true, true)
+        SendNUIMessage({ action = "enableUIDragMode" })
+    else
+        AG.Notify.Show('Bus System', 'Du musst in einem Bus sitzen, um das UI zu bearbeiten!', 'error')
+    end
+end, false)
+
+RegisterNUICallback('exitDragMode', function(data, cb)
+    -- Called when ESC is pressed in the UI during drag mode
+    SetNuiFocus(false, false)
+    cb('ok')
+end)
+
+RegisterCommand('busuireset', function()
+    if inBus and driverUIVisible then
+        SendNUIMessage({ action = "resetUIPosition" })
+        AG.Notify.Show('Bus System', 'UI Position wurde zurückgesetzt!', 'success')
+    end
+end, false)
+
+-- =============================================
+-- KeyBindings (Doors & Actions)
+-- =============================================
+
+local function toggleDoor(veh, doorIndex)
+    if GetVehicleDoorAngleRatio(veh, doorIndex) > 0.1 then
+        SetVehicleDoorShut(veh, doorIndex, false)
+    else
+        SetVehicleDoorOpen(veh, doorIndex, false, false)
+    end
+end
+
+RegisterCommand('+bus_door_front', function()
+    if inBus and currentBus ~= 0 then
+        toggleDoor(currentBus, 1)
+        toggleDoor(currentBus, 2)
+    end
+end, false)
+RegisterKeyMapping('+bus_door_front', 'Bus: Vordere Türen (1&2)', 'keyboard', 'NUMPAD1')
+
+RegisterCommand('+bus_door_rear', function()
+    if inBus and currentBus ~= 0 then
+        toggleDoor(currentBus, 3)
+        toggleDoor(currentBus, 4)
+    end
+end, false)
+RegisterKeyMapping('+bus_door_rear', 'Bus: Hintere Türen (3&4)', 'keyboard', 'NUMPAD2')
+
+RegisterCommand('+bus_service', function()
+    if inBus and currentTripId then
+        TriggerServerEvent('ethor_bus:server:ToggleServiceMode', currentTripId)
+    end
+end, false)
+RegisterKeyMapping('+bus_service', 'Bus: Service Mode (Beenden)', 'keyboard', 'NUMPAD4')
+
+RegisterCommand('+bus_skip', function()
+    if inBus and currentTripId then
+        TriggerServerEvent('ethor_bus:server:ReportSkipStop', currentTripId, 5)
+        AG.Notify.Show('Bus System', 'Haltestelle übersprungen.', 'error')
+        if currentRouteStops and currentStopIndex then
+            currentStopIndex = currentStopIndex + 1
+            if currentStopIndex > #currentRouteStops then currentStopIndex = 1 end
+        end
+        TriggerEvent('ethor_bus:client:UpdateDriverUI')
+    end
+end, false)
+RegisterKeyMapping('+bus_skip', 'Bus: Haltestelle überspringen', 'keyboard', 'NUMPAD5')
