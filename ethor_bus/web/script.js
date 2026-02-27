@@ -289,17 +289,17 @@ function updateDriverInfo(info) {
     // Doors
     if (info.doorFront !== undefined) {
         if (info.doorFront) {
-            $('#door-front').addClass('open').html('<i class="fa-solid fa-door-open"></i> Tür 1 (Offen)');
+            $('#door-front').addClass('open').html('<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span><i class="fa-solid fa-door-open"></i> Tür 1</span><span style="font-size:10px; opacity:0.8;">(Offen)</span></div>');
         } else {
-            $('#door-front').removeClass('open').html('<i class="fa-solid fa-door-closed"></i> Tür 1 (Geschlossen)');
+            $('#door-front').removeClass('open').html('<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span><i class="fa-solid fa-door-closed"></i> Tür 1</span><span style="font-size:10px; opacity:0.8;">(Geschlossen)</span></div>');
         }
     }
 
     if (info.doorRear !== undefined) {
         if (info.doorRear) {
-            $('#door-rear').addClass('open').html('<i class="fa-solid fa-door-open"></i> Tür 2 (Offen)');
+            $('#door-rear').addClass('open').html('<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span><i class="fa-solid fa-door-open"></i> Tür 2</span><span style="font-size:10px; opacity:0.8;">(Offen)</span></div>');
         } else {
-            $('#door-rear').removeClass('open').html('<i class="fa-solid fa-door-closed"></i> Tür 2 (Geschlossen)');
+            $('#door-rear').removeClass('open').html('<div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;"><span><i class="fa-solid fa-door-closed"></i> Tür 2</span><span style="font-size:10px; opacity:0.8;">(Geschlossen)</span></div>');
         }
     }
 
