@@ -449,7 +449,6 @@ window.addEventListener('message', function (event) {
 function startAdRotation(intervalMs) {
     if (adRotationInterval) clearInterval(adRotationInterval);
 
-    let driverAdImg = $('#driver-ad-image');
     let passAdImg = $('#passenger-ad-image');
     let inbusAdImg = $('#inbus-ad-image'); // New In-Bus Monitor
 
@@ -468,21 +467,17 @@ function startAdRotation(intervalMs) {
 startAdRotation(30000);
 
 function displayAd(adData) {
-    let driverAdImg = $('#driver-ad-image');
     let passAdImg = $('#passenger-ad-image');
     let inbusAdImg = $('#inbus-ad-image');
 
     // Fade out
-    driverAdImg.addClass('hidden');
     passAdImg.addClass('hidden');
     inbusAdImg.addClass('hidden');
 
     setTimeout(() => {
-        driverAdImg.attr('src', adData.image_url);
         passAdImg.attr('src', adData.image_url);
         inbusAdImg.attr('src', adData.image_url);
 
-        driverAdImg.on('load', function () { $(this).removeClass('hidden'); });
         passAdImg.on('load', function () { $(this).removeClass('hidden'); });
         inbusAdImg.on('load', function () { $(this).removeClass('hidden'); });
     }, 500);
