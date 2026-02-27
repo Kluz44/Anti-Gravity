@@ -145,6 +145,34 @@
         </div>
     </div>
 
+    <!-- IN-BUS PASSENGER INFO UI -->
+    <div id="inbus-passenger-ui" style="display: none;">
+        <div class="monitor-container">
+            <div class="monitor-left">
+                <img id="inbus-ad-image" src="" alt="Advertisement" class="hidden">
+            </div>
+            <div class="monitor-right">
+                <div class="monitor-header">
+                    <span class="m-line-badge" id="pax-line">--</span>
+                    <span class="m-destination" id="pax-next-stop">Keine Route</span>
+                </div>
+                <div class="monitor-body">
+                    <div class="m-stop-row top-stop">
+                        <div class="m-dot-container">
+                            <div class="m-line-segment"></div>
+                            <div class="m-dot current highlight"></div>
+                        </div>
+                        <span class="m-stop-name" id="pax-next-stop-body">Nächste Haltestelle</span>
+                    </div>
+                </div>
+                <div class="monitor-footer">
+                    <div class="m-dot highlight"></div>
+                    <span class="m-eta" id="pax-eta-text">ETA: <span id="pax-eta">--:--</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="script.js"></script>

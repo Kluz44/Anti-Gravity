@@ -88,7 +88,17 @@ CreateThread(function()
         
         if IsPedInAnyVehicle(ped, false) then
             local veh = GetVehiclePedIsIn(ped, false)
-            if GetPedInVehicleSeat(veh, -1) == ped and isVehicleABus(veh) then
+            local isDriver = GetPedInVehicleSeat(veh, -1) == ped
+            
+            if isVehicleABus(veh) then
+                if isDriver then
+                    -- =========================================================
+                    -- DRIVER LOGIC
+                    -- =========================================================
+                    if passengerUIVisible then
+                        passengerUIVisible = false
+                        SendNUIMessage({ action = "togglePassengerInBusUI", show = false })
+                    end
                 if not inBus then
                     inBus = true
                     currentBus = veh
@@ -121,21 +131,55 @@ CreateThread(function()
                     }
                 })
                 Wait(500) -- Refresh rate for doors
+                    }
+                })
+                Wait(500) -- Refresh rate for doors
             else
-                if inBus then
-                    inBus = false
-                    currentBus = 0
+                -- =========================================================
+                -- PASSENGER LOGIC (Not Driver)
+                -- =========================================================
+                if driverUIVisible then
                     driverUIVisible = false
                     SendNUIMessage({ action = "toggleDriverUI", show = false })
                 end
+                
+                if not passengerUIVisible then
+                    passengerUIVisible = true
+                    inBus = true
+                    currentBus = veh
+                    SendNUIMessage({
+                        action = "togglePassengerInBusUI",
+                        show = true,
+                        info = {
+                            line = "Ausser Dienst",
+                            nextStop = "Gewerbegebiet",
+                            eta = "--:--"
+                        }
+                    })
+                end
+                
+                SendNUIMessage({
+                    action = "updatePassengerInBusUI",
+                    info = {
+                        -- In a real scenario, this gets data synced from the driver via server
+                        -- For now, we just keep it visible
+                    }
+                })
                 Wait(1000)
             end
         else
+            -- Outside any vehicle
             if inBus then
                 inBus = false
                 currentBus = 0
-                driverUIVisible = false
-                SendNUIMessage({ action = "toggleDriverUI", show = false })
+                if driverUIVisible then
+                    driverUIVisible = false
+                    SendNUIMessage({ action = "toggleDriverUI", show = false })
+                end
+                if passengerUIVisible then
+                    passengerUIVisible = false
+                    SendNUIMessage({ action = "togglePassengerInBusUI", show = false })
+                end
             end
             Wait(2000)
         end
