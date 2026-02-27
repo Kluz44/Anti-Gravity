@@ -131,9 +131,6 @@ CreateThread(function()
                     }
                 })
                 Wait(500) -- Refresh rate for doors
-                    }
-                })
-                Wait(500) -- Refresh rate for doors
             else
                 -- =========================================================
                 -- PASSENGER LOGIC (Not Driver)
