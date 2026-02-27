@@ -107,9 +107,9 @@ CreateThread(function()
                     })
                 end
                 
-                -- Update Loop for Doors
-                local doorFront = GetVehicleDoorAngleRatio(veh, 0) > 0.1 -- FL Door
-                local doorRear = GetVehicleDoorAngleRatio(veh, 2) > 0.1  -- RL Door or specific bus doors
+                -- Update Loop for Doors (Passenger Side: 1=Front Right, 3=Rear Right)
+                local doorFront = GetVehicleDoorAngleRatio(veh, 1) > 0.1 
+                local doorRear = GetVehicleDoorAngleRatio(veh, 3) > 0.1
                 
                 SendNUIMessage({
                     action = "updateDriverUI",

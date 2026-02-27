@@ -92,6 +92,9 @@
 
     <!-- DRIVER UI WRAPPER -->
     <div id="driver-ui" style="display: none;">
+        <div class="driver-ad-box" style="margin-bottom: 0;">
+            <img id="driver-ad-image" src="" alt="Advertisement" class="hidden">
+        </div>
         <div class="driver-panel">
             <!-- LEFT -->
             <div class="col-left">
@@ -120,29 +123,7 @@
         </div>
     </div>
 
-    <!-- Bordrechner / Driver UI Container -->
-    <div id="driver-ui-container" class="hidden">
-        <div class="driver-header">
-            <h2>Bordrechner</h2>
-            <div class="line-badge" id="driver-line-display">L1</div>
-        </div>
 
-        <div class="driver-ad-box">
-            <img id="driver-ad-image" src="" alt="Advertisement" class="hidden">
-        </div>
-
-        <div class="driver-stats">
-            <div class="door-status" id="door-front"><i class="fa-solid fa-door-closed"></i> Tür 1 (Geschlossen)
-            </div>
-            <div class="door-status" id="door-rear"><i class="fa-solid fa-door-closed"></i> Tür 2 (Geschlossen)
-            </div>
-            <div class="alert-box" id="stop-request-alert"><i class="fa-solid fa-bell"></i> STOP REQUEST</div>
-        </div>
-        <div class="driver-footer">
-            <span class="pax-count"><i class="fa-solid fa-users"></i> Pax: <span id="drv-pax">0/50</span></span>
-            <span class="mood-score"><i class="fa-solid fa-face-smile"></i> Mood: <span id="drv-mood">100%</span></span>
-        </div>
-    </div>
 
     <!-- PASSENGER STOP UI (DEPARTURE BOARD) -->
     <div id="passenger-ui" style="display: none;">
