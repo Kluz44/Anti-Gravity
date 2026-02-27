@@ -110,7 +110,7 @@ CreateThread(function()
                             action = "toggleDriverUI",
                             show = true,
                             info = {
-                                line = "Ausser Dienst",
+                                line = "Außer Dienst",
                                 nextStop = "Gewerbegebiet",
                                 eta = "--:--",
                                 pax = "0/50",
@@ -151,7 +151,7 @@ CreateThread(function()
                             action = "togglePassengerInBusUI",
                             show = true,
                             info = {
-                                line = "Ausser Dienst",
+                                line = "Außer Dienst",
                                 nextStop = "Gewerbegebiet",
                                 eta = "--:--"
                             }
@@ -401,3 +401,96 @@ RegisterCommand('+bus_skip', function()
     end
 end, false)
 RegisterKeyMapping('+bus_skip', 'Bus: Haltestelle überspringen', 'keyboard', 'NUMPAD5')
+
+-- Stop Request (Passenger presses E)
+local lastStopRequestTime = 0
+RegisterCommand('+bus_stop_request', function()
+    if inBus and currentBus ~= 0 then
+        local ped = PlayerPedId()
+        local isDriver = GetPedInVehicleSeat(currentBus, -1) == ped
+        if not isDriver then
+            local currentTime = GetGameTimer()
+            if currentTime - lastStopRequestTime > 10000 then
+                lastStopRequestTime = currentTime
+                
+                -- Play local passenger sound immediately
+                SendNUIMessage({
+                    action = "playSound",
+                    file = "StopRequest"
+                })
+                
+                -- Send up to server to sync to driver
+                TriggerServerEvent('ethor_bus:server:SyncStopRequest', NetworkGetNetworkIdFromEntity(currentBus))
+            else
+                AG.Notify.Show('Bus System', 'Bitte warte einen Moment vor dem nächsten Haltewunsch.', 'error')
+            end
+        end
+    end
+end, false)
+RegisterKeyMapping('+bus_stop_request', 'Bus: Haltewunsch (Passagier)', 'keyboard', 'E')
+
+-- Stop Request Acknowledge (Driver presses NUM6)
+RegisterCommand('+bus_clear_request', function()
+    if inBus and currentBus ~= 0 then
+        local ped = PlayerPedId()
+        local isDriver = GetPedInVehicleSeat(currentBus, -1) == ped
+        if isDriver then
+            -- Tell server to clear the request
+            TriggerServerEvent('ethor_bus:server:ClearStopRequest', NetworkGetNetworkIdFromEntity(currentBus))
+            AG.Notify.Show('Bus System', 'Haltewunsch quittiert.', 'success')
+        end
+    end
+end, false)
+RegisterKeyMapping('+bus_clear_request', 'Bus: Haltewunsch Quittieren (Fahrer)', 'keyboard', 'NUMPAD6')
+
+-- Client Event listener for synchronized Stop Requests
+RegisterNetEvent('ethor_bus:client:ReceiveStopRequest', function(busNetId)
+    if inBus and currentBus ~= 0 then
+        -- Check if we are in the same bus that the request came from
+        if NetworkGetNetworkIdFromEntity(currentBus) == busNetId then
+            local ped = PlayerPedId()
+            local isDriver = GetPedInVehicleSeat(currentBus, -1) == ped
+            
+            if isDriver then
+                SendNUIMessage({
+                    action = "playSound",
+                    file = "StopRequest"
+                })
+                AG.Notify.Show('Linie', 'Haltewunsch ausgelöst!', 'warning')
+            end
+        end
+    end
+end)
+
+-- Update Driver UI manually
+RegisterNetEvent('ethor_bus:client:UpdateDriverUI', function()
+    local nextStopName = "Gewerbegebiet"
+    if currentRouteStops and currentStopIndex then
+        local stop = currentRouteStops[currentStopIndex]
+        if stop and stop.name then
+            nextStopName = stop.name
+        end
+    end
+
+    local cleanStopName = nextStopName:gsub("%s+", "") -- Remove spaces to match mp3 titles
+    
+    SendNUIMessage({
+        action = "updateDriverUI",
+        info = {
+            nextStop = nextStopName
+        }
+    })
+    
+    SendNUIMessage({
+        action = "updatePassengerInBusUI",
+        info = {
+            nextStop = nextStopName
+        }
+    })
+
+    -- Play Sequence: NextStop.mp3 -> cleanStopName.mp3
+    SendNUIMessage({
+        action = "playSound",
+        file = { "NextStop", cleanStopName }
+    })
+end)

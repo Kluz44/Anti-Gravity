@@ -55,3 +55,22 @@ RegisterNetEvent('ethor_bus:server:FetchRequests', function()
         AG.Notify.Show(src, 'Es gibt ' .. #reqs .. ' offene Haltestellen-Anfragen.', 'info')
     end
 end)
+
+-- Passenger Stop Request Relay
+RegisterNetEvent('ethor_bus:server:SyncStopRequest', function(busNetId)
+    local src = source
+    local busEntity = NetworkGetEntityFromNetworkId(busNetId)
+    
+    if busEntity and DoesEntityExist(busEntity) then
+        -- Find driver of this specific bus to notify them
+        -- (A simpler way is to broadcast to all clients, and let the client explicitly filter if they're in that Network ID Bus and if they are the Driver)
+        TriggerClientEvent('ethor_bus:client:ReceiveStopRequest', -1, busNetId)
+    end
+end)
+
+-- Driver Clear Stop Request Relay (Optional future usage)
+RegisterNetEvent('ethor_bus:server:ClearStopRequest', function(busNetId)
+    local src = source
+    -- Could be used to visually clear the "Stop Requested" light on passenger monitors later
+    -- TriggerClientEvent('ethor_bus:client:ReceiveClearStopRequest', -1, busNetId)
+end)

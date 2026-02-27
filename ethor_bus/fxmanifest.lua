@@ -51,6 +51,7 @@ files {
     'web/ag_map_day.jpg',
     'web/placeholder1.jpg',
     'web/placeholder2.jpg',
+    'web/sounds/*.mp3',
     'data.json',
     'data/busstops.json',
     'data/routes.json'

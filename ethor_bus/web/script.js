@@ -443,6 +443,26 @@ window.addEventListener('message', function (event) {
         if (data.heatmapData && $('#dispatch-ui').is(':visible')) {
             renderHeatmap(data.heatmapData);
         }
+    } else if (data.action === "playSound") {
+        let audio = document.getElementById("bus-audio");
+        if (!audio) return;
+
+        let files = Array.isArray(data.file) ? data.file : [data.file];
+        let currentIdx = 0;
+
+        function playNext() {
+            if (currentIdx >= files.length) return;
+            audio.src = `sounds/${files[currentIdx]}.mp3`;
+            audio.volume = data.volume || 1.0;
+            audio.play().catch(e => console.error("Audio Play Error:", e));
+
+            audio.onended = function () {
+                currentIdx++;
+                playNext();
+            };
+        }
+
+        playNext();
     }
 });
 
