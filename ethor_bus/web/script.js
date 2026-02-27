@@ -116,12 +116,12 @@ function renderLines() {
 }
 
 // Coordinate mapping (GTA coords to map div percentage mapping)
-// This is an extremely rough estimation for typical map backgrounds
+// Standard GTA V Map bounds for a square image (roughly -4000 to 8000 scaled to 0-100%)
 function mapGtaToPixels(x, y) {
-    // Assuming Map bounds: X: -4000 to 4000, Y: -4000 to 8000
-    // And percentage mapping 0-100%
-    const percentX = ((x + 4000) / 8000) * 100;
-    const percentY = 100 - (((y + 4000) / 12000) * 100);
+    // Map bounds: X: -4200 to 4200 (width 8400), Y: -4200 to +8400 (height 12600)
+    // We adjust percentages to fit the image
+    const percentX = ((x + 4200) / 8400) * 100;
+    const percentY = 100 - (((y + 4200) / 12600) * 100);
     return { px: percentX, py: percentY };
 }
 
