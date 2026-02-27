@@ -703,13 +703,14 @@ header {
     /* Orange badge */
     color: white;
     font-weight: 800;
-    font-size: 20px;
-    padding: 4px 12px;
-    clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);
+    font-size: 16px;
+    padding: 6px 20px;
+    white-space: nowrap;
+    clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
 }
 
 .m-destination {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
@@ -762,7 +763,7 @@ header {
 }
 
 .m-stop-name {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: white;
 }
@@ -778,7 +779,7 @@ header {
 }
 
 .monitor-footer .m-eta {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #fff;
 }
