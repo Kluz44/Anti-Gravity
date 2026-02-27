@@ -115,14 +115,20 @@ function renderLines() {
     });
 }
 
-// Coordinate mapping (GTA coords to map div percentage mapping)
-// Standard GTA V Map bounds for a square image (roughly -4000 to 8000 scaled to 0-100%)
+// Coordinate mapping (Match ag_powerwater scale precisely)
 function mapGtaToPixels(x, y) {
-    // Map bounds: X: -4200 to 4200 (width 8400), Y: -4200 to +8400 (height 12600)
-    // We adjust percentages to fit the image
-    const percentX = ((x + 4200) / 8400) * 100;
-    const percentY = 100 - (((y + 4200) / 12600) * 100);
-    return { px: percentX, py: percentY };
+    const minX = -4000;
+    const maxX = 4200;
+    const minY = -4500;
+    const maxY = 8000;
+
+    const percentX = ((x - minX) / (maxX - minX)) * 100;
+    const percentY = ((y - minY) / (maxY - minY)) * 100;
+
+    return {
+        px: Math.max(0, Math.min(100, percentX)),
+        py: Math.max(0, Math.min(100, 100 - percentY))
+    };
 }
 
 function renderMapMarkers() {
