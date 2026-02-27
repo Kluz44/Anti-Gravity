@@ -30,13 +30,10 @@ body {
     width: 90vw;
     height: 90vh;
     margin: 5vh auto;
-    background-color: rgba(15, 23, 42, 0.4);
-    /* Much more transparent */
+    background-color: transparent;
     border-radius: 12px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     overflow: hidden;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* LEFT: MAP SEGMENT */
@@ -45,7 +42,6 @@ body {
     position: relative;
     background-color: transparent;
     overflow: hidden;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #gta-map {
@@ -98,6 +94,9 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 400px;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 header {
@@ -326,7 +325,7 @@ header {
     bottom: 20px;
     right: 20px;
     width: 450px;
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
