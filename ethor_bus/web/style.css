@@ -368,12 +368,16 @@ header {
 }
 
 .door-status {
-    color: var(--text-muted);
+    color: white;
+    background: var(--danger);
+    /* Solid Red when closed */
+    border: 1px solid var(--danger);
 }
 
 .door-status.open {
-    color: var(--success);
-    background: rgba(16, 185, 129, 0.2);
+    color: white;
+    background: var(--success);
+    /* Solid Green when open */
     border: 1px solid var(--success);
 }
 
@@ -446,9 +450,10 @@ header {
 }
 
 .btn-drv.action {
-    background: rgba(239, 68, 68, 0.2);
+    background: var(--danger);
+    /* Solid Red */
     border-color: var(--danger);
-    color: var(--danger);
+    color: white;
 }
 
 .btn-drv.action:hover {
