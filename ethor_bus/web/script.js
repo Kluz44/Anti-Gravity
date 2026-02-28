@@ -15,6 +15,7 @@ window.addEventListener('message', function (event) {
 
     if (data.action === "openDispatch") {
         try {
+            console.log("RECEIVED OPENDISPATCH");
             $("#dispatch-ui").fadeIn(300);
             // Reset view on open
             mapZoom = 1.0;
@@ -33,8 +34,12 @@ window.addEventListener('message', function (event) {
                 renderLines();
             }
         } catch (e) {
-            $.post('https://ethor_bus/nuiError', JSON.stringify({ error: e.toString(), stack: e.stack }));
             console.error(e);
+            fetch(`https://${GetParentResourceName()}/nuiError`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: String(e), stack: e.stack })
+            }).catch(err => console.log("Fetch Error Failed", err));
         }
     }
 });

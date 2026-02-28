@@ -13,15 +13,23 @@ RegisterCommand('busboss', function()
 end)
 
 RegisterNetEvent('ethor_bus:client:OpenDispatchUI', function(data)
-    if isDispatchOpen then return end
     isDispatchOpen = true
     SetNuiFocus(true, true)
     
-    SendNUIMessage({
+    local sendPayload = {
         action = "openDispatch",
         stops = data.stops or {},
         routes = data.routes or {}
-    })
+    }
+    
+    local success, encoded = pcall(json.encode, sendPayload)
+    if not success then
+        print('^1[ethor_bus] CRITICAL: Failed to JSON encode NUI payload: ^7' .. tostring(encoded))
+    else
+        print('^4[ethor_bus] ^7Sending NUI Payload (' .. string.len(encoded) .. ' bytes)')
+    end
+
+    SendNUIMessage(sendPayload)
     
     AG.Notify.Show('Bus System', 'Dispatch UI geöffnet', 'success')
 end)
