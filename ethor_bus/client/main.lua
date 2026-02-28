@@ -494,3 +494,29 @@ RegisterNetEvent('ethor_bus:client:UpdateDriverUI', function()
         file = { "NextStop", cleanStopName }
     })
 end)
+
+-- Replay Announcement (Driver presses NUM7)
+RegisterCommand('+bus_replay_announcement', function()
+    if inBus and currentBus ~= 0 then
+        local ped = PlayerPedId()
+        local isDriver = GetPedInVehicleSeat(currentBus, -1) == ped
+        if isDriver then
+            local nextStopName = "Gewerbegebiet"
+            if currentRouteStops and currentStopIndex then
+                local stop = currentRouteStops[currentStopIndex]
+                if stop and stop.name then
+                    nextStopName = stop.name
+                end
+            end
+            
+            local cleanStopName = nextStopName:gsub("%s+", "")
+            
+            SendNUIMessage({
+                action = "playSound",
+                file = { "NextStop", cleanStopName }
+            })
+            AG.Notify.Show('Bus System', 'Ansage wird wiederholt.', 'info')
+        end
+    end
+end, false)
+RegisterKeyMapping('+bus_replay_announcement', 'Bus: Ansage wiederholen', 'keyboard', 'NUMPAD7')
