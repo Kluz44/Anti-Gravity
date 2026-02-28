@@ -3,6 +3,10 @@
 // ==========================================
 
 let mapZoom = 1.0;
+let panX = 0;
+let panY = 0;
+let isDragging = false;
+let startX, startY;
 let stopsData = [];
 let linesData = [];
 
@@ -11,15 +15,20 @@ window.addEventListener('message', function (event) {
 
     if (data.action === "openDispatch") {
         $("#dispatch-ui").fadeIn(300);
+        // Reset view on open
+        mapZoom = 1.0;
+        panX = 0;
+        panY = 0;
+        applyZoom();
 
         // Populate initially
         if (data.stops) {
-            stopsData = data.stops;
+            stopsData = Object.values(data.stops);
             renderStops();
             renderMapMarkers();
         }
-        if (data.lines) {
-            linesData = data.lines;
+        if (data.routes || data.lines) {
+            linesData = Object.values(data.routes || data.lines || {});
             renderLines();
         }
     }
@@ -64,8 +73,34 @@ $('#zoom-out').on('click', function () {
     }
 });
 
+// Map Panning (Dragging)
+$('#gta-map').on('mousedown', function (e) {
+    // Prevent dragging if clicking a button inside map-section
+    if ($(e.target).closest('.map-controls').length > 0) return;
+
+    isDragging = true;
+    startX = e.clientX - panX;
+    startY = e.clientY - panY;
+    $(this).css({ 'cursor': 'grabbing', 'transition': 'none' });
+});
+
+$(document).on('mousemove', function (e) {
+    if (!isDragging) return;
+    e.preventDefault(); // prevent text selection
+    panX = e.clientX - startX;
+    panY = e.clientY - startY;
+    applyZoom();
+});
+
+$(document).on('mouseup mouseleave', function () {
+    if (isDragging) {
+        isDragging = false;
+        $('#gta-map').css({ 'cursor': 'grab', 'transition': 'transform 0.2s cubic-bezier(0.2, 0, 0, 1)' });
+    }
+});
+
 function applyZoom() {
-    $('#gta-map').css('transform', `scale(${mapZoom})`);
+    $('#gta-map').css('transform', `translate(${panX}px, ${panY}px) scale(${mapZoom})`);
 }
 
 // Render Data Utilities
