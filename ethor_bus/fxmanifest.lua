@@ -46,8 +46,8 @@ ui_page 'web/index.html'
 
 files {
     'web/index.html',
-    'web/style.css',
-    'web/script.js',
+    'web/style_v2.css',
+    'web/script_v2.js',
     'web/ag_map_day.jpg',
     'web/placeholder1.jpg',
     'web/placeholder2.jpg',

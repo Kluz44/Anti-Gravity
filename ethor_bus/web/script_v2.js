@@ -22,9 +22,10 @@ window.addEventListener('message', function (event) {
             panY = 0;
             applyZoom();
 
-            // Populate initially
             if (data.stops) {
-                stopsData = Object.values(data.stops || {});
+                // Ensure array format for safe iteration regardless of Lua table type
+                stopsData = Array.isArray(data.stops) ? data.stops : Object.values(data.stops || {});
+                $.post(`https://${GetParentResourceName()}/nuiDebug`, JSON.stringify({ msg: "Parsed stops array length: " + stopsData.length }));
                 renderStops();
                 renderMapMarkers();
             }
@@ -82,6 +83,23 @@ $('#zoom-out').on('click', function () {
         if (mapZoom < 1.0) mapZoom = 1.0;
         applyZoom();
     }
+});
+
+$('#gta-map').on('wheel', function (e) {
+    // Determine wheel direction
+    const delta = Math.sign(e.originalEvent.deltaY);
+
+    // Zoom out (scrolling down)
+    if (delta > 0 && mapZoom > 1.0) {
+        mapZoom -= 0.1;
+        if (mapZoom < 1.0) mapZoom = 1.0;
+    }
+    // Zoom in (scrolling up)
+    else if (delta < 0 && mapZoom < 3.0) {
+        mapZoom += 0.1;
+    }
+
+    applyZoom();
 });
 
 // Map Panning (Dragging)

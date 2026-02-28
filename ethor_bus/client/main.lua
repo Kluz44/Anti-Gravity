@@ -37,6 +37,11 @@ RegisterNUICallback('nuiError', function(data, cb)
     cb('ok')
 end)
 
+RegisterNUICallback('nuiDebug', function(data, cb)
+    print('^5[NUI DEBUG] ^7' .. tostring(data.msg))
+    cb('ok')
+end)
+
 RegisterNUICallback('actionDriverService', function(data, cb)
     if currentTripId then
         TriggerServerEvent('ethor_bus:server:ToggleServiceMode', currentTripId)

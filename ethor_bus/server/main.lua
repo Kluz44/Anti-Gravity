@@ -12,6 +12,7 @@ RegisterNetEvent('ethor_bus:server:RequestDispatchData', function()
     if IsPlayerAceAllowed(src, 'command.buscreate') or (playerJob and playerJob.name == Config.Society) then
         -- Fetch Stops
         local stops = MySQL.query.await('SELECT id, name, coords, base_demand, rush_profile FROM bus_stops')
+        print('^3[DB] Loaded ' .. #stops .. ' stops from bus_stops table^7')
         
         -- Fetch Routes (Assuming checking company later, fetching all for now)
         local routes = MySQL.query.await('SELECT id, name, color, stops_json FROM bus_routes')
