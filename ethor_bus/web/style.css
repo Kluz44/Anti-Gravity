@@ -41,19 +41,16 @@ body {
     position: relative;
     background-color: transparent;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #gta-map {
     width: 100%;
-    max-height: 100%;
-    aspect-ratio: 82 / 125;
+    height: 100%;
     position: relative;
     background-image: url('ag_map_day.jpg');
     background-color: transparent;
-    background-size: 100% 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
     cursor: grab;
     transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);

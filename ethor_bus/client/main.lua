@@ -26,6 +26,12 @@ RegisterNetEvent('ethor_bus:client:OpenDispatchUI', function(data)
     AG.Notify.Show('Bus System', 'Dispatch UI geöffnet', 'success')
 end)
 
+RegisterNUICallback('nuiError', function(data, cb)
+    print('^1[NUI ERROR (ethor_bus)] ^7' .. tostring(data.error))
+    if data.stack then print('^1Stacktrace: ^7' .. tostring(data.stack)) end
+    cb('ok')
+end)
+
 RegisterNUICallback('actionDriverService', function(data, cb)
     if currentTripId then
         TriggerServerEvent('ethor_bus:server:ToggleServiceMode', currentTripId)

@@ -14,22 +14,27 @@ window.addEventListener('message', function (event) {
     const data = event.data;
 
     if (data.action === "openDispatch") {
-        $("#dispatch-ui").fadeIn(300);
-        // Reset view on open
-        mapZoom = 1.0;
-        panX = 0;
-        panY = 0;
-        applyZoom();
+        try {
+            $("#dispatch-ui").fadeIn(300);
+            // Reset view on open
+            mapZoom = 1.0;
+            panX = 0;
+            panY = 0;
+            applyZoom();
 
-        // Populate initially
-        if (data.stops) {
-            stopsData = Object.values(data.stops || {});
-            renderStops();
-            renderMapMarkers();
-        }
-        if (data.routes || data.lines) {
-            linesData = Object.values(data.routes || data.lines || {});
-            renderLines();
+            // Populate initially
+            if (data.stops) {
+                stopsData = Object.values(data.stops || {});
+                renderStops();
+                renderMapMarkers();
+            }
+            if (data.routes || data.lines) {
+                linesData = Object.values(data.routes || data.lines || {});
+                renderLines();
+            }
+        } catch (e) {
+            $.post('https://ethor_bus/nuiError', JSON.stringify({ error: e.toString(), stack: e.stack }));
+            console.error(e);
         }
     }
 });
