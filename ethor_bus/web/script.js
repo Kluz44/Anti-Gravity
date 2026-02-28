@@ -140,7 +140,7 @@ function renderLines() {
             <li class="list-item" style="border-left: 4px solid ${line.color};">
                 <div class="item-info">
                     <h4>${line.name}</h4>
-                    <p>Haltestellen: ${line.stops.length}</p>
+                    <p>Haltestellen: ${line.stops ? line.stops.length : 0}</p>
                 </div>
                 <button class="btn-primary" style="background:var(--bg-main); border:1px solid var(--border);">Route zeigen</button>
             </li>
