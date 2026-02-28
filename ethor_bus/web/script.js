@@ -23,7 +23,7 @@ window.addEventListener('message', function (event) {
 
         // Populate initially
         if (data.stops) {
-            stopsData = Object.values(data.stops);
+            stopsData = Object.values(data.stops || {});
             renderStops();
             renderMapMarkers();
         }
