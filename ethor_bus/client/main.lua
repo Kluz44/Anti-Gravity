@@ -16,7 +16,10 @@ RegisterNetEvent('ethor_bus:client:OpenDispatchUI', function(payloadString)
     isDispatchOpen = true
     SetNuiFocus(true, true)
     
-    local data = json.decode(payloadString)
+    local success, data = pcall(json.decode, payloadString)
+    if not success or not data then
+        data = { stops = {}, routes = {} }
+    end
     
     local sendPayload = {
         action = "openDispatch",
@@ -25,7 +28,6 @@ RegisterNetEvent('ethor_bus:client:OpenDispatchUI', function(payloadString)
     }
     
     SendNUIMessage(sendPayload)
-    
     AG.Notify.Show('Bus System', 'Dispatch UI geöffnet', 'success')
 end)
 

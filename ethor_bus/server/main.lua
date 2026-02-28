@@ -9,33 +9,32 @@ RegisterNetEvent('ethor_bus:server:RequestDispatchData', function()
     local playerJob = AG.GetJob(src) -- Assuming bridge has this
     
     -- Check for specific job/boss based on Config.Society
-    if not (IsPlayerAceAllowed(src, 'command.buscreate') or (playerJob and playerJob.name == Config.Society)) then
-        AG.Notify.Show(src, 'Keine Berechtigung (Job: ' .. (playerJob and playerJob.name or 'None') .. ')', 'error')
-        return
-    end
-    
-    -- Fetch Stops
-    local stops = MySQL.query.await('SELECT id, name, coords, base_demand, rush_profile FROM bus_stops')
-    
-    -- Fetch Routes (Assuming checking company later, fetching all for now)
-    local routes = MySQL.query.await('SELECT id, name, color, stops_json FROM bus_routes')
-    
-    -- Parse JSON strings
-    for k, v in ipairs(stops) do
-        if type(v.coords) == 'string' then v.coords = json.decode(v.coords) end
-    end
-    for k, v in ipairs(routes) do
-        if type(v.stops_json) == 'string' then v.stops = json.decode(v.stops_json) end
-    end
+    if IsPlayerAceAllowed(src, 'command.buscreate') or (playerJob and playerJob.name == Config.Society) then
+        -- Fetch Stops
+        local stops = MySQL.query.await('SELECT id, name, coords, base_demand, rush_profile FROM bus_stops')
+        
+        -- Fetch Routes (Assuming checking company later, fetching all for now)
+        local routes = MySQL.query.await('SELECT id, name, color, stops_json FROM bus_routes')
+        
+        -- Parse JSON strings
+        for k, v in ipairs(stops) do
+            if type(v.coords) == 'string' then v.coords = json.decode(v.coords) end
+        end
+        for k, v in ipairs(routes) do
+            if type(v.stops_json) == 'string' then v.stops = json.decode(v.stops_json) end
+        end
 
-    local payloadString = json.encode({
-        stops = stops,
-        routes = routes
-    })
-    
-    TriggerClientEvent('ethor_bus:client:OpenDispatchUI', src, payloadString)
-    
-    if Config.Debug then print('^4[ethor_bus] ^7Sent Dispatch Data to ' .. src) end
+        local payloadString = json.encode({
+            stops = stops,
+            routes = routes
+        })
+        
+        TriggerClientEvent('ethor_bus:client:OpenDispatchUI', src, payloadString)
+        
+        if Config.Debug then print('^4[ethor_bus] ^7Sent Dispatch Data to ' .. src) end
+    else
+        AG.Notify.Show(src, 'Keine Berechtigung (Job: ' .. (playerJob and playerJob.name or 'None') .. ')', 'error')
+    end
 end)
 
 -- =============================================

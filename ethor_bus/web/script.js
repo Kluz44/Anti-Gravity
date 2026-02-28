@@ -1,7 +1,3 @@
-console.log("ETHOR BUS SCRIPT JS LOADED");
-document.getElementById('debug-overlay').style.background = 'green';
-document.getElementById('debug-overlay').innerText = 'SCRIPT.JS PARSED SUCCESSFULLY';
-
 // ==========================================
 // Boss Dispatch NUI Logic
 // ==========================================
@@ -16,12 +12,9 @@ let linesData = [];
 
 window.addEventListener('message', function (event) {
     const data = event.data;
-    document.getElementById('debug-overlay').style.display = 'block';
-    document.getElementById('debug-overlay').innerText = 'NUI Event empfangen: ' + data.action;
 
     if (data.action === "openDispatch") {
         try {
-            console.log("RECEIVED OPENDISPATCH");
             $("#dispatch-ui").fadeIn(300);
             // Reset view on open
             mapZoom = 1.0;
