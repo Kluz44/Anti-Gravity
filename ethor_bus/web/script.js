@@ -12,6 +12,8 @@ let linesData = [];
 
 window.addEventListener('message', function (event) {
     const data = event.data;
+    document.getElementById('debug-overlay').style.display = 'block';
+    document.getElementById('debug-overlay').innerText = 'NUI Event empfangen: ' + data.action;
 
     if (data.action === "openDispatch") {
         try {
