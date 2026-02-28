@@ -76,8 +76,10 @@ $('#zoom-in').on('click', function () {
 });
 
 $('#zoom-out').on('click', function () {
-    if (mapZoom > 0.5) {
+    if (mapZoom > 1.0) {
         mapZoom -= 0.2;
+        // Clamp to exactly 1.0 to avoid floating point issues (e.g. 1.0000000000000002)
+        if (mapZoom < 1.0) mapZoom = 1.0;
         applyZoom();
     }
 });

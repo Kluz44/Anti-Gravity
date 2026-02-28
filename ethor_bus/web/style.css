@@ -246,34 +246,38 @@ header {
 /* LISTS */
 .line-list,
 .stop-list {
-    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    list-style: none;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    padding-right: 10px;
 }
 
 .list-item {
-    background: var(--bg-secondary);
+    background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border);
-    padding: 15px;
     border-radius: 8px;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: border-color 0.2s;
+    transition: background 0.2s;
 }
 
 .list-item:hover {
-    border-color: var(--accent);
+    background: rgba(0, 0, 0, 0.4);
 }
 
-.item-info h4 {
+.list-item .item-info h4 {
     font-size: 16px;
-    margin-bottom: 4px;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
-.item-info p {
-    font-size: 12px;
+.list-item .item-info p {
+    font-size: 13px;
     color: var(--text-muted);
 }
 
