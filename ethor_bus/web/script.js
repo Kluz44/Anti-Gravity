@@ -1,3 +1,7 @@
+console.log("ETHOR BUS SCRIPT JS LOADED");
+document.getElementById('debug-overlay').style.background = 'green';
+document.getElementById('debug-overlay').innerText = 'SCRIPT.JS PARSED SUCCESSFULLY';
+
 // ==========================================
 // Boss Dispatch NUI Logic
 // ==========================================

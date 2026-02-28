@@ -2,21 +2,7 @@
 -- Server Main Logic (ethor_bus)
 -- =============================================
 
--- Admin/Boss Command to open UI
-RegisterCommand('busboss', function(source, args)
-    local src = source
-    local playerJob = AG.GetJob(src) -- Assuming bridge has this
-    
-    -- Either admin or specific boss 
-    if IsPlayerAceAllowed(src, 'command.buscreate') or (playerJob and playerJob.name == Config.Society) then
-        local stops = MySQL.query.await('SELECT * FROM bus_stops')
-        local routes = MySQL.query.await('SELECT * FROM bus_routes')
-        
-        TriggerClientEvent('ethor_bus:client:OpenDispatch', src, stops, routes)
-    else
-        AG.Notify.Show(src, 'Keine Berechtigung', 'error')
-    end
-end, false)
+
 
 RegisterNetEvent('ethor_bus:server:RequestDispatchData', function()
     local src = source
@@ -42,10 +28,12 @@ RegisterNetEvent('ethor_bus:server:RequestDispatchData', function()
         if type(v.stops_json) == 'string' then v.stops = json.decode(v.stops_json) end
     end
 
-    TriggerClientEvent('ethor_bus:client:OpenDispatchUI', src, {
+    local payloadString = json.encode({
         stops = stops,
         routes = routes
     })
+    
+    TriggerClientEvent('ethor_bus:client:OpenDispatchUI', src, payloadString)
     
     if Config.Debug then print('^4[ethor_bus] ^7Sent Dispatch Data to ' .. src) end
 end)
