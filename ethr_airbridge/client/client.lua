@@ -86,6 +86,9 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     local crew3=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,3,true,false)
     for _,p in ipairs({pilot,copilot,crew1,crew2,crew3}) do SetBlockingOfNonTemporaryEvents(p,true); SetPedCanBeTargetted(p,false); SetPedFleeAttributes(p,0,false); SetPedCombatAttributes(p,46,true); SetPedCanBeDraggedOut(p, not (Config.Pilot.NoDrag)); SetPedCanRagdoll(p, not (Config.Pilot.BlockRagdoll)); if Config.Pilot.Godmode then SetEntityInvincible(p,true) end end
     local ep=Config.EndPoint
+    if Config.Loiter and Config.Loiter.Enabled and Config.Loiter.Route and #Config.Loiter.Route > 0 then
+        ep = vec4(Config.Loiter.Route[1].x, Config.Loiter.Route[1].y, Config.CruiseAltitude, 0.0)
+    end
     TaskPlaneMission(pilot, plane, 0,0, ep.x,ep.y,ep.z, 4, Config.FlightSpeed or 85.0, 0.0,0.0, Config.CruiseAltitude, 100.0, true)
     if (Config.Pilot.KeepGearUpTick or 0) > 0 then CreateThread(function() while DoesEntityExist(plane) do if GetLandingGearState(plane) ~= 1 then ControlLandingGear(plane,1) end Wait(Config.Pilot.KeepGearUpTick) end end) end
     local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(plane)):lower()
@@ -153,18 +156,67 @@ RegisterNetEvent('ethr_airbridge:guidedDespawn', function()
     if not flight.isHost then return end
     local plane = flight.plane
     if not plane or not DoesEntityExist(plane) then TriggerServerEvent('ethr_airbridge:hostDespawned'); return end
-    local function taskTo(point, cruiseAlt, speedOverride)
-        TaskPlaneMission(flight.pilots[1], plane, 0,0, point.x,point.y,point.z, 4, speedOverride or 0.0, 0.0,0.0, cruiseAlt or Config.CruiseAltitude, 100.0, true)
+    
+    -- Fly to cinematic DespawnPoint before deleting
+    local dp = Config.DespawnPoint or vec4(5284.1255, 6583.4004, 640.9523, 125.0896)
+    local pilot = flight.pilots and flight.pilots[1]
+    if pilot and DoesEntityExist(pilot) then
+        TaskPlaneMission(pilot, plane, 0,0, dp.x,dp.y,dp.z, 4, Config.FlightSpeed or 85.0, 0.0,0.0, Config.CruiseAltitude or 550.0, 100.0, true)
     end
-    local off=Config.DespawnOffset
-    local tgt=vec3(Config.EndPoint.x+off.x, Config.EndPoint.y+off.y, Config.EndPoint.z+off.z)
-    taskTo(vec4(tgt.x,tgt.y,tgt.z,0.0), Config.CruiseAltitude, Config.Loiter and Config.Loiter.SpeedOverride or 0.0)
-    local timeout=GetGameTimer()+15000
-    while DoesEntityExist(plane) and GetGameTimer()<timeout do
-        local pos=GetEntityCoords(plane)
-        if #(pos - tgt) < (Config.Loiter and Config.Loiter.ArriveThreshold or 250.0) then break end
-        if GetLandingGearState(plane) ~= 1 then ControlLandingGear(plane,1) end
-        Wait(300)
+    
+    local timeout = GetGameTimer() + 120000 -- Give it 2 minutes maximum to reach the despawn point over the ocean
+    while DoesEntityExist(plane) and GetGameTimer() < timeout do Wait(1000)
+        local pos = GetEntityCoords(plane)
+        local targetVec = vec3(dp.x, dp.y, dp.z)
+        -- If distance is less than 350 meters from despawn point, we arrived
+        if #(pos - targetVec) < 350.0 then break end
+        if GetLandingGearState(plane) ~= 1 then ControlLandingGear(plane, 1) end
+    end
+    
+    -- Delete pilots + plane directly because it's called when everyone left
+    if flight.pilots then for _,pp in ipairs(flight.pilots) do if pp and DoesEntityExist(pp) then DeleteEntity(pp) end end end
+    if DoesEntityExist(plane) then DeleteVehicle(plane) end
+    flight.plane=nil; flight.pilots={}; flight.planeNetId=nil
+    TriggerServerEvent('ethr_airbridge:hostDespawned')
+end)
+
+-- ===== Loiter Loop (Runs during flight) =====
+CreateThread(function()
+    while true do Wait(2000)
+        if flight.isHost and flight.plane and DoesEntityExist(flight.plane) and Config.Loiter and Config.Loiter.Enabled and Config.Loiter.Route and #Config.Loiter.Route > 0 then
+            local p = flight.plane
+            local pos = GetEntityCoords(p)
+            local route = Config.Loiter.Route
+            
+            if not flight.currentWaypoint then flight.currentWaypoint = 1 end
+            
+            local targetPt = route[flight.currentWaypoint]
+            local targetVec = vec3(targetPt.x, targetPt.y, Config.CruiseAltitude)
+            local dist = #(pos - targetVec)
+            
+            if dist < (Config.Loiter.ArriveThreshold or 350.0) then
+                -- Reached the waypoint, go to next
+                flight.currentWaypoint = flight.currentWaypoint + 1
+                if flight.currentWaypoint > #route then flight.currentWaypoint = 1 end
+                
+                -- Issue new task
+                local nextPt = route[flight.currentWaypoint]
+                local nextVec = vec3(nextPt.x, nextPt.y, Config.CruiseAltitude)
+                local pilot = flight.pilots and flight.pilots[1]
+                if pilot and DoesEntityExist(pilot) then
+                    TaskPlaneMission(pilot, p, 0,0, nextVec.x,nextVec.y,nextVec.z, 4, Config.Loiter.SpeedOverride or 85.0, 0.0,0.0, Config.CruiseAltitude, 100.0, true)
+                end
+            else
+                -- Just re-issue sometimes to make sure AI doesn't break
+                if not flight.lastTaskReissue or GetGameTimer() - flight.lastTaskReissue > (Config.Loiter.ReissueMs or 5000) then
+                    flight.lastTaskReissue = GetGameTimer()
+                    local pilot = flight.pilots and flight.pilots[1]
+                    if pilot and DoesEntityExist(pilot) then
+                        TaskPlaneMission(pilot, p, 0,0, targetVec.x,targetVec.y,targetVec.z, 4, Config.Loiter.SpeedOverride or 85.0, 0.0,0.0, Config.CruiseAltitude, 100.0, true)
+                    end
+                end
+            end
+        end
     end
     -- delete pilots + plane
     if flight.pilots then for _,pp in ipairs(flight.pilots) do if pp and DoesEntityExist(pp) then DeleteEntity(pp) end end end
@@ -264,8 +316,32 @@ RegisterNetEvent('ethr_airbridge:boardPlane', function(netId, assignedSeat)
 
     -- Jump thread
     CreateThread(function()
+        local afkDeadline = GetGameTimer() + ((Config.AfkTimeoutMinutes or 10) * 60000)
+        
         while DoesEntityExist(plane) and (flight.isOnboard or flight.attached) do Wait(0)
             BeginTextCommandDisplayHelp("STRING"); AddTextComponentSubstringPlayerName(Config.HelpTextPressToJump or 'F drücken zum Springen'); EndTextCommandDisplayHelp(0,false,true,0)
+            
+            -- AFK Check
+            if GetGameTimer() > afkDeadline then
+                if flight.attached then DetachEntity(ped, true, true); flight.attached=false end
+                SetVehicleDoorsLockedForAllPlayers(plane,false); SetVehicleDoorsLocked(plane,1)
+                TaskLeaveVehicle(ped,plane,4160); Wait(250)
+                if IsPedInAnyVehicle(ped,false) then TaskLeaveVehicle(ped,plane,0); Wait(300) end
+                
+                -- Remove parachute if given
+                RemoveWeaponFromPed(ped, `GADGET_PARACHUTE`)
+                
+                local tp = Config.AfkTeleport or vec4(-1923.7034, 3758.9832, -83.8440, 293.2326)
+                SetEntityCoordsNoOffset(ped, tp.x, tp.y, tp.z, false, false, false)
+                SetEntityHeading(ped, tp.w)
+                ClearPedTasksImmediately(ped)
+                
+                flight.isOnboard=false; TriggerServerEvent('ethr_airbridge:playerJumped')
+                if Notify and Notify.Client then Notify.Client('Du warst zu lange an Bord und wurdest zum Terminal zurückgebracht.','error',6000) end
+                return
+            end
+
+            -- Normal Jump
             if IsControlJustPressed(0,75) then
                 GiveWeaponToPed(ped, `GADGET_PARACHUTE`, 1, false, true)
                 SetPedParachuteTintIndex(ped, 6) -- 6 = Schwarzer Fallschirm

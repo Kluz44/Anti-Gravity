@@ -32,9 +32,28 @@ Config.Pilot = { Godmode=true, BlockRagdoll=true, BlockSeatShuffle=true, NoDrag=
 -- Routen & Flug
 Config.StartPoint = vec4(-532.2598, -4764.4829, 340.5653, 352.5164)
 Config.EndPoint   = vec4(-471.3706, 6032.3511, 913.7523, 3.1410)
+Config.DespawnPoint = vec4(5284.1255, 6583.4004, 640.9523, 125.0896)
 Config.CruiseAltitude = 550.0
 Config.FlightSpeed    = 85.0
-Config.Loiter = { Enabled=true, PointA = vec4(-1400.0,-2500.0,550.0,110.0), PointB = vec4(3800.0,4400.0,550.0,20.0), ArriveThreshold=250.0, ReissueMs=8000, SpeedOverride=85.0 }
+Config.Loiter = { 
+    Enabled = true, 
+    Route = {
+        vec2(-16.67, 6213.64),
+        vec2(-1786.36, 4225.76),
+        vec2(-2489.39, 2092.42),
+        vec2(-1859.09, -16.67),
+        vec2(-501.52, -1640.91),
+        vec2(1025.76, -1907.58),
+        vec2(2407.58, -1422.73),
+        vec2(2553.03, 565.15),
+        vec2(3086.36, 3304.55),
+        vec2(2843.94, 5607.58),
+        vec2(1389.39, 6359.09)
+    },
+    ArriveThreshold = 350.0, 
+    ReissueMs = 5000, 
+    SpeedOverride = 85.0 
+}
 Config.DespawnOffset = vec3(2000.0, 2000.0, 300.0)
 
 -- Sitz-Policy (Die Crew belegt die Sitze -1 bis 3)
@@ -52,6 +71,8 @@ Config.MaxPlayersPerFlight = 10
 Config.ReminderIntervalSeconds = 60
 Config.FinalReminderSeconds = 30
 Config.FlightCooldownSeconds = 180
+Config.AfkTimeoutMinutes = 10
+Config.AfkTeleport = vec4(-1923.7034, 3758.9832, -83.8440, 293.2326)
 
 -- UX & Notifies
 Config.NotifySystem = 'qb'
