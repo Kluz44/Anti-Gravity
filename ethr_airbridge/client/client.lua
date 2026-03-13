@@ -100,7 +100,7 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     CreateThread(function()
         while DoesEntityExist(plane) do
             Wait(800)
-            local seatedPax=0; local max=GetVehicleMaxNumberOfPassengers(plane) or 0; for s=1,(max+2) do if not IsVehicleSeatFree(plane,s) then seatedPax=seatedPax+1 end end
+            local seatedPax=0; local max=GetVehicleMaxNumberOfPassengers(plane) or 0; for s=1,(max+2) do local p=GetPedInVehicleSeat(plane,s); if p~=0 and IsPedAPlayer(p) then seatedPax=seatedPax+1 end end
             local attachedPax=0; local peds=GetGamePool('CPed'); for i=1,#peds do local pp=peds[i]; if DoesEntityExist(pp) and IsPedAPlayer(pp) and IsEntityAttachedToEntity(pp,plane) then attachedPax=attachedPax+1 end end
             if (seatedPax + attachedPax) == 0 then
                 TriggerServerEvent('ethr_airbridge:flightEmpty')
