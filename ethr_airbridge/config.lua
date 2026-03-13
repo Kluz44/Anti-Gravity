@@ -48,6 +48,7 @@ Config.CargoAttachOffsets = {
 -- Boarding & Gruppenlogik
 Config.StartMode = 'window'
 Config.CheckInWindowMinutes = 3
+Config.MaxPlayersPerFlight = 10
 Config.ReminderIntervalSeconds = 60
 Config.FinalReminderSeconds = 30
 Config.FlightCooldownSeconds = 180

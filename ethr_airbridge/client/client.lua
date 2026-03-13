@@ -110,6 +110,45 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     end)
 end)
 
+-- ===== Host Migration (Takeover control if original host left) =====
+RegisterNetEvent('ethr_airbridge:hostMigration', function(netId)
+    flight.isHost = true
+    flight.planeNetId = netId
+    dprint('Host Migration empfangen. Übernehme Fluginstrumente.')
+    
+    local flightStartedTick = GetGameTimer()
+    CreateThread(function()
+        while not flight.plane do Wait(100)
+            local p = NetworkGetEntityFromNetworkId(netId)
+            if DoesEntityExist(p) then flight.plane = p end
+            if GetGameTimer() - flightStartedTick > 5000 then break end
+        end
+        if not flight.plane or not DoesEntityExist(flight.plane) then return end
+        
+        -- Übernehme Kontrolle über Flugzeug und versuche Piloten zu finden
+        NetworkRequestControlOfEntity(flight.plane)
+        -- Finde Piloten
+        local pilot = GetPedInVehicleSeat(flight.plane, -1)
+        if pilot ~= 0 then 
+            NetworkRequestControlOfEntity(pilot) 
+            flight.pilots = {pilot} -- Mindestens den Piloten kennen für Mission
+        end
+        
+        -- Starte den Host-Watchdog neu
+        CreateThread(function()
+            while DoesEntityExist(flight.plane) do
+                Wait(800)
+                local seatedPax=0; local max=GetVehicleMaxNumberOfPassengers(flight.plane) or 0; for s=1,(max+2) do local p=GetPedInVehicleSeat(flight.plane,s); if p~=0 and IsPedAPlayer(p) then seatedPax=seatedPax+1 end end
+                local attachedPax=0; local peds=GetGamePool('CPed'); for i=1,#peds do local pp=peds[i]; if DoesEntityExist(pp) and IsPedAPlayer(pp) and IsEntityAttachedToEntity(pp,flight.plane) then attachedPax=attachedPax+1 end end
+                if (seatedPax + attachedPax) == 0 then
+                    TriggerServerEvent('ethr_airbridge:flightEmpty')
+                    break
+                end
+            end
+        end)
+    end)
+end)
+
 -- ===== Guided despawn (host only) =====
 RegisterNetEvent('ethr_airbridge:guidedDespawn', function()
     if not flight.isHost then return end
