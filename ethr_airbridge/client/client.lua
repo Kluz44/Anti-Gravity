@@ -72,7 +72,7 @@ end
 -- ===== StartNow: spawn plane & crew, AI mission, report seats =====
 RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     if not isHost or not flight.isHost then return end
-    lib.requestModel(Config.PlaneModel,10000); lib.requestModel(Config.PilotModel,10000); lib.requestModel(Config.CopilotModel,10000)
+    lib.requestModel(Config.PlaneModel,10000); lib.requestModel(Config.PilotModel,10000); lib.requestModel(Config.CopilotModel,10000); lib.requestModel(Config.CrewModel,10000)
     local sp=Config.StartPoint
     local plane=CreateVehicle(Config.PlaneModel, sp.x,sp.y,sp.z, sp.w, true, false)
     while not DoesEntityExist(plane) do Wait(0) end
@@ -81,7 +81,11 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     SetVehicleMaxSpeed(plane,200.0); SetVehicleEnginePowerMultiplier(plane,15.0); SetVehicleEngineTorqueMultiplier(plane,1.6); SetPlaneTurbulenceMultiplier(plane,0.0)
     local pilot=CreatePedInsideVehicle(plane,1,Config.PilotModel,-1,true,false)
     local copilot=CreatePedInsideVehicle(plane,1,Config.CopilotModel,0,true,false)
-    for _,p in ipairs({pilot,copilot}) do SetBlockingOfNonTemporaryEvents(p,true); SetPedCanBeTargetted(p,false); SetPedFleeAttributes(p,0,false); SetPedCombatAttributes(p,46,true); SetPedCanBeDraggedOut(p, not (Config.Pilot.NoDrag)); SetPedCanRagdoll(p, not (Config.Pilot.BlockRagdoll)); if Config.Pilot.Godmode then SetEntityInvincible(p,true) end end
+    local crew1=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,1,true,false)
+    local crew2=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,2,true,false)
+    local crew3=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,3,true,false)
+    local crew4=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,4,true,false)
+    for _,p in ipairs({pilot,copilot,crew1,crew2,crew3,crew4}) do SetBlockingOfNonTemporaryEvents(p,true); SetPedCanBeTargetted(p,false); SetPedFleeAttributes(p,0,false); SetPedCombatAttributes(p,46,true); SetPedCanBeDraggedOut(p, not (Config.Pilot.NoDrag)); SetPedCanRagdoll(p, not (Config.Pilot.BlockRagdoll)); if Config.Pilot.Godmode then SetEntityInvincible(p,true) end end
     local ep=Config.EndPoint
     TaskPlaneMission(pilot, plane, 0,0, ep.x,ep.y,ep.z, 4, Config.FlightSpeed or 85.0, 0.0,0.0, Config.CruiseAltitude, 100.0, true)
     if (Config.Pilot.KeepGearUpTick or 0) > 0 then CreateThread(function() while DoesEntityExist(plane) do if GetLandingGearState(plane) ~= 1 then ControlLandingGear(plane,1) end Wait(Config.Pilot.KeepGearUpTick) end end) end
@@ -89,7 +93,7 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     local seatList = buildPassengerSeatList(plane, modelName)
     local netId = NetworkGetNetworkIdFromEntity(plane); SetNetworkIdExistsOnAllMachines(netId,true); SetNetworkIdCanMigrate(netId,true)
     SetVehicleForwardSpeed(plane, Config.FlightSpeed or 85.0)
-    flight.plane=plane; flight.pilots={pilot,copilot}; flight.planeNetId=netId
+    flight.plane=plane; flight.pilots={pilot,copilot,crew1,crew2,crew3,crew4}; flight.planeNetId=netId
     TriggerServerEvent('ethr_airbridge:reportPlaneNetId', netId, seatList)
 
     -- Host loop: pax count -> guided despawn request (legacy path)

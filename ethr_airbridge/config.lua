@@ -26,6 +26,7 @@ Config.Luftfahrzeugkennzeichen = 'ETH-463'
 -- NPC Crew
 Config.PilotModel   = `S_M_Y_Pilot_01`
 Config.CopilotModel = `S_M_Y_Pilot_01`
+Config.CrewModel    = `S_M_Y_Pilot_01`
 Config.Pilot = { Godmode=true, BlockRagdoll=true, BlockSeatShuffle=true, NoDrag=true, KeepGearUpTick=500 }
 
 -- Routen & Flug
@@ -36,8 +37,8 @@ Config.FlightSpeed    = 85.0
 Config.Loiter = { Enabled=true, PointA = vec4(-1400.0,-2500.0,550.0,110.0), PointB = vec4(3800.0,4400.0,550.0,20.0), ArriveThreshold=250.0, ReissueMs=8000, SpeedOverride=85.0 }
 Config.DespawnOffset = vec3(2000.0, 2000.0, 300.0)
 
--- Sitz-Policy (nie -1/0)
-Config.SeatPolicy = { AutoDiscover=true, AlwaysExclude={-1,0}, PerModelPreferred = {} }
+-- Sitz-Policy (Die Crew belegt die Sitze -1 bis 4)
+Config.SeatPolicy = { AutoDiscover=true, AlwaysExclude={-1,0,1,2,3,4}, PerModelPreferred = {} }
 Config.CargoAttachOffsets = {
     vec3(0.0,-2.2,0.85), vec3(0.6,-1.8,0.85), vec3(-0.6,-1.8,0.85),
     vec3(1.2,-2.4,0.85), vec3(-1.2,-2.4,0.85), vec3(0.0,-3.0,0.85),
