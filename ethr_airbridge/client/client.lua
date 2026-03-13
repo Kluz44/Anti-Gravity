@@ -182,8 +182,13 @@ RegisterNetEvent('ethr_airbridge:boardPlane', function(netId, assignedSeat)
 
     local function stageToStartPoint()
         local sp = Config.StartPoint
-        local stage = vec3(sp.x, sp.y, sp.z - 2.0)
+        local randomOffsetX = math.random(-30, 30) / 10.0
+        local randomOffsetY = math.random(-30, 30) / 10.0
+        local stage = vec3(sp.x + randomOffsetX, sp.y + randomOffsetY, sp.z - 2.0)
         SetEntityCoordsNoOffset(ped, stage.x, stage.y, stage.z, false, false, false)
+        FreezeEntityPosition(ped, true)
+        SetEntityCollision(ped, false, false)
+        SetEntityVisible(ped, false, false)
         ClearPedTasksImmediately(ped)
     end
 
@@ -198,13 +203,21 @@ RegisterNetEvent('ethr_airbridge:boardPlane', function(netId, assignedSeat)
         while not DoesEntityExist(plane) and GetGameTimer()<timeout do plane=NetworkGetEntityFromNetworkId(netId); Wait(80) end
     end
     if not DoesEntityExist(plane) then
+        FreezeEntityPosition(ped, false)
+        SetEntityCollision(ped, true, true)
+        SetEntityVisible(ped, true, false)
         TriggerEvent('chat:addMessage', { args = { '^3[Airbridge]^7 Fehler: Flugzeug nicht synchronisiert (NetID).' } })
         return
     end
 
-    -- Move near plane and prep
-    local stage = GetOffsetFromEntityInWorldCoords(plane, 0.0, -8.0, -2.0)
+    -- Move near plane and prep (with random spread to avoid collision death)
+    local randomOffsetX = math.random(-40, 40) / 10.0
+    local randomOffsetY = math.random(-40, 40) / 10.0
+    local stage = GetOffsetFromEntityInWorldCoords(plane, randomOffsetX, -8.0 + randomOffsetY, -2.0)
     SetEntityCoordsNoOffset(ped, stage.x, stage.y, stage.z, false, false, false)
+    FreezeEntityPosition(ped, true)
+    SetEntityCollision(ped, false, false)
+    SetEntityVisible(ped, false, false)
     ClearPedTasksImmediately(ped)
     if SetVehicleDoorsLockedForPlayer then SetVehicleDoorsLockedForPlayer(plane, PlayerId(), false) end
     SetVehicleDoorsLockedForAllPlayers(plane, false); SetVehicleDoorsLocked(plane, 1)
@@ -242,6 +255,10 @@ RegisterNetEvent('ethr_airbridge:boardPlane', function(netId, assignedSeat)
         if not chosen then AttachEntityToEntity(ped,plane,0,0.0,-2.2,0.85,0.0,0.0,0.0,false,false,true,false,2,true) end
         flight.attached=true; if Notify and Notify.Client then Notify.Client('Alle Sitze voll – du bist im Laderaum gesichert.','inform') end
     else flight.isOnboard=true end
+
+    FreezeEntityPosition(ped, false)
+    SetEntityCollision(ped, true, true)
+    SetEntityVisible(ped, true, false)
 
     TriggerServerEvent('ethr_airbridge:clientBoarded')
     CreateThread(function() Wait(1200); SetVehicleDoorsLocked(plane,4); SetVehicleDoorsLockedForAllPlayers(plane,true) end)
