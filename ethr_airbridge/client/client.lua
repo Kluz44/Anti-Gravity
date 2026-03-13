@@ -84,8 +84,7 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     local crew1=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,1,true,false)
     local crew2=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,2,true,false)
     local crew3=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,3,true,false)
-    local crew4=CreatePedInsideVehicle(plane,1,Config.CrewModel or Config.CopilotModel,4,true,false)
-    for _,p in ipairs({pilot,copilot,crew1,crew2,crew3,crew4}) do SetBlockingOfNonTemporaryEvents(p,true); SetPedCanBeTargetted(p,false); SetPedFleeAttributes(p,0,false); SetPedCombatAttributes(p,46,true); SetPedCanBeDraggedOut(p, not (Config.Pilot.NoDrag)); SetPedCanRagdoll(p, not (Config.Pilot.BlockRagdoll)); if Config.Pilot.Godmode then SetEntityInvincible(p,true) end end
+    for _,p in ipairs({pilot,copilot,crew1,crew2,crew3}) do SetBlockingOfNonTemporaryEvents(p,true); SetPedCanBeTargetted(p,false); SetPedFleeAttributes(p,0,false); SetPedCombatAttributes(p,46,true); SetPedCanBeDraggedOut(p, not (Config.Pilot.NoDrag)); SetPedCanRagdoll(p, not (Config.Pilot.BlockRagdoll)); if Config.Pilot.Godmode then SetEntityInvincible(p,true) end end
     local ep=Config.EndPoint
     TaskPlaneMission(pilot, plane, 0,0, ep.x,ep.y,ep.z, 4, Config.FlightSpeed or 85.0, 0.0,0.0, Config.CruiseAltitude, 100.0, true)
     if (Config.Pilot.KeepGearUpTick or 0) > 0 then CreateThread(function() while DoesEntityExist(plane) do if GetLandingGearState(plane) ~= 1 then ControlLandingGear(plane,1) end Wait(Config.Pilot.KeepGearUpTick) end end) end
@@ -93,7 +92,7 @@ RegisterNetEvent('ethr_airbridge:startNow', function(isHost, players)
     local seatList = buildPassengerSeatList(plane, modelName)
     local netId = NetworkGetNetworkIdFromEntity(plane); SetNetworkIdExistsOnAllMachines(netId,true); SetNetworkIdCanMigrate(netId,true)
     SetVehicleForwardSpeed(plane, Config.FlightSpeed or 85.0)
-    flight.plane=plane; flight.pilots={pilot,copilot,crew1,crew2,crew3,crew4}; flight.planeNetId=netId
+    flight.plane=plane; flight.pilots={pilot,copilot,crew1,crew2,crew3}; flight.planeNetId=netId
     TriggerServerEvent('ethr_airbridge:reportPlaneNetId', netId, seatList)
 
     -- Host loop: pax count -> guided despawn request (legacy path)
