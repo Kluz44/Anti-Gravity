@@ -213,6 +213,7 @@ RegisterNetEvent('ethr_airbridge:boardPlane', function(netId, assignedSeat)
             BeginTextCommandDisplayHelp("STRING"); AddTextComponentSubstringPlayerName(Config.HelpTextPressToJump or 'F drücken zum Springen'); EndTextCommandDisplayHelp(0,false,true,0)
             if IsControlJustPressed(0,75) then
                 GiveWeaponToPed(ped, `GADGET_PARACHUTE`, 1, false, true)
+                SetPedParachuteTintIndex(ped, 6) -- 6 = Schwarzer Fallschirm
                 if flight.attached then
                     DetachEntity(ped,true,true); flight.attached=false
                 else
