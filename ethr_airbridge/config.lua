@@ -24,9 +24,9 @@ Config.PlaneModel = `titan20`
 Config.Luftfahrzeugkennzeichen = 'ETH-463'
 
 -- NPC Crew
-Config.PilotModel   = `S_M_Y_Pilot_01`
-Config.CopilotModel = `S_M_Y_Pilot_01`
-Config.CrewModel    = `S_M_Y_Pilot_01`
+Config.PilotModel   = `S_M_M_Pilot_02`
+Config.CopilotModel = `S_M_M_Pilot_02`
+Config.CrewModel    = `S_M_M_Pilot_02`
 Config.Pilot = { Godmode=true, BlockRagdoll=true, BlockSeatShuffle=true, NoDrag=true, KeepGearUpTick=500 }
 
 -- Routen & Flug
