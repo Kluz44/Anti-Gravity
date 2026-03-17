@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethorium Banking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" style="display: none;">
+        
+        <!-- Banking Dashboard -->
+        <main class="dashboard glass-panel" id="dashboard-view">
+            <aside class="sidebar">
+                <div class="logo">
+                    <i class="fas fa-university"></i>
+                    <h2>Ethorium<br><span>Banking</span></h2>
+                </div>
+                <nav>
+                    <a href="#" class="active" data-tab="overview"><i class="fas fa-home"></i> Overview</a>
+                    <a href="#" data-tab="transfer"><i class="fas fa-exchange-alt"></i> Transfer</a>
+                    <a href="#" data-tab="invoices"><i class="fas fa-file-invoice-dollar"></i> Invoices</a>
+                    <a href="#" data-tab="cards"><i class="fas fa-credit-card"></i> Cards</a>
+                    <a href="#" data-tab="loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                </nav>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Avatar">
+                    <div>
+                        <h4>John Doe</h4>
+                        <p>Personal Account</p>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="content">
+                <header>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search transactions...">
+                    </div>
+                    <div class="actions">
+                        <button class="btn primary" onclick="closeUI()"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                    </div>
+                </header>
+
+                <div class="main-content" id="tab-overview">
+                    <div class="balance-card premium-gradient">
+                        <div class="top">
+                            <span>Total Balance</span>
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h1 id="total-balance">$0.00</h1>
+                        <div class="bottom">
+                            <span id="iban-display">LS12-ETH-00000000</span>
+                            <button class="btn glass-btn" onclick="copyIban()"><i class="fas fa-copy"></i> Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-card" onclick="openDeposit()"><i class="fas fa-arrow-up"></i> Deposit</button>
+                        <button class="action-card" onclick="openWithdraw()"><i class="fas fa-arrow-down"></i> Withdraw</button>
+                        <button class="action-card" onclick="switchTab('transfer')"><i class="fas fa-paper-plane"></i> Send</button>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <h3>Recent Transactions</h3>
+                        <div class="transaction-list">
+                            <!-- Populated via JS -->
+                            <div class="empty-state">No recent transactions.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modals will be injected over this view -->
+            </section>
+        </main>
+
+        <!-- Admin Creator UI -->
+        <main class="creator-ui glass-panel" id="creator-view" style="display: none;">
+            <header class="creator-header">
+                <h2><i class="fas fa-tools"></i> Bank Creator Panel</h2>
+                <button class="btn danger" onclick="closeUI()"><i class="fas fa-times"></i> Close</button>
+            </header>
+            <div class="creator-body">
+                <div class="form-group">
+                    <label>Bank Name</label>
+                    <input type="text" id="creator-name" placeholder="E.g. Fleeca Bank Grapeseed">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="creator-type">
+                        <option value="bank">Full Branch</option>
+                        <option value="atm">ATM Only</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Starting Vault Balance</label>
+                    <input type="number" id="creator-vault" value="1000000">
+                </div>
+                <button class="btn success full-width" onclick="submitCreator()">Create Here</button>
+            </div>
+        </main>
+
+        <!-- Talk NPC / Dialogue UI -->
+        <main class="dialog-ui" id="dialog-view" style="display: none;">
+            <div class="dialog-content glass-panel">
+                <div class="npc-header">
+                    <div class="npc-info">
+                        <span id="npc-tag" class="tag">NPC</span>
+                        <h2 id="npc-name">NPC Name</h2>
+                    </div>
+                </div>
+                <!-- Cinematic Message Box -->
+                <div class="dialog-message" id="dialog-message">
+                    Hello, how can I help you today?
+                </div>
+                
+                <!-- Options -->
+                <div class="dialog-options" id="dialog-options">
+                    <!-- Populated by JS -->
+                </div>
+                
+                <div class="dialog-help">
+                    <span><i class="fas fa-mouse-pointer"></i> Select an option</span>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="overlay" style="display: none;">
+        <div class="modal glass-panel" id="action-modal">
+            <h3 id="modal-title">Action</h3>
+            <input type="number" id="modal-amount" placeholder="Amount">
+            <div class="modal-buttons">
+                <button class="btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn primary" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+</body>
+</html>
