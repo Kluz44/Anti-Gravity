@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>s1n_billing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+  <div class="General" style="display: none">
+    <div class="viewSide" style="display: none" current-invoice="0">
+      <div class="viewBox">
+        <div class="viewTopSide">
+          <div class="viewTitleBox">
+            <div class="viewTitleLine"></div>
+            <div class="viewTitleTextBox">
+              <h2 class="viewTitleText"><span content="UI_VIEW_INFO_TITLE"></span> <span class="invoice-index"></span></h2>
+              <p class="viewTitleSubText" content="UI_NOTE"></p>
+            </div>
+          </div>
+          <div class="viewExitBox" onclick="document.querySelector(`.viewSide`).style.display = 'none'">
+            <i class="fa-solid fa-xmark"></i>
+            <span content="UI_EXIT"></span>
+          </div>
+        </div>
+        <div class="viewBottomSide">
+          <div class="viewInfoBox">
+            <div class="viewInfo" style="width: 100%">
+              <h2 content="UI_COLUMN_HEAD_REFERENCE_ID"></h2>
+              <span class='pay-invoice-reference-id'></span>
+            </div>
+            <div class="viewInfo" style="width: 11.52vw">
+              <h2 content="UI_SENT"></h2>
+              <span class="pay-invoice-sent-date"></span>
+            </div>
+            <div class="viewInfo" style="width: 11.52vw">
+              <h2 content="UI_VIEW_INFO_DUE"></h2>
+              <span class="pay-invoice-due-date"></span>
+            </div>
+            <div class="viewInfo" style="width: 11.52vw">
+              <h2 content="UI_VIEW_INFO_TO"></h2>
+              <span class="pay-invoice-receiver-name"></span>
+            </div>
+            <div class="viewInfo" style="width: 11.52vw">
+              <h2 content="UI_VIEW_INFO_FROM"></h2>
+              <span class="pay-invoice-sender-name"></span>
+            </div>
+          </div>
+          <div class="viewTotalPriceBox">
+            <div class="viewTotalPrice">
+              <h2 class="pay-invoice-item">Item</h2>
+              <span class="pay-invoice-item-amount">53$</span>
+            </div>
+            <div class="viewTotalPrice">
+              <h2 class="pay-invoice-note"></h2>
+            </div>
+            <div class="viewTotalPrices">
+              <div class="viewTotalPrice2">
+                <h2 content="UI_VIEW_SUB_TOTAL"></h2>
+                <span class="pay-invoice-sub-total"></span>
+              </div>
+              <div class="viewTotalPrice2">
+                <h2 content="UI_VAT"></h2>
+                <span class="pay-invoice-vat"></span>
+              </div>
+            </div>
+            <div class="viewTotalPrice2" style="color: #4eff7f">
+              <h2 style="color: #fff" content="UI_VIEW_TOTAL"></h2>
+              <span class="pay-invoice-total"></span>
+            </div>
+          </div>
+        </div>
+        <div class="viewBoxPayButton" onclick="payInvoice()"></div>
+      </div>
+    </div>
+    <div class="exitBox" onclick="closeUI()"><i class="fa-solid fa-xmark"></i></div>
+    <div class="topSide">
+      <div class="topLeftSide">
+        <div class="titleBox">
+          <img src="assets/img/icon.png" alt="" class="titlePng" />
+          <h2 class="title">
+            <span content="UI_SERVER_NAME"></span>
+            <div class="titlespan" content="UI_BILLING_SYSTEM"></div>
+          </h2>
+        </div>
+        <div class="subTitleBox">
+          <div class="subTitleLine"></div>
+          <div class="subTitleTextBox">
+            <h2 class="subTitleText" content="UI_MY_INVOICES" id="invoices-page-type"></h2>
+            <p class="subTitleSubText" content="UI_EVERYTHING"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottomSide">
+      <div class="listTopSide">
+        <div class="lostTopLeftSide">
+          <div class="listTitleBox">
+            <h2 class="listTitleText" content="UI_MY_INVOICES_LIST_TITLE"></h2>
+            <p class="listTitleSubText" content="UI_MY_INVOICES_LIST_SUBTITLE"></p>
+          </div>
+          <div class="listInputBox">
+            <div class="input-container">
+              <input type="text" id="search-reference-id" placeholder-content="UI_REFERENCE_ID_SEARCH_PLACEHOLDER"/>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="select-container">
+              <select id="filters">
+                <option value="" disabled hidden content="UI_SORT_BY"></option>
+                <option value="createdAt-asc" content="UI_FILTER_SORT_BY_CREATION_DATE_ASC"></option>
+                <option value="createdAt-desc" content="UI_FILTER_SORT_BY_CREATION_DATE_DESC" selected></option>
+              </select>
+              <span class="select-arrow"></span>
+            </div>
+          </div>
+        </div>
+        <div class="payAllButton" style="display: flex"></div>
+      </div>
+      <div class="listSide">
+        <div class="listTopBox">
+          <h2 class="listText" style="width: 7.5vw" content="UI_COLUMN_HEAD_REFERENCE_ID"></h2>
+          <h2 class="listText" style="width: 5.8333vw" content="UI_COLUMN_HEAD_STATUS"></h2>
+          <h2 class="listText" style="width: 5.3646vw" content="UI_COLUMN_HEAD_TYPE"></h2>
+          <h2 class="listText" style="width: 9.0104vw" content="UI_COLUMN_HEAD_AUTHOR"></h2>
+          <h2 class="listText" style="width: 9.6875vw" content="UI_COLUMN_HEAD_CREATION_DATE"></h2>
+          <h2 class="listText" style="width: 6.25vw" content="UI_COLUMN_HEAD_AMOUNT"></h2>
+          <h2 class="listText" style="width: 6.3021vw; position: absolute; right: 0" content="UI_COLUMN_HEAD_ACTIONS"></h2>
+        </div>
+        <div class="listBoxList my-invoices-list"></div>
+      </div>
+    </div>
+    <div class="pageList">
+      <div class="pageBox" page-route="1" onclick="setInvoicePage(this.getAttribute('page-route'))">1</div>
+      <div class="pageBox"page-route="2" onclick="setInvoicePage(this.getAttribute('page-route'))">2</div>
+      <div class="pageBox selectPage" page-route="3" onclick="setInvoicePage(this.getAttribute('page-route'))">3</div>
+      <div class="pageBox" page-route="4" onclick="setInvoicePage(this.getAttribute('page-route'))">4</div>
+      <div class="pageBox" page-route="5" onclick="setInvoicePage(this.getAttribute('page-route'))">5</div>
+      <div class="pageBox" page-route="6" onclick="setInvoicePage(this.getAttribute('page-route'))">6</div>
+      <div class="pageBox" page-route="7" onclick="setInvoicePage(this.getAttribute('page-route'))"><i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+  </div>
+  <div class="categoryPage" style="display: none">
+    <div class="exitBox" onclick="closeUI()"><i class="fa-solid fa-xmark"></i></div>
+    <div class="titleBox">
+      <img src="assets/img/icon.png" alt="" class="titlePng" />
+      <h2 class="title">
+        <span content="UI_SERVER_NAME"></span>
+        <div class="titlespan" content="UI_BILLING_SYSTEM"></div>
+      </h2>
+    </div>
+    <div class="categoryList">
+      <div class="categoryBox" category-box="manage-invoices" onclick="view(this.getAttribute('category-box'))">
+        <div class="categoryIcon"><i class="fa-solid fa-user"></i></div>
+        <div class="categoryTextBox">
+          <h2 class="categoryText" content="UI_CATEGORY_MANAGE_INVOICES"></h2>
+          <p class="categorySubText" content="UI_CATEGORY_MANAGE_INVOICES_DESCRIPTION"></p>
+        </div>
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+      <div class="categoryBox" category-box="create-contract" onclick="view(this.getAttribute('category-box'))">
+        <div class="categoryIcon"><i class="fa-solid fa-file-lines"></i></div>
+        <div class="categoryTextBox">
+          <h2 class="categoryText" content="UI_CATEGORY_CREATE_CONTRACT"></h2>
+          <p class="categorySubText" content="UI_CATEGORY_CREATE_CONTRACT_DESCRIPTION"></p>
+        </div>
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+      <div class="categoryBox" category-box="create-invoice" onclick="view(this.getAttribute('category-box'))">
+        <div class="categoryIcon">
+          <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div class="categoryTextBox">
+          <h2 class="categoryText" content="UI_CATEGORY_CREATE_INVOICE"></h2>
+          <p class="categorySubText" content="UI_CATEGORY_CREATE_INVOICE_DESCRIPTION"></p>
+        </div>
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+      <div class="categoryBox" category-box="manage-company-invoices" onclick="view(this.getAttribute('category-box'))">
+        <div class="categoryIcon">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+        <div class="categoryTextBox">
+          <h2 class="categoryText" content="UI_CATEGORY_MANAGE_COMPANY_INVOICES"></h2>
+          <p class="categorySubText" content="UI_CATEGORY_MANAGE_COMPANY_INVOICES_DESCRIPTION"></p>
+        </div>
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+      <div class="categoryBox" category-box="review-invoices" onclick="view(this.getAttribute('category-box'))">
+        <div class="categoryIcon">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+        <div class="categoryTextBox">
+          <h2 class="categoryText" content="UI_CATEGORY_REVIEW_INVOICES"></h2>
+          <p class="categorySubText" content="UI_CATEGORY_REVIEW_INVOICES_DESCRIPTION"></p>
+        </div>
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+    </div>
+  </div>
+  <div class="createInvoicesPage" style="display: none">
+    <div class="exitBox" onclick="closeUI()"><i class="fa-solid fa-xmark"></i></div>
+    <div class="pageTitleBox">
+      <div class="pageTitleLine"></div>
+      <div class="pageTitleTextBox">
+        <h2 class="pageTitleText" content="UI_CREATE_INVOICE_TITLE"></h2>
+        <p class="pageTitleSubText" content="UI_CREATE_INVOICE_SUBTITLE"></p>
+      </div>
+    </div>
+    <div class="createButtonList">
+      <div class="createButtons" id="button-invoice-set-as-job" content="UI_AS_JOB" data-type="job"></div>
+      <div class="createButtons" id="button-invoice-set-as-citizen" style="border-radius: 0px 0.625vw 0.625vw 0px" content="UI_AS_CITIZEN" data-type="personal"></div>
+    </div>
+    <div class="createInvoicesBottomBox">
+      <div class="createInputBox">
+        <span content="UI_ITEM"></span>
+        <div class="ItemSelect-container">
+          <select id="create-invoice-items"></select>
+          <span class="select-arrow"></span>
+        </div>
+      </div>
+      <div class="createInputBox">
+        <span content="UI_AMOUNT"></span>
+        <div class="priceinput-container">
+          <input id="amount" type="number" step="1" placeholder="0"/>
+        </div>
+      </div>
+      <div class="createInputBox">
+        <span content="UI_NOTE"></span>
+        <div class="priceinput-container">
+          <input style="color: white" type="text" id="note" placeholder-content="UI_NOTE_INPUT_PLACEHOLDER" />
+        </div>
+      </div>
+      <div class="createInputBox">
+        <span content="UI_DATE"></span>
+        <div class="priceinput-container">
+          <input style="color: white" type="date" id="date" placeholder-content="UI_DATE_INPUT_PLACEHOLDER" />
+        </div>
+      </div>
+    </div>
+    <div class="pagePayButton" content="UI_CREATE" onclick="createInvoice()"></div>
+  </div>
+  <div class="inspectPage" style="display: none">
+    <div class="exitBox" onclick="closeUI()"><i class="fa-solid fa-xmark"></i></div>
+    <div class="pageTitleBox">
+      <div class="pageTitleLine"></div>
+      <div class="pageTitleTextBox">
+        <h2 class="pageTitleText" content="UI_INSPECT_TITLE"></h2>
+        <p class="pageTitleSubText" content="UI_INSPECT_SUBTITLE"></p>
+      </div>
+    </div>
+    <div class="invoicesBottomBox">
+      <div class="priceinput-container">
+        <input style="color: white" type="text" id="input-review-invoices-full-name" placeholder-content="UI_CITIZEN_FULL_NAME_PLACEHOLDER" />
+        <div class="lookupButton" id="button-review-invoices-lookup">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span content="UI_LOOKUP"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="createContractPage" style="display: none">
+    <div class="exitBox" onclick="closeUI()"><i class="fa-solid fa-xmark"></i></div>
+    <div class="pageTitleBox">
+      <div class="pageTitleLine"></div>
+      <div class="pageTitleTextBox">
+        <h2 class="pageTitleText" content="UI_CREATE_CONTRACT"></h2>
+        <p class="pageTitleSubText" content="UI_CREATE_CONTRACT_SUBTITLE"></p>
+      </div>
+    </div>
+    <h2 class="pageInfo" content="UI_CREATE_CONTRACT_INFO"></h2>
+    <div class="createInvoicesBottomBox">
+      <div class="createInputBox">
+        <span content="UI_CONTRACT_AMOUNT"></span>
+        <div class="priceinput-container">
+          <input style="color: white" type="number" placeholder-content="UI_AMOUNT_PLACEHOLDER" name="input-contract-amount"/>
+        </div>
+      </div>
+      <div class="createInputBox">
+        <span content="UI_ITEM"></span>
+        <div class="ItemSelect-container">
+          <select name="item" id="contract-select">
+            <option value="" content="UI_SELECT_ITEM" disabled selected hidden></option>
+            <option value="inventory-item" content="UI_ITEM_INVENTORY"></option>
+            <option value="vehicle" content="UI_ITEM_VEHICLE"></option>
+          </select>
+          <span class="select-arrow"></span>
+        </div>
+      </div>
+      <div class="createInputBox" id="contract-item-box">
+        <span content="UI_ITEM_INVENTORY"></span>
+        <div class="ItemSelect-container">
+          <select name="item" id="contract-item-select">
+          </select>
+          <span class="select-arrow"></span>
+        </div>
+      </div>
+      <div class="createInputBox" style="color: #55ff85" id="contract-item-amount">
+        <span content="UI_AMOUNT"></span>
+        <div class="priceinput-container">
+          <input style="
+                border-radius: 0.3125vw;
+                border: 0.1042vw solid rgba(85, 255, 133, 0.05);
+                background: rgba(85, 255, 133, 0.05);
+                color: #55ff85;
+              " type="number" name="amount" id="contract-item-amount-input" placeholder="0$" value="1" />
+        </div>
+      </div>
+    </div>
+    <div class="submitButton" content="UI_BUTTON_SUBMIT_INFO" onclick="createContract()"></div>
+  </div>
+  <div class="contractPage" style="display: none">
+    <div class="contractTitleBox">
+      <div class="contractTitleLine"></div>
+      <div class="contractTitleTextBox">
+        <h2 class="contractTitleText" content="UI_CONTRACT_TITLE"></h2>
+        <p class="contractTitleSubText" content="UI_CONTRACT_SUBTITLE"></p>
+      </div>
+    </div>
+    <div class="contractInfoTextBox">
+      <h2 class="contractInfoText">
+        This agreement is made between
+        <span name="sellerName"></span>
+        (hereafter referred to as the "Seller") and <span name="buyerName"></span> (hereafter referred to as the "Buyer")
+        for the transfer of ownership of the Seller's <span name="contractItem"></span>, <span name="contractItemDetails"></span>
+      </h2>
+      <h2 class="contractInfoText">
+        The agreed date of the transaction is <span name="date"></span>.
+        The Buyer agrees to pay the Seller the sum of <span name="contract-amount"></span> via
+        <span>Bank Transfer</span>.
+      </h2>
+      <h2 class="contractInfoText">
+        The <span name="contractItem"></span> is sold in its current condition ("AS IS"), with no guarantees or warranties provided by the Seller regarding its state or performance.
+        The Seller commits to handing over all necessary documentation related to the <span name="contractItem"></span> to the Buyer upon completion of the sale.
+      </h2>
+    </div>
+    <div class="signatureList">
+      <div class="signatureBox">
+        <span class="seller-signature">&nbsp;</span>
+        <div class="signatureLine"></div>
+        <span content="UI_SELLER_SIGNATURE"></span>
+      </div>
+      <div class="signatureBox">
+        <span class="buyer-signature">&nbsp;</span>
+        <div class="signatureLine"></div>
+        <span content="UI_BUYER_SIGNATURE"></span>
+      </div>
+    </div>
+    <div class="signButton">
+      <i class="fa-solid fa-file-signature"></i>
+      <span content="UI_SIGN_CONTRACT"></span>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+
+</html>

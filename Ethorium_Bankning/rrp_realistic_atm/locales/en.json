@@ -1,0 +1,154 @@
+{
+    "inv_amount": "Invalid amount!",
+    "not_enough_cash": "Not enough cash!",
+    "not_enough_bank": "Not enough money in the bank!",
+    "not_enough_cash_tax": "You do not have enough money to cover the tax",
+    "not_enough_bank_tax": "You do not have enough money to cover the tax",
+    "daily_trans_limit": "You have reached the daily transaction limit!",
+    "daily_trans_amount": "You have reached the daily transaction amount!",
+    "unsuccess": "Failed",
+    "atm_used": "Another player is currently using the ATM!",
+    "card_not_yours": "This card does not belong to you!",
+
+
+    "homepage": {
+        "title": "Please select a transaction!",
+        "subtitle": "Transaction selection",
+        "description": "",
+        "buttons": {
+            "info": "Info Page",
+            "change_pin": "Change Pincode",
+            "balance": "Balance",
+            "withdraw": "Withdraw",
+            "deposit": "Deposit",
+            "exit": "Exit"
+        }
+    },
+    "common": {
+        "back": "Back",
+        "cancel": "Cancel"
+    },
+    "pin_code": {
+        "request": {
+            "title": "Please enter your PIN code!",
+            "subtitle": "PIN code",
+            "description": "Please enter your PIN code below:\nInterrupt below with the [CANCEL] button!"
+        },
+        "error": {
+            "title": "Error!",
+            "subtitle": "PIN code",
+            "description": "Your PIN code is incorrect!",
+            "retry_button": "Try again"
+        },
+        "change_success": {
+            "title": "Success!",
+            "subtitle": "PIN code change",
+            "description": "Your PIN code has been changed successfully!"
+        },
+        "change_fail": {
+            "title": "Error!",
+            "subtitle": "PIN code change",
+            "description": "Your PIN code change failed!"
+        },
+        "reenter": {
+            "title": "Re-enter the new PIN code!",
+            "subtitle": "PIN code change",
+            "description": "Please enter your new PIN code below:\nInterrupt below with the [CANCEL] button!"
+        }
+    },
+    "wait_page": {
+        "title": "Please wait...",
+        "subtitle": "Transaction in progress",
+        "description": "Please wait while your transaction is being processed..."
+    },
+    "info_page": {
+        "title": "Information",
+        "subtitle": "",
+        "description": "<ul><li>The minimum amount that can be withdrawn per transaction is 1000$.</li><li>The maximum amount that can be withdrawn per transaction is 1,000,000$.</li><li>The transaction fee is 5%.</li><li>Withdrawals up to 50,000$ per day are free, with a maximum of 2 free transactions per day.</li><li>The minimum fee amount is 100$.</li><li>The daily limit is 100,000$, but there is no limit on the number of daily transactions.</li></ul>"
+    },
+    "receipt_page": {
+        "title": "Receipt",
+        "subtitle": "Transaction receipt",
+        "more": "Withdraw more money",
+        "description": "Transaction successful!<br>%s<br>Sum = %s<br>Thank you for using our ATM!"
+
+        
+    },
+    "unsuccessful_withdraw": {
+        "title": "Error!",
+        "subtitle": "Withdraw"
+    },
+    "other_amount_page_W": {
+        "title": "Other amount",
+        "subtitle": "Withdraw",
+        "description": "Please enter the amount you want to withdraw below:"
+    },
+    "withdraw_page": {
+        "title": "Withdraw Money",
+        "subtitle": "Withdraw",
+        "description": "",
+        "other": "Other amount"
+    },
+
+    "changepin1": {
+        "title": "Change PIN Code",
+        "subtitle": "Change PIN",
+        "description": "Please enter your new PIN code below:\nInterrupt below with the [CANCEL] button!"
+    },
+
+    "changepin2": {
+        "title": "Change PIN Code",
+        "subtitle": "Change PIN",
+        "description": "Please re-enter your new PIN code below:\nInterrupt below with the [CANCEL] button!"
+    },
+
+    "balance_page": {
+        "title": "Balance",
+        "subtitle": "",
+        "description": "<h1>Your balance is: \n$%s</h1>"
+    },
+
+    "wait_for_deposit": {
+        "title": "Please insert the banknotes into the slot!",
+        "description": "Remove any foreign objects from the banknotes (coins, clips, paper, etc ... )!<br>Do not insert heavily wrinkled banknotes into the ATM!<br>max. 200 pcs<br>A maximum of 4,000,000$ or 200 banknotes can be deposited in one transaction!<br>Interrupt below with the [CANCEL] button!",
+        "subtitle": "Deposit"
+    },
+
+    "success_deposit_page": {
+        "title": "Success!",
+        "subtitle": "Deposit",
+        "description": "Your deposit of $%s was successful!",
+        "more_deposit": "More deposit"
+    },
+
+    "unsuccess_deposit_page": {
+        "title": "Error!",
+        "subtitle": "Deposit"
+    },
+
+    "approved_deposit_page": {
+        "title": "Deposit approved!",
+        "subtitle": "Deposit",
+        "description": "Your deposit of $%s was approved!",
+        "approvedBtn": "Approved"
+    },
+
+    "other_amount_page_D": {
+        "title": "Other amount",
+        "subtitle": "Deposit",
+        "description": "Please enter the amount you want to deposit below:"
+    },
+
+    "createDepositPage": {
+        "title": "Deposit money",
+        "subtitle": "Deposit",
+        "description": "Please enter the amount you want to deposit below:",
+        "other": "Other amount"
+    },
+
+    "createAccountSelectorPage": {
+        "title": "Select Account Type",
+        "description": "Please select the type of account you want to create:",
+        "selectedOptionTitle": "Selected Account Type"
+    }
+}

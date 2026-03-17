@@ -1,0 +1,1483 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=BIZ+UDGothic&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap');
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+}
+
+.General {
+  position: relative;
+  align-items: center;
+  gap: 1.22vw;
+  width: 54.2708vw;
+  height: 72vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2.0833vw;
+  padding-bottom: 1.3021vw !important;
+  border-radius: 1.1979vw;
+  background: radial-gradient(
+      10.61% 11.03% at 100% 1.24%,
+      rgba(217, 52, 52, 0.28) 0%,
+      rgba(217, 52, 52, 0) 100%
+    ),
+    radial-gradient(
+      55.43% 48.61% at 0.83% 108.15%,
+      rgba(84, 255, 163, 0.05) 0%,
+      rgba(15, 27, 24, 0) 100%
+    ),
+    radial-gradient(
+      49.91% 28.07% at 100% 56.25%,
+      rgba(0, 164, 255, 0.1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      50.11% 49.31% at 1.34% 0%,
+      rgba(175, 255, 212, 0.28) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      71.4% 75.28% at 50% 50%,
+      rgba(14, 20, 19, 0) 63.15%,
+      #0e1413 88.74%
+    ),
+    radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(15, 27, 24, 0.92) 0%,
+      rgba(14, 20, 19, 0.95) 100%
+    );
+}
+
+.topSide {
+  padding-right: 1.4583vw;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleBox {
+  display: flex;
+  align-items: center;
+  gap: 0.6771vw;
+}
+
+.titlePng {
+  width: 3.9583vw;
+  height: 3.9583vw;
+  object-fit: cover;
+}
+
+.title {
+  margin-bottom: 0.5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1823vw;
+  color: #54ffa3;
+  font-family: Barlow;
+  font-size: 25.098px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.titlespan {
+  padding: 0 0.3vw;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 1.1458vw;
+  border-radius: 0.1272vw;
+  background: linear-gradient(
+    90deg,
+    rgba(84, 255, 163, 0.26) 0%,
+    rgba(84, 255, 163, 0) 100%,
+    rgba(84, 255, 163, 0) 100%
+  );
+  color: #fff;
+  font-family: Barlow;
+  font-size: 0.817vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.subTitleBox {
+  gap: 0.5208vw;
+  display: flex;
+  align-items: center;
+}
+
+.subTitleLine {
+  width: 0.1563vw;
+  height: 2.2917vw;
+  background: #d9d9d9;
+}
+
+.topLeftSide {
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+}
+
+.subTitleTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1563vw;
+}
+
+.subTitleText {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.4799vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 90%; /* 25.574px */
+}
+
+.subTitleSubText {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: Barlow;
+  font-size: 1.0197vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 17.621px */
+}
+
+.infoBox {
+  height: 3.7546vw;
+  gap: 0.7292vw;
+  display: flex;
+  align-items: center;
+  padding: 0 0.7813vw;
+  border-radius: 0.1651vw;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.infoBox h3 {
+  gap: 0.1563vw;
+  width: 14.8958vw;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-family: Barlow;
+  font-size: 12.492px;
+
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.infoBox h3 p {
+  color: rgba(255, 255, 255, 0.59);
+  font-family: Barlow;
+  font-size: 0.6506vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.infoBox i {
+  font-size: 1.5vw;
+  color: #00a6ed;
+}
+
+.bottomSide {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 52vh;
+  gap: 1.5104vw;
+}
+
+.listTopSide {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.listTitleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2604vw;
+}
+
+.listTitleText {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.0887vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.listTitleSubText {
+  color: rgba(255, 255, 255, 0.59);
+  font-family: Barlow;
+  font-size: 0.9488vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 90%; /* 16.395px */
+}
+
+.listInputBox {
+  display: flex;
+  gap: 0.5938vw;
+  align-items: center;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 12.3255vw;
+  height: 2.0295vw;
+}
+
+.input-container input {
+  width: 100%;
+  height: 100%;
+  padding: 0vw 0.5208vw;
+  border-radius: 0.3036vw;
+  border: 0.1215vw solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  outline: none;
+  transition: border-bottom 0.3s;
+  color: rgba(255, 255, 255, 0.76);
+  font-family: Barlow;
+  font-size: 0.8501vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-right: 1.7417vw;
+}
+
+.input-container i {
+  position: absolute;
+  right: 0.6vw;
+  color: #ffffff4f;
+  font-size: 0.8vw;
+}
+
+.select-container {
+  position: relative;
+  width: 12.2367vw;
+  height: 2.0295vw;
+}
+
+.select-container select {
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 0vw 0.5208vw;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: Barlow;
+  font-size: 0.9vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 0.2984vw;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.select-container .select-arrow {
+  position: absolute;
+  top: 0.85vw;
+  right: 0.7vw;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #888;
+  pointer-events: none;
+}
+
+.lostTopLeftSide {
+  display: flex;
+  align-items: center;
+  gap: 2.0833vw;
+}
+
+.payAllButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10.1042vw;
+  height: 2.0313vw;
+  border-radius: 0.3646vw;
+  border: 0.0521vw solid #35fa84;
+  background: rgba(53, 250, 132, 0.2);
+  color: #35fa84;
+  font-family: Barlow;
+  font-size: 0.85vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: 250ms ease-in-out;
+}
+
+.payAllButton:hover {
+  cursor: pointer;
+  background: #35fa84;
+  color: black;
+}
+
+.listSide {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8333vw;
+}
+
+.listTopBox {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.listText {
+  color: #fff;
+  text-align: center;
+  font-family: Barlow;
+  font-size: 1.0417vw;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 18px */
+}
+
+.listBoxList {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5208vw;
+}
+
+.listBox {
+  position: relative;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: 2.8125vw;
+  border-radius: 0.3646vw;
+  border: 0.1042vw solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.referenceId {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 7.5vw;
+  border-radius: 0.3646vw 0px 0px 0.3646vw;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.63);
+  text-align: center;
+  font-family: Barlow;
+  font-size: 0.9375vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.statusBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 5.8333vw;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5104vw;
+  height: 1.5104vw;
+  border-radius: 0.2083vw;
+}
+
+.nostatus {
+  border: 0.0521vw solid rgba(180, 79, 79, 0.83);
+  background: linear-gradient(
+    172deg,
+    rgba(202, 71, 71, 0.3) -0.98%,
+    rgba(165, 27, 27, 0.3) 93.7%
+  );
+}
+
+.status i {
+  font-size: 0.9vw;
+}
+
+.nostatus i {
+  color: #ff5454;
+}
+
+.yesstatus {
+  border: 0.0521vw solid rgba(53, 250, 132, 0.83);
+  background: linear-gradient(
+    172deg,
+    rgba(72, 208, 127, 0.3) -0.98%,
+    rgba(31, 177, 90, 0.3) 93.7%
+  );
+}
+
+.yesstatus i {
+  color: #35fa84;
+}
+
+.listInText {
+  color: rgba(255, 255, 255, 0.63);
+  text-align: center;
+  font-family: Barlow;
+  font-size: 0.9375vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+}
+
+.typeText {
+  width: 5.3646vw;
+}
+
+.authorText {
+  width: 9.0104vw;
+}
+
+.creationDateText {
+  width: 9.6875vw;
+}
+.amountText {
+  color: #5fff78;
+  width: 6.25vw;
+}
+
+.viewButton {
+  width: 6.3021vw;
+  border-radius: 0px 0.3646vw 0.3646vw 0px;
+  background: rgba(0, 163, 255, 0.2);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4167vw;
+  height: 100%;
+  right: 0;
+  top: 0;
+  color: #5cc6ff;
+  font-family: Barlow;
+  font-size: 0.9307vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: 250ms ease-in-out;
+}
+
+.viewButton i {
+  font-size: 0.9vw;
+}
+
+.viewButton:hover {
+  cursor: pointer;
+  background: #5cc6ff;
+  color: black;
+}
+
+.pageList {
+  display: flex;
+  align-items: center;
+  gap: 0.4688vw;
+}
+
+.pageBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8229vw;
+  height: 1.8229vw;
+  border-radius: 0.2604vw;
+  border: 0.0521vw solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-family: Barlow;
+  font-size: 0.9375vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 16.2px */
+  transition: 200ms ease-in-out;
+}
+
+.pageBox:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.selectPage {
+  width: 2.1354vw;
+  height: 2.1354vw;
+  color: #000;
+  text-align: center;
+  font-family: Barlow;
+  font-size: 1.0982vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 18.977px */
+  border-radius: 5.857px;
+  background: #35fa84 !important;
+  box-shadow: 0px 0px 1.625vw 0px rgba(53, 250, 132, 0.33);
+}
+
+.pageBox i {
+  color: #ffffff66;
+  font-size: 0.8vw;
+}
+
+.exitBox {
+  cursor: pointer;
+  top: 1.0417vw;
+  right: 1.0417vw;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2003vw;
+  background: #d93434;
+  width: 1.3519vw;
+  height: 1.3519vw;
+  flex-shrink: 0;
+}
+
+.exitBox i {
+  color: white;
+  font-size: 0.8vw;
+}
+
+.viewBox {
+  position: relative;
+  gap: 0.9896vw;
+  padding: 1.3021vw;
+  padding-bottom: 3.75vw !important;
+  display: flex;
+  flex-direction: column;
+  width: 26.0417vw;
+  border-radius: 1.1979vw;
+  background: radial-gradient(
+      55.43% 48.61% at 0.83% 108.15%,
+      rgba(84, 255, 163, 0.05) 0%,
+      rgba(15, 27, 24, 0) 100%
+    ),
+    radial-gradient(
+      49.91% 28.07% at 100% 56.25%,
+      rgba(0, 164, 255, 0.1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      50.11% 49.31% at 1.34% 0%,
+      rgba(175, 255, 212, 0.28) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      71.4% 75.28% at 50% 50%,
+      rgba(14, 20, 19, 0) 63.15%,
+      #0e1413 88.74%
+    ),
+    radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(15, 27, 24, 0.92) 0%,
+      rgba(14, 20, 19, 0.95) 100%
+    );
+  border: 0.1042vw solid rgba(255, 255, 255, 0.09);
+}
+
+.viewSide {
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.1979vw;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.viewTopSide {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.viewTitleBox {
+  display: flex;
+  align-items: center;
+  gap: 0.4844vw;
+}
+
+.viewTitleTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1615vw;
+}
+
+.viewTitleText {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.3861vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 90%; /* 23.953px */
+}
+
+.viewTitleSubText {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: Barlow;
+  font-size: 0.9551vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 16.504px */
+}
+
+.viewTitleLine {
+  width: 0.1464vw;
+  height: 2.1464vw;
+  background: #d9d9d9;
+}
+
+.viewExitBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.2604vw;
+  height: 1.6667vw;
+  border-radius: 0.2992vw;
+  gap: 0.2604vw;
+  border: 0.0428vw solid #ff6262;
+  background: rgba(255, 98, 98, 0.2);
+  color: #ff6262;
+  text-align: center;
+  font-family: Barlow;
+  font-size: 0.7195vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: 200ms ease-in-out;
+}
+
+.viewExitBox:hover {
+  background: #ff6262;
+  cursor: pointer;
+  color: black;
+}
+
+.viewExitBox i {
+  font-size: 0.9vw;
+}
+
+.viewBottomSide {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.1458vw;
+}
+
+.viewInfoBox {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  row-gap: 0.3125vw;
+}
+
+.viewInfo {
+  padding: 0vw 0.6771vw;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  height: 1.9792vw;
+  border-radius: 0.2604vw;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.54);
+  text-align: right;
+  font-family: Barlow;
+  font-size: 0.7813vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 13.5px */
+}
+
+.viewInfo h2 {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.28);
+  font-family: Barlow;
+  font-size: 0.7813vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 13.5px */
+}
+
+.viewTotalPriceBox {
+  padding: 0.8854vw;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  width: 23.4375vw;
+  height: 9.6354vw;
+  border-radius: 0.3646vw;
+  background: rgba(255, 255, 255, 0.04);
+  justify-content: space-between;
+}
+
+.viewTotalPrice {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(78, 255, 127, 0.8);
+  text-align: right;
+  font-family: Barlow;
+  font-size: 0.8333vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 14.4px */
+}
+
+.viewTotalPrice h2 {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: Barlow;
+  font-size: 0.8333vw;
+  text-align: left;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 14.4px */
+}
+
+.viewTotalPrice2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(78, 255, 127, 0.8);
+  text-align: right;
+  font-family: Barlow;
+  font-size: 1.0417vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 18px */
+}
+
+.viewTotalPrice2 h2 {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: Barlow;
+  font-size: 1.0417vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 18px */
+}
+
+.viewTotalPrices {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.8854vw;
+}
+
+.viewBoxPayButton {
+  z-index: 3;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2.6042vw;
+  border-radius: 0px 0px 1.1953vw 1.1953vw;
+  background: rgba(53, 250, 132, 0.2);
+  color: #4eff7f;
+  text-align: center;
+  font-family: Barlow;
+  font-size: 0.9375vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 16.2px */
+  transition: 250ms ease-in-out;
+}
+
+.viewBoxPayButton-hover:hover {
+  cursor: pointer;
+  color: black;
+  font-weight: 600;
+  background-color: #4eff7f;
+}
+
+.categoryPage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7813vw;
+  align-items: center;
+  padding: 1.6667vw;
+  width: 29.375vw;
+  border-radius: 1.1979vw;
+  background: radial-gradient(
+      10.61% 11.03% at 100% 1.24%,
+      rgba(217, 52, 52, 0.28) 0%,
+      rgba(217, 52, 52, 0) 100%
+    ),
+    radial-gradient(
+      55.43% 48.61% at 0.83% 108.15%,
+      rgba(84, 255, 163, 0.05) 0%,
+      rgba(15, 27, 24, 0) 100%
+    ),
+    radial-gradient(
+      49.91% 28.07% at 100% 56.25%,
+      rgba(0, 164, 255, 0.1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      50.11% 49.31% at 1.34% 0%,
+      rgba(175, 255, 212, 0.28) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      71.4% 75.28% at 50% 50%,
+      rgba(14, 20, 19, 0) 63.15%,
+      #0e1413 88.74%
+    ),
+    radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(15, 27, 24, 0.92) 0%,
+      rgba(14, 20, 19, 0.95) 100%
+    );
+}
+
+.categoryList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7292vw;
+}
+
+.categoryBox {
+  position: relative;
+  gap: 0.1042vw;
+  padding-right: 0.7813vw;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 3.4896vw;
+  border-radius: 0.3125vw;
+  border: 0.1042vw solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.07);
+  transition: 250ms ease-in-out;
+}
+
+.categoryBox:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.categoryBox:hover .categoryIcon i {
+  color: #fff;
+}
+
+.categoryIcon {
+  width: 3.4896vw;
+  height: 3.4896vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categoryIcon i {
+  font-size: 1.3vw;
+  color: #ffffff7a;
+  transition: 250ms ease-in-out;
+}
+
+.categoryTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1042vw;
+}
+
+.categoryText {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 0.8876vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.categorySubText {
+  color: rgba(255, 255, 255, 0.67);
+  font-family: Barlow;
+  font-size: 0.7608vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.categoryBox > i {
+  font-size: 1.2vw;
+  position: absolute;
+  right: 1.2vw;
+  color: #ffffff63;
+  transition: 250ms ease-in-out;
+}
+
+.categoryBox:hover > i {
+  color: white;
+  transform: translateX(30%);
+}
+
+.createInvoicesPage {
+  gap: 1.3021vw !important;
+}
+.myInvoicesPage,
+.createInvoicesPage,
+.inspectPage,
+.createContractPage {
+  flex-direction: column;
+  width: 24.0104vw;
+  border-radius: 1.1979vw;
+  background: radial-gradient(
+      10.61% 11.03% at 100% 1.24%,
+      rgba(217, 52, 52, 0.28) 0%,
+      rgba(217, 52, 52, 0) 100%
+    ),
+    radial-gradient(
+      55.43% 48.61% at 0.83% 108.15%,
+      rgba(84, 255, 163, 0.05) 0%,
+      rgba(15, 27, 24, 0) 100%
+    ),
+    radial-gradient(
+      49.91% 28.07% at 100% 56.25%,
+      rgba(0, 164, 255, 0.1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      50.11% 49.31% at 1.34% 0%,
+      rgba(175, 255, 212, 0.28) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    radial-gradient(
+      71.4% 75.28% at 50% 50%,
+      rgba(14, 20, 19, 0) 63.15%,
+      #0e1413 88.74%
+    ),
+    radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(15, 27, 24, 0.92) 0%,
+      rgba(14, 20, 19, 0.95) 100%
+    );
+  position: relative;
+  display: flex;
+  padding: 1.8229vw;
+  padding-bottom: 4.6875vw !important;
+  gap: 1.6667vw;
+}
+
+.createContractPage {
+  gap: 1.0417vw !important;
+}
+
+.inspectPage {
+  padding-bottom: 1.8229vw !important;
+}
+
+.pageTitleBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5208vw;
+}
+
+.pageTitleLine {
+  width: 0.1705vw;
+  height: 2.5vw;
+  background: #d9d9d9;
+}
+.pageTitleTextBox {
+  gap: 0.3vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageTitleText {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.6145vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 90%; /* 27.898px */
+}
+
+.pageTitleSubText {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: Barlow;
+  font-size: 1.1124vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 19.223px */
+}
+
+.invoicesBottomBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.0938vw;
+}
+
+.createInvoicesBottomBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7292vw;
+}
+
+.lookupButton {
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 0;
+  gap: 0.3167vw;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 5.5729vw;
+  border-radius: 0px 0.3646vw 0.3646vw 0px;
+  background: rgba(0, 163, 255, 0.2);
+  color: #5cc6ff;
+  font-family: Barlow;
+  font-size: 0.9113vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 15.747px */
+  transition: 250ms ease-in-out;
+}
+
+.lookupButton i {
+  font-size: 0.8vw;
+}
+
+.lookupButton:hover {
+  cursor: pointer;
+  background: #5cc6ff;
+  color: black;
+}
+
+.textAreaBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5208vw;
+  width: 100%;
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.0633vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 18.373px */
+}
+
+.textArea {
+  padding: 0vw 0.7292vw;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2.5vw;
+  border-radius: 0.3125vw;
+  border: 0.1042vw solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.32);
+  font-family: Barlow;
+  font-size: 1.0146vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 17.532px */
+}
+
+.pagePayButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 3.125vw;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-radius: 0px 0px 1.1953vw 1.1953vw;
+  background: rgba(53, 250, 132, 0.2);
+  color: #35fa84;
+  font-family: Barlow;
+  font-size: 1.1857vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 20.489px */
+  transition: 250ms ease-in-out;
+}
+
+.pagePayButton:hover {
+  cursor: pointer;
+  background: #35fa84;
+  color: black;
+}
+
+.ItemSelect-container {
+  position: relative;
+  width: 100%;
+  height: 2.5vw;
+}
+
+.ItemSelect-container select {
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 0vw 0.7292vw;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.32);
+  font-family: Barlow;
+  font-size: 1.0146vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 17.532px */
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 0.3125vw;
+  border: 0.1042vw solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ItemSelect-container .select-arrow {
+  position: absolute;
+  top: 1.1vw;
+  right: 0.9vw;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #888;
+  pointer-events: none;
+}
+
+.createInputBox {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5208vw;
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.0633vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 18.373px */
+}
+
+.priceinput-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 2.5vw;
+}
+
+.priceinput-container input {
+  width: 100%;
+  height: 100%;
+  padding: 0vw 0.5208vw;
+  border-radius: 0.3036vw;
+  border: 0.1215vw solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  outline: none;
+  transition: border-bottom 0.3s;
+  color: rgba(41, 255, 137, 0.685);
+  font-family: Barlow;
+  font-size: 1.0146vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 17.532px */
+}
+
+.createButtonList {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.createButtons {
+  transition: 250ms ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 9.9479vw;
+  height: 2.4479vw;
+  border-radius: 0.625vw 0px 0px 0.625vw;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.44);
+  font-family: Barlow;
+  font-size: 0.9804vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 16.941px */
+}
+
+.createButtons:hover {
+  cursor: pointer;
+  background: #24dd7a;
+  color: black;
+}
+
+.createButtons[selected] {
+  cursor: pointer;
+  background: #24dd7a;
+  color: black;
+}
+
+option {
+  background-color: #1f523a;
+  color: #fff;
+}
+option:checked {
+  background-color: #30ff8d;
+  color: black;
+}
+
+.pageInfo {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.53);
+  font-family: Barlow;
+  font-size: 0.8333vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 121%; /* 19.36px */
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 250ms ease-in-out;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3.125vw;
+  border-radius: 0px 0px 1.1953vw 1.1953vw;
+  background: rgba(0, 163, 255, 0.2);
+  color: #5cc6ff;
+  text-align: center;
+  font-family: Barlow;
+  font-size: 1.1857vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 20.489px */
+}
+
+.submitButton:hover {
+  background: #5cc6ff;
+  cursor: pointer;
+  color: black;
+}
+
+.contractPage {
+  position: relative;
+  gap: 2.1354vw;
+  padding: 1.6667vw;
+  padding-top: 3.0208vw !important;
+  display: flex;
+  flex-direction: column;
+  width: 30.0521vw;
+  height: 38.4896vw;
+  background-image: url(assets/img/contractPage.png);
+  background-size: cover;
+}
+
+.contractTitleBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5208vw;
+}
+
+.contractTitleLine {
+  width: 0.1564vw;
+  height: 2.2928vw;
+  background: #d9d9d9;
+}
+
+.contractTitleTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1563vw;
+}
+
+.contractTitleText {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.4807vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 90%; /* 25.586px */
+}
+
+.contractTitleSubText {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: Barlow;
+  font-size: 1.0203vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 90%; /* 17.63px */
+}
+
+.contractInfoTextBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1979vw;
+}
+
+.contractInfoText {
+  color: rgba(255, 255, 255, 0.45);
+  font-family: "BIZ UDGothic";
+  font-size: 0.9726vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 137%; /* 25.582px */
+}
+
+.contractInfoText span {
+  color: rgba(255, 255, 255, 0.6);
+  font-family: "BIZ UDGothic";
+  font-size: 0.9726vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 137%;
+}
+
+.signatureList {
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  display: flex;
+  gap: 4.1667vw;
+  align-items: center;
+  bottom: 5.2083vw;
+}
+
+.signatureBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5729vw;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.34);
+  font-family: "BIZ UDGothic";
+  font-size: 0.8333vw;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 137%; /* 21.92px */
+}
+
+.seller-signature {
+  position: relative;
+  top: 1.25vw;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: all 100ms;
+  font-family: "Just Another Hand", cursive;
+  font-weight: 400;
+  font-size: 1.8vw;
+  font-style: normal;
+  height: 2vw;
+}
+
+.buyer-signature {
+  position: relative;
+  top: 1.25vw;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: all 100ms;
+  font-family: "Just Another Hand", cursive;
+  font-weight: 400;
+  font-size: 1.8vw;
+  font-style: normal;
+  height: 2vw;
+}
+
+.signatureLine {
+  width: 9.8958vw;
+  height: 0.0521vw;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.signButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12.0833vw;
+  height: 2.3958vw;
+  bottom: -0.5vw;
+  border-radius: 0.4167vw;
+  border: 0.1042vw solid rgba(0, 255, 117, 0.2);
+  background: rgba(0, 255, 117, 0.4);
+  backdrop-filter: blur(1.2396vw);
+  gap: 0.4688vw;
+  color: #a0ffc9;
+  font-family: Barlow;
+  font-size: 0.9375vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 90%; /* 16.2px */
+  transition: 250ms ease-in-out;
+}
+
+.signButton i {
+  font-size: 0.9vw;
+}
+
+.signButton:hover {
+  cursor: pointer;
+  color: black;
+  background: rgba(0, 255, 117, 1);
+}
+
+.no-hover:hover {
+  background-color: initial;
+  color: initial;
+  cursor: default;
+}

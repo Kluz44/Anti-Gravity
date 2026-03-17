@@ -1,0 +1,4 @@
+"languages/**.lua",
+"configuration/**/*",
+"src/server/api.lua",
+"src/client/api.lua",

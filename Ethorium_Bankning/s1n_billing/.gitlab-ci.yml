@@ -1,0 +1,215 @@
+# Variables globales
+variables:
+  VERSION_FILE: "fxmanifest.lua"
+  GIT_DEPTH: "0"
+  RELEASE_NAME: "release"
+  RELEASE_ESCROW_NAME: "release-escrow"
+
+stages:
+  - version
+  - prepare
+  - release
+  - pages
+
+bump-version:
+  stage: version
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  before_script:
+    - apk add --no-cache git bash perl
+    # Configuration Git minimale
+    - git config --global user.email "ci@s1nscripts.com"
+    - git config --global user.name "S1N CI"
+    # URL avec le PAT
+    - git remote set-url origin "https://gitlab-ci:${GITLAB_PAT}@gitlab.com/${CI_PROJECT_PATH}.git"
+  script:
+    - |
+      cat > version_script.sh << 'EOL'
+      #!/bin/bash
+      set -e
+
+      # Fonction pour extraire la version actuelle
+      function get_current_version() {
+        if [ -f "${VERSION_FILE}" ]; then
+          local version
+          version=$(grep -E "version '[0-9]+\.[0-9]+\.[0-9]+'" "${VERSION_FILE}" | perl -pe "s/.*version '([0-9]+\.[0-9]+\.[0-9]+)'.*/\1/")
+          if [ -n "$version" ]; then
+            echo "$version"
+          else
+            echo "0.0.0"
+          fi
+        else
+          echo "0.0.0"
+        fi
+      }
+
+      # Fonction pour bumper la version
+      function bump_version() {
+        local current_version="$1"
+        local version_type="$2"
+        local IFS='.'
+        local -a VERSION
+        read -ra VERSION <<< "$current_version"
+        
+        case $version_type in
+          major)
+            ((VERSION[0]++))
+            VERSION[1]=0
+            VERSION[2]=0
+            ;;
+          minor)
+            ((VERSION[1]++))
+            VERSION[2]=0
+            ;;
+          patch)
+            ((VERSION[2]++))
+            ;;
+        esac
+        
+        echo "${VERSION[0]}.${VERSION[1]}.${VERSION[2]}"
+      }
+
+      # Obtenir le dernier tag
+      LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+      
+      if [ -n "$LAST_TAG" ]; then
+        echo "Analyzing commits since last tag: $LAST_TAG"
+        COMMITS=$(git log --pretty=format:"%s" $LAST_TAG..HEAD)
+      else
+        echo "No previous tag found, analyzing all commits"
+        COMMITS=$(git log --pretty=format:"%s")
+      fi
+      
+      VERSION_TYPE="patch"
+      
+      echo "Analyzing commit messages..."
+      while IFS= read -r commit; do
+        if [[ $commit == *"BREAKING CHANGE"* ]] || [[ $commit == "feat!"* ]]; then
+          VERSION_TYPE="major"
+          break
+        elif [[ $commit == "feat:"* ]] && [ "$VERSION_TYPE" != "major" ]; then
+          VERSION_TYPE="minor"
+        fi
+      done <<< "$COMMITS"
+      
+      CURRENT_VERSION=$(get_current_version)
+      NEW_VERSION=$(bump_version "$CURRENT_VERSION" "$VERSION_TYPE")
+      
+      echo "Current version: $CURRENT_VERSION"
+      echo "Version type to bump: $VERSION_TYPE"
+      echo "New version: $NEW_VERSION"
+      
+      sed -i "s/version '[0-9]*\.[0-9]*\.[0-9]*'/version '$NEW_VERSION'/" "$VERSION_FILE"
+      
+      echo "Content of VERSION_FILE:"
+      cat "${VERSION_FILE}"
+      echo "--------------------"
+      
+      # Debug pour voir la branche actuelle
+      echo "Current branch:"
+      git branch -a
+      
+      git add "$VERSION_FILE"
+      git commit -m "chore: bump version to $NEW_VERSION [skip ci]"
+      git push origin HEAD:main
+      
+      echo "$NEW_VERSION" > version.txt
+      
+      EOL
+
+    - chmod +x version_script.sh
+    - ./version_script.sh
+
+  artifacts:
+    paths:
+      - $VERSION_FILE
+      - version.txt
+
+prepare-release:
+  stage: prepare
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  needs:
+    - bump-version
+  before_script:
+    - apk add --no-cache git sed
+    # Configuration Git minimale
+    - git config --global user.email "ci@s1nscripts.com"
+    - git config --global user.name "S1N CI"
+    # URL avec le PAT
+    - git remote set-url origin "https://gitlab-ci:${GITLAB_PAT}@gitlab.com/${CI_PROJECT_PATH}.git"
+  script:
+    - |
+      VERSION=$(cat version.txt)
+      echo "Preparing release v${VERSION}"
+      
+      # Sauvegarder le contenu original du fxmanifest.lua
+      cp "$VERSION_FILE" "${VERSION_FILE}.original"
+      
+      # Créer une branche temporaire pour la version standard
+      git checkout -b release/v${VERSION}
+
+      git add $VERSION_FILE
+      git commit -m "chore: update escrow configuration for v${VERSION} [skip ci]"
+      git push origin release/v${VERSION}
+      
+      # Créer une branche temporaire pour la version escrow
+      git checkout -b release-escrow/v${VERSION}
+      
+      # Restaurer le contenu original avant de le modifier pour l'escrow
+      cp "${VERSION_FILE}.original" "$VERSION_FILE"
+      
+      # Mettre à jour le fxmanifest.lua avec le contenu de .escrow_ignore
+      ESCROW_CONTENT=$(cat .escrow_ignore | tr -d '\n' | sed 's/,$//')
+      sed -i "/escrow_ignore {/,/}/c\escrow_ignore {\n    ${ESCROW_CONTENT}\n}" "$VERSION_FILE"
+      
+      # Vérifier le contenu mis à jour
+      echo "Content of $VERSION_FILE after escrow update:"
+      cat "$VERSION_FILE"
+      
+      git add $VERSION_FILE
+      git commit -m "chore: update escrow configuration for v${VERSION} [skip ci]"
+      git push origin release-escrow/v${VERSION}
+      
+      # Retourner à la branche principale
+      git checkout main
+      rm "${VERSION_FILE}.original"
+
+create-release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  needs:
+    - bump-version
+    - prepare-release
+  script:
+    - VERSION=$(cat version.txt)
+    - |
+      release-cli create --name "v$VERSION" \
+                        --tag-name "v$VERSION" \
+                        --description "Release v$VERSION" \
+                        --ref $CI_COMMIT_SHA \
+                        --assets-link "{\"name\":\"${RELEASE_NAME}.zip\",\"url\":\"${CI_PROJECT_URL}/-/archive/release/v${VERSION}/${RELEASE_NAME}.zip\"}" \
+                        --assets-link "{\"name\":\"${RELEASE_ESCROW_NAME}.zip\",\"url\":\"${CI_PROJECT_URL}/-/archive/release-escrow/v${VERSION}/${RELEASE_ESCROW_NAME}.zip\"}"
+
+pages:
+  stage: pages
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  needs:
+    - bump-version
+  script:
+    - VERSION=$(cat version.txt)
+    # Créer le dossier public (requis pour GitLab Pages)
+    - mkdir -p public
+    # Créer le fichier JSON
+    - echo "{\"version\":\"$VERSION\",\"updated_at\":\"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"}" > public/version.json
+    # Créer aussi une version txt pour les requêtes simples
+    - echo "$VERSION" > public/latest
+  artifacts:
+    paths:
+      - public

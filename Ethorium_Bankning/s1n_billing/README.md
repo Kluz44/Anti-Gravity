@@ -1,0 +1,1 @@
+Documentation of the script available on https://docs.s1nscripts.com

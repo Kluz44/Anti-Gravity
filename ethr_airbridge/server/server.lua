@@ -41,25 +41,12 @@ end
 
 -- ===== DUI Update Helper =====
 local function updateDuiState()
-    local qCount = #PendingQueue
-    if qCount > 0 then
-        local paxLimit = Config.MaxPlayersPerFlight or 10
-        if queueWindowEndsAt > 0 then
-            local remaining = math.max(0, queueWindowEndsAt - os.time())
-            if remaining == 0 and activeDispatching then
-                exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, 0, "Boarding..")
-            else
-                exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, remaining, "Check-in")
-            end
-        else
-            exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, 0, "Standby")
-        end
+    if not exports['ethorium_dui'] then return end
+    if queueWindowEndsAt > 0 then
+        local remaining = math.max(0, queueWindowEndsAt - os.time())
+        exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, remaining, "Check-in")
     else
-        if activeDispatching or next(Flights) then
-            exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, Config.FlightCooldownSeconds or 180, "Noch nicht verfügbar")
-        else
-            exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, 0, "Standby")
-        end
+        exports['ethorium_dui']:AddFlight(Config.Luftfahrzeugkennzeichen, 0, "Check-in")
     end
 end
 
@@ -138,95 +125,61 @@ local function ensureBoardingAll(f, retries, intervalMs)
 end
 
 -- ===== The Dispatcher (Central logic for generating flights) =====
-local function triggerDispatcher()
-    if activeDispatching or #PendingQueue == 0 then return end
+local cooldownEndsAt = 0
 
-    activeDispatching = true
-    updateDuiState() -- Setzt DUI in "unavailable" oder cooldown state
-    debug('Dispatch-Prozess gestartet.')
-
-    -- Wait cooldown if there is an active flight
-    if next(Flights) ~= nil then
-        debug('Flugzeuge aktiv. Warte auf Cooldown bevor nächstes Flugzeug freigegeben wird.')
-        Wait((Config.FlightCooldownSeconds or 180) * 1000)
-    end
-    
-    if #PendingQueue == 0 then 
-        activeDispatching = false
-        updateDuiState()
-        return 
-    end
-
-    local paxLimit = Config.MaxPlayersPerFlight or 10
-    local nextBatch = {}
-    local amountToTake = math.min(paxLimit, #PendingQueue)
-
-    -- Take players from the queue
-    for i=1, amountToTake do
-        table.insert(nextBatch, table.remove(PendingQueue, 1))
-    end
-    
-    -- Create flight instance
-    local f = createFlightInstance()
-    for _, src in ipairs(nextBatch) do
-        f.participants[src] = true
-        f.boarded[src] = false
-        table.insert(f.joinOrder, src)
-    end
-
-    -- Assign host
-    f.host = nextBatch[1]
-    
-    debug(('Generiere Flight %d für %d Spieler (Host: %d). %d Spieler verbleiben in Queue.'):format(f.id, #nextBatch, f.host, #PendingQueue))
-
-    -- Inform participants
-    for _, src in ipairs(nextBatch) do
-        if Notify and Notify.Server then Notify.Server(src, 'Dein Flug ist bereit. Boarding beginnt.', 'success') end
-    end
-    if Notify and Notify.ServerAll then Notify.ServerAll('Flugzeug-Boarding läuft. Bitte bereitmachen.', 'primary', 5000) end
-
-    TriggerClientEvent('ethr_airbridge:hostAssign', f.host, true)
-    -- Tell host to spawn plane
-    TriggerClientEvent('ethr_airbridge:startNow', f.host, true, GetPlayers())
-
-    activeDispatching = false
-
-    -- If there are still people pending, update DUI to show Cooldown.
-    if #PendingQueue > 0 then
-        updateDuiState()
-        -- Start the next dispatch cycle asynchronously
-        CreateThread(function()
-            triggerDispatcher()
-        end)
-    else
-        queueWindowEndsAt = 0
-        updateDuiState()
-    end
-end
-
-local function manageQueueWindow()
-    if queueWindowEndsAt > 0 then return end -- Already running
-    queueWindowEndsAt = os.time() + (Config.CheckInWindowMinutes * 60)
-    updateDuiState()
-    
-    CreateThread(function()
-        while os.time() < queueWindowEndsAt and #PendingQueue < (Config.MaxPlayersPerFlight or 10) do
-            Wait(1000)
+CreateThread(function()
+    while true do Wait(1000)
+        -- 1. Check if window should end
+        if queueWindowEndsAt > 0 then
+            if os.time() >= queueWindowEndsAt or #PendingQueue >= (Config.MaxPlayersPerFlight or 10) then
+                queueWindowEndsAt = 0
+                updateDuiState()
+            end
         end
-        
-        -- Window ended OR full
-        if #PendingQueue > 0 then
-            triggerDispatcher()
-        end
-    end)
-end
 
+        -- 2. Dispatch if window is closed, there are players, AND no cooldown!
+        if queueWindowEndsAt == 0 and #PendingQueue > 0 and os.time() >= cooldownEndsAt then
+            local paxLimit = Config.MaxPlayersPerFlight or 10
+            local nextBatch = {}
+            local amountToTake = math.min(paxLimit, #PendingQueue)
+
+            for i=1, amountToTake do
+                table.insert(nextBatch, table.remove(PendingQueue, 1))
+            end
+            
+            local f = createFlightInstance()
+            for _, src in ipairs(nextBatch) do
+                f.participants[src] = true
+                f.boarded[src] = false
+                table.insert(f.joinOrder, src)
+            end
+            f.host = nextBatch[1]
+            
+            debug(('Generiere Flight %d für %d Spieler (Host: %d). %d verbleiben.'):format(f.id, #nextBatch, f.host, #PendingQueue))
+
+            for _, src in ipairs(nextBatch) do
+                if Notify and Notify.Server then Notify.Server(src, 'Dein Flug ist bereit. Boarding beginnt.', 'success') end
+            end
+            if Notify and Notify.ServerAll then Notify.ServerAll('Flugzeug-Boarding läuft. Bitte bereitmachen.', 'primary', 5000) end
+
+            TriggerClientEvent('ethr_airbridge:hostAssign', f.host, true)
+            TriggerClientEvent('ethr_airbridge:startNow', f.host, true, GetPlayers())
+
+            cooldownEndsAt = os.time() + (Config.FlightCooldownSeconds or 180)
+            
+            -- If there are players left, start their window IMMEDIATELY
+            if #PendingQueue > 0 then
+                queueWindowEndsAt = os.time() + (Config.CheckInWindowMinutes * 60)
+            end
+            updateDuiState()
+        end
+    end
+end)
 
 -- ===== Core: Check-In =====
 RegisterNetEvent('ethr_airbridge:checkIn', function()
     local src=source
     
-    -- Check if player is already in a flight or queue
     if getFlightForPlayer(src) then
         if Notify and Notify.Server then Notify.Server(src,'Du bist bereits auf einem aktiven Flug.','error') end
         return
@@ -239,44 +192,29 @@ RegisterNetEvent('ethr_airbridge:checkIn', function()
         end
     end
 
-    -- Add to queue
     table.insert(PendingQueue, src)
-    
-    local paxLimit = Config.MaxPlayersPerFlight or 10
     local position = #PendingQueue
-
-    -- 1. If currently dispatching, just inform them they are in queue for next flight
-    if activeDispatching then
-        if Notify and Notify.Server then 
-            Notify.Server(src, ('Check-in erfolgreich. Position in Warteschlange: %d. Warte auf Cooldown.'):format(position), 'success') 
-        end
-        return
+    
+    if position == 1 and queueWindowEndsAt == 0 then
+        queueWindowEndsAt = os.time() + (Config.CheckInWindowMinutes * 60)
+        updateDuiState()
     end
 
-    -- 2. Start instant
+    local paxLimit = Config.MaxPlayersPerFlight or 10
+    local remaining = math.max(0, queueWindowEndsAt - os.time())
+    local waitState = ""
+    if os.time() < cooldownEndsAt then waitState = " (Warten auf Startbahn)" end
+
     if Config.StartMode == 'instant' then
         if Notify and Notify.Server then Notify.Server(src, 'Check-in bestätigt.', 'success') end
-        if position >= paxLimit then
-            triggerDispatcher()
-        elseif position == 1 then
-            -- Optional start timer for instant if not full yet
-            CreateThread(function()
-                Wait(15000)
-                triggerDispatcher()
-            end)
-        end
+        if position >= paxLimit then queueWindowEndsAt = 0 end
         return
     end
 
-    -- 3. Window Mode
-    manageQueueWindow()
-    local remaining = math.max(0, queueWindowEndsAt - os.time())
-    
     if position >= paxLimit then
-        if Notify and Notify.Server then Notify.Server(src, ('Check-in erfolgreich (Limit %d erreicht). Flug wird vorbereitet.'):format(paxLimit), 'success') end
-        -- It will auto-trigger because of the manageQueueWindow loop breaking early.
+        if Notify and Notify.Server then Notify.Server(src, ('Check-in erfolgreich (Limit %d erreicht). Flug wird vorbereitet%s.'):format(paxLimit, waitState), 'success') end
     else
-        if Notify and Notify.Server then Notify.Server(src, ('Check-in bestätigt (Warteposition: %d). Abflugfenster schließt in ca. %d Min.'):format(position, math.max(1, math.ceil(remaining/60))), 'success') end
+        if Notify and Notify.Server then Notify.Server(src, ('Check-in bestätigt (Warteposition: %d). Abflugfenster schließt in ca. %d Min%s.'):format(position, math.max(1, math.ceil(remaining/60)), waitState), 'success') end
     end
 end)
 
